@@ -236,9 +236,9 @@ gapminder %&gt;%
     gdpPercap &gt;= 15000 ~ "high income",  
     gdpPercap &lt; 15000 ~ "not high income")  
     ) %&gt;%  
-* mutate(europe = case_when(
-*   continent == "Europe" ~ "Europe",
-*   continent != "Europe" ~ "not Europe")
+* mutate(asia = case_when(
+*   continent == "Asia" ~ "Asia",
+*   continent != "Asia" ~ "not Asia")
 *        )
 ```
 ]]
@@ -246,18 +246,18 @@ gapminder %&gt;%
 
 ```
 # A tibble: 140 x 8
-   country    continent  year lifeExp      pop gdpPercap high_income    europe  
-   &lt;fct&gt;      &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;   
- 1 Afghanist… Asia       2007    43.8   3.19e7      975. not high inco… not Eur…
- 2 Albania    Europe     2007    76.4   3.60e6     5937. not high inco… Europe  
- 3 Algeria    Africa     2007    72.3   3.33e7     6223. not high inco… not Eur…
- 4 Angola     Africa     2007    42.7   1.24e7     4797. not high inco… not Eur…
- 5 Argentina  Americas   2007    75.3   4.03e7    12779. not high inco… not Eur…
- 6 Austria    Europe     2007    79.8   8.20e6    36126. high income    Europe  
- 7 Bahrain    Asia       2007    75.6   7.09e5    29796. high income    not Eur…
- 8 Bangladesh Asia       2007    64.1   1.50e8     1391. not high inco… not Eur…
- 9 Belgium    Europe     2007    79.4   1.04e7    33693. high income    Europe  
-10 Benin      Africa     2007    56.7   8.08e6     1441. not high inco… not Eur…
+   country     continent  year lifeExp      pop gdpPercap high_income    asia   
+   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;          &lt;chr&gt;  
+ 1 Afghanistan Asia       2007    43.8   3.19e7      975. not high inco… Asia   
+ 2 Albania     Europe     2007    76.4   3.60e6     5937. not high inco… not As…
+ 3 Algeria     Africa     2007    72.3   3.33e7     6223. not high inco… not As…
+ 4 Angola      Africa     2007    42.7   1.24e7     4797. not high inco… not As…
+ 5 Argentina   Americas   2007    75.3   4.03e7    12779. not high inco… not As…
+ 6 Austria     Europe     2007    79.8   8.20e6    36126. high income    not As…
+ 7 Bahrain     Asia       2007    75.6   7.09e5    29796. high income    Asia   
+ 8 Bangladesh  Asia       2007    64.1   1.50e8     1391. not high inco… Asia   
+ 9 Belgium     Europe     2007    79.4   1.04e7    33693. high income    not As…
+10 Benin       Africa     2007    56.7   8.08e6     1441. not high inco… not As…
 # … with 130 more rows
 ```
 ]]
@@ -276,9 +276,9 @@ gapminder %&gt;%
     gdpPercap &gt;= 15000 ~ "high income",  
     gdpPercap &lt; 15000 ~ "not high income")  
     ) %&gt;%  
-  mutate(europe = case_when(  
-    continent == "Europe" ~ "Europe",  
-    continent != "Europe" ~ "not Europe")  
+  mutate(asia = case_when(  
+    continent == "Asia" ~ "Asia",  
+    continent != "Asia" ~ "not Asia")  
          ) %&gt;%  
 * mutate(gdppercap_log10 =
 *          log10(gdpPercap))
@@ -288,18 +288,18 @@ gapminder %&gt;%
 
 ```
 # A tibble: 140 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Afghan… Asia       2007    43.8 3.19e7      975. not high i… not E…
- 2 Albania Europe     2007    76.4 3.60e6     5937. not high i… Europe
- 3 Algeria Africa     2007    72.3 3.33e7     6223. not high i… not E…
- 4 Angola  Africa     2007    42.7 1.24e7     4797. not high i… not E…
- 5 Argent… Americas   2007    75.3 4.03e7    12779. not high i… not E…
- 6 Austria Europe     2007    79.8 8.20e6    36126. high income Europe
- 7 Bahrain Asia       2007    75.6 7.09e5    29796. high income not E…
- 8 Bangla… Asia       2007    64.1 1.50e8     1391. not high i… not E…
- 9 Belgium Europe     2007    79.4 1.04e7    33693. high income Europe
-10 Benin   Africa     2007    56.7 8.08e6     1441. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Afghan… Asia       2007    43.8 3.19e7      975. not high i… Asia 
+ 2 Albania Europe     2007    76.4 3.60e6     5937. not high i… not …
+ 3 Algeria Africa     2007    72.3 3.33e7     6223. not high i… not …
+ 4 Angola  Africa     2007    42.7 1.24e7     4797. not high i… not …
+ 5 Argent… Americas   2007    75.3 4.03e7    12779. not high i… not …
+ 6 Austria Europe     2007    79.8 8.20e6    36126. high income not …
+ 7 Bahrain Asia       2007    75.6 7.09e5    29796. high income Asia 
+ 8 Bangla… Asia       2007    64.1 1.50e8     1391. not high i… Asia 
+ 9 Belgium Europe     2007    79.4 1.04e7    33693. high income not …
+10 Benin   Africa     2007    56.7 8.08e6     1441. not high i… not …
 # … with 130 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -318,9 +318,9 @@ gapminder %&gt;%
     gdpPercap &gt;= 15000 ~ "high income",  
     gdpPercap &lt; 15000 ~ "not high income")  
     ) %&gt;%  
-  mutate(europe = case_when(  
-    continent == "Europe" ~ "Europe",  
-    continent != "Europe" ~ "not Europe")  
+  mutate(asia = case_when(  
+    continent == "Asia" ~ "Asia",  
+    continent != "Asia" ~ "not Asia")  
          ) %&gt;%  
   mutate(gdppercap_log10 =  
            log10(gdpPercap)) %&gt;%  
@@ -331,18 +331,18 @@ gapminder %&gt;%
 
 ```
 # A tibble: 50 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -361,14 +361,14 @@ gapminder %&gt;%
     gdpPercap &gt;= 15000 ~ "high income",  
     gdpPercap &lt; 15000 ~ "not high income")  
     ) %&gt;%  
-  mutate(europe = case_when(  
-    continent == "Europe" ~ "Europe",  
-    continent != "Europe" ~ "not Europe")  
+  mutate(asia = case_when(  
+    continent == "Asia" ~ "Asia",  
+    continent != "Asia" ~ "not Asia")  
          ) %&gt;%  
   mutate(gdppercap_log10 =  
            log10(gdpPercap)) %&gt;%  
   sample_n(50, replace = F) -&gt;  
-*gm07_sample_50
+*gm_2007_sample
 ```
 ]]
 .column[.content[
@@ -391,25 +391,25 @@ count: false
 .column[.content[
 
 ```r
-*gm07_sample_50
+*gm_2007_sample
 ```
 ]]
 .column[.content[
 
 ```
 # A tibble: 50 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -419,7 +419,7 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
 * ggplot()
 ```
 ]]
@@ -432,7 +432,7 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
   ggplot() +  
 * aes(x = gdppercap_log10)
 ```
@@ -446,7 +446,7 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
   ggplot() +  
   aes(x = gdppercap_log10) +  
 * aes(y = lifeExp)
@@ -461,7 +461,7 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
   ggplot() +  
   aes(x = gdppercap_log10) +  
   aes(y = lifeExp) +  
@@ -478,7 +478,7 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
   ggplot() +  
   aes(x = gdppercap_log10) +  
   aes(y = lifeExp) +  
@@ -530,8 +530,8 @@ count: false
 
 ```r
 *cor.test(
-* x = gm07_sample_50$gdppercap_log10,
-* y = gm07_sample_50$lifeExp
+* x = gm_2007_sample$gdppercap_log10,
+* y = gm_2007_sample$lifeExp
 * )
 ```
 ]]
@@ -541,7 +541,7 @@ count: false
 
 	Pearson's product-moment correlation
 
-data:  gm07_sample_50$gdppercap_log10 and gm07_sample_50$lifeExp
+data:  gm_2007_sample$gdppercap_log10 and gm_2007_sample$lifeExp
 t = 14.437, df = 48, p-value &lt; 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
@@ -558,8 +558,8 @@ count: false
 
 ```r
 cor.test(  
-  x = gm07_sample_50$gdppercap_log10,  
-  y = gm07_sample_50$lifeExp  
+  x = gm_2007_sample$gdppercap_log10,  
+  y = gm_2007_sample$lifeExp  
   )  
 * # using a new pipe from the magrittr package
 *library(magrittr)
@@ -571,7 +571,7 @@ cor.test(
 
 	Pearson's product-moment correlation
 
-data:  gm07_sample_50$gdppercap_log10 and gm07_sample_50$lifeExp
+data:  gm_2007_sample$gdppercap_log10 and gm_2007_sample$lifeExp
 t = 14.437, df = 48, p-value &lt; 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
@@ -588,12 +588,12 @@ count: false
 
 ```r
 cor.test(  
-  x = gm07_sample_50$gdppercap_log10,  
-  y = gm07_sample_50$lifeExp  
+  x = gm_2007_sample$gdppercap_log10,  
+  y = gm_2007_sample$lifeExp  
   )  
   # using a new pipe from the magrittr package
 library(magrittr)  
-*gm07_sample_50   # state what data vars come from
+*gm_2007_sample   # state what data vars come from
 ```
 ]]
 .column[.content[
@@ -602,7 +602,7 @@ library(magrittr)
 
 	Pearson's product-moment correlation
 
-data:  gm07_sample_50$gdppercap_log10 and gm07_sample_50$lifeExp
+data:  gm_2007_sample$gdppercap_log10 and gm_2007_sample$lifeExp
 t = 14.437, df = 48, p-value &lt; 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
@@ -614,18 +614,18 @@ sample estimates:
 
 ```
 # A tibble: 50 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -636,12 +636,12 @@ count: false
 
 ```r
 cor.test(  
-  x = gm07_sample_50$gdppercap_log10,  
-  y = gm07_sample_50$lifeExp  
+  x = gm_2007_sample$gdppercap_log10,  
+  y = gm_2007_sample$lifeExp  
   )  
   # using a new pipe from the magrittr package
 library(magrittr)  
-gm07_sample_50 %$%  # state what data vars come from
+gm_2007_sample %$%  # state what data vars come from
 * cor.test(x = gdppercap_log10,
 *          y = lifeExp)
 ```
@@ -652,7 +652,7 @@ gm07_sample_50 %$%  # state what data vars come from
 
 	Pearson's product-moment correlation
 
-data:  gm07_sample_50$gdppercap_log10 and gm07_sample_50$lifeExp
+data:  gm_2007_sample$gdppercap_log10 and gm_2007_sample$lifeExp
 t = 14.437, df = 48, p-value &lt; 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
@@ -693,7 +693,7 @@ count: false
 .column[.content[
 
 ```r
-*ggplot(gm07_sample_50)
+*ggplot(gm_2007_sample)
 ```
 ]]
 .column[.content[
@@ -705,7 +705,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
 * aes(y = lifeExp)
 ```
 ]]
@@ -718,9 +718,9 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(y = lifeExp) +  
-* aes(x = europe)
+* aes(x = asia)
 ```
 ]]
 .column[.content[
@@ -732,10 +732,10 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(y = lifeExp) +  
-  aes(x = europe) +  
-* aes(fill = europe)
+  aes(x = asia) +  
+* aes(fill = asia)
 ```
 ]]
 .column[.content[
@@ -747,10 +747,10 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(y = lifeExp) +  
-  aes(x = europe) +  
-  aes(fill = europe) +  
+  aes(x = asia) +  
+  aes(fill = asia) +  
 * geom_boxplot()
 ```
 ]]
@@ -763,10 +763,10 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(y = lifeExp) +  
-  aes(x = europe) +  
-  aes(fill = europe) +  
+  aes(x = asia) +  
+  aes(fill = asia) +  
   geom_boxplot() +  
 * geom_jitter(height = 0,
 *             width = .2,
@@ -790,7 +790,7 @@ count: false
 .column[.content[
 
 ```r
-*ggplot(gm07_sample_50)
+*ggplot(gm_2007_sample)
 ```
 ]]
 .column[.content[
@@ -802,7 +802,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
 * aes(x = lifeExp)
 ```
 ]]
@@ -815,9 +815,9 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(x = lifeExp) +  
-* aes(fill = europe)
+* aes(fill = asia)
 ```
 ]]
 .column[.content[
@@ -829,10 +829,10 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(x = lifeExp) +  
-  aes(fill = europe) +  
-* aes(col = europe)
+  aes(fill = asia) +  
+* aes(col = asia)
 ```
 ]]
 .column[.content[
@@ -844,10 +844,10 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(x = lifeExp) +  
-  aes(fill = europe) +  
-  aes(col = europe) +  
+  aes(fill = asia) +  
+  aes(col = asia) +  
 * geom_histogram(alpha = .2)
 ```
 ]]
@@ -860,12 +860,12 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(x = lifeExp) +  
-  aes(fill = europe) +  
-  aes(col = europe) +  
+  aes(fill = asia) +  
+  aes(col = asia) +  
   geom_histogram(alpha = .2) +  
-* facet_wrap(~ europe, nrow = 2)
+* facet_wrap(~ asia, nrow = 2)
 ```
 ]]
 .column[.content[
@@ -877,12 +877,12 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(x = lifeExp) +  
-  aes(fill = europe) +  
-  aes(col = europe) +  
+  aes(fill = asia) +  
+  aes(col = asia) +  
   geom_histogram(alpha = .2) +  
-  facet_wrap(~ europe, nrow = 2) +  
+  facet_wrap(~ asia, nrow = 2) +  
 * geom_rug()
 ```
 ]]
@@ -917,25 +917,25 @@ count: false
 .column[.content[
 
 ```r
-*gm07_sample_50
+*gm_2007_sample
 ```
 ]]
 .column[.content[
 
 ```
 # A tibble: 50 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -945,8 +945,8 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
-* t.test(formula = lifeExp ~ europe,
+gm_2007_sample %&gt;%  
+* t.test(formula = lifeExp ~ asia,
 *        data = .)
 ```
 ]]
@@ -956,14 +956,14 @@ gm07_sample_50 %&gt;%
 
 	Welch Two Sample t-test
 
-data:  lifeExp by europe
-t = 5.7172, df = 46.16, p-value = 7.591e-07
+data:  lifeExp by asia
+t = 0.99834, df = 30.407, p-value = 0.326
 alternative hypothesis: true difference in means is not equal to 0
 95 percent confidence interval:
-  7.573559 15.803256
+ -3.46270 10.09291
 sample estimates:
-    mean in group Europe mean in group not Europe 
-                76.67775                 64.98934 
+    mean in group Asia mean in group not Asia 
+              70.11513               66.80003 
 ```
 ]]
 
@@ -982,7 +982,7 @@ count: false
 .column[.content[
 
 ```r
-*ggplot(gm07_sample_50)
+*ggplot(gm_2007_sample)
 ```
 ]]
 .column[.content[
@@ -994,7 +994,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
 * aes(y = lifeExp)
 ```
 ]]
@@ -1007,7 +1007,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(y = lifeExp) +  
 * aes(x = continent)
 ```
@@ -1021,7 +1021,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(y = lifeExp) +  
   aes(x = continent) +  
 * aes(fill = continent)
@@ -1036,7 +1036,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(y = lifeExp) +  
   aes(x = continent) +  
   aes(fill = continent) +  
@@ -1052,7 +1052,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(y = lifeExp) +  
   aes(x = continent) +  
   aes(fill = continent) +  
@@ -1071,7 +1071,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(y = lifeExp) +  
   aes(x = continent) +  
   aes(fill = continent) +  
@@ -1091,7 +1091,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
+ggplot(gm_2007_sample) +  
   aes(y = lifeExp) +  
   aes(x = continent) +  
   aes(fill = continent) +  
@@ -1126,25 +1126,25 @@ count: false
 
 ```r
 * # the model itself
-*gm07_sample_50
+*gm_2007_sample
 ```
 ]]
 .column[.content[
 
 ```
 # A tibble: 50 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -1155,7 +1155,7 @@ count: false
 
 ```r
   # the model itself
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
 *aov(formula = lifeExp ~ continent,
 *   data = .)
 ```
@@ -1182,7 +1182,7 @@ count: false
 
 ```r
   # the model itself
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
 aov(formula = lifeExp ~ continent,  
     data = .) -&gt;  
 *a 
@@ -1198,7 +1198,7 @@ count: false
 
 ```r
   # the model itself
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
 aov(formula = lifeExp ~ continent,  
     data = .) -&gt;  
 a  
@@ -1277,7 +1277,7 @@ class: inverse, center, middle
 
 ### contingency table
 
-Creating a contingency table with base R is pretty straightforward. We are using the dollar sign to point to a column in the dataframe gm07_sample_50.
+Creating a contingency table with base R is pretty straightforward. We are using the dollar sign to point to a column in the dataframe gm_2007_sample.
 
 
 ---
@@ -1300,25 +1300,25 @@ count: false
 
 ```r
 library(magrittr)  
-*gm07_sample_50
+*gm_2007_sample
 ```
 ]]
 .column[.content[
 
 ```
 # A tibble: 50 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -1329,18 +1329,18 @@ count: false
 
 ```r
 library(magrittr)  
-gm07_sample_50 %$%  
-*table(x = europe,
+gm_2007_sample %$%  
+*table(x = asia,
 *     y = high_income)
 ```
 ]]
 .column[.content[
 
 ```
-            y
-x            high income not high income
-  Europe               7               5
-  not Europe           6              32
+          y
+x          high income not high income
+  Asia               6               9
+  not Asia           7              28
 ```
 ]]
 ---
@@ -1350,8 +1350,8 @@ count: false
 
 ```r
 library(magrittr)  
-gm07_sample_50 %$%  
-table(x = europe,  
+gm_2007_sample %$%  
+table(x = asia,  
       y = high_income)  %&gt;%  
 * vcd::mosaic()
 ```
@@ -1377,25 +1377,25 @@ count: false
 .column[.content[
 
 ```r
-*gm07_sample_50
+*gm_2007_sample
 ```
 ]]
 .column[.content[
 
 ```
 # A tibble: 50 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -1405,27 +1405,27 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
-* group_by(europe, high_income)
+gm_2007_sample %&gt;%  
+* group_by(asia, high_income)
 ```
 ]]
 .column[.content[
 
 ```
 # A tibble: 50 x 9
-# Groups:   europe, high_income [4]
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+# Groups:   asia, high_income [4]
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -1435,8 +1435,8 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
-  group_by(europe, high_income) %&gt;%  
+gm_2007_sample %&gt;%  
+  group_by(asia, high_income) %&gt;%  
 * count()
 ```
 ]]
@@ -1444,13 +1444,13 @@ gm07_sample_50 %&gt;%
 
 ```
 # A tibble: 4 x 3
-# Groups:   europe, high_income [4]
-  europe     high_income         n
-  &lt;chr&gt;      &lt;chr&gt;           &lt;int&gt;
-1 Europe     high income         7
-2 Europe     not high income     5
-3 not Europe high income         6
-4 not Europe not high income    32
+# Groups:   asia, high_income [4]
+  asia     high_income         n
+  &lt;chr&gt;    &lt;chr&gt;           &lt;int&gt;
+1 Asia     high income         6
+2 Asia     not high income     9
+3 not Asia high income         7
+4 not Asia not high income    28
 ```
 ]]
 ---
@@ -1459,8 +1459,8 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
-  group_by(europe, high_income) %&gt;%  
+gm_2007_sample %&gt;%  
+  group_by(asia, high_income) %&gt;%  
   count() %&gt;%  
 * spread(high_income, n)
 ```
@@ -1469,11 +1469,11 @@ gm07_sample_50 %&gt;%
 
 ```
 # A tibble: 2 x 3
-# Groups:   europe [2]
-  europe     `high income` `not high income`
-  &lt;chr&gt;              &lt;int&gt;             &lt;int&gt;
-1 Europe                 7                 5
-2 not Europe             6                32
+# Groups:   asia [2]
+  asia     `high income` `not high income`
+  &lt;chr&gt;            &lt;int&gt;             &lt;int&gt;
+1 Asia                 6                 9
+2 not Asia             7                28
 ```
 ]]
 
@@ -1487,25 +1487,25 @@ count: false
 .column[.content[
 
 ```r
-*gm07_sample_50
+*gm_2007_sample
 ```
 ]]
 .column[.content[
 
 ```
 # A tibble: 50 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -1515,7 +1515,7 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
 *ggplot()
 ```
 ]]
@@ -1528,7 +1528,7 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
 ggplot() +  
 * aes(x = high_income)
 ```
@@ -1542,10 +1542,10 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
 ggplot() +  
   aes(x = high_income) +  
-* aes(y = europe)
+* aes(y = asia)
 ```
 ]]
 .column[.content[
@@ -1557,10 +1557,10 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
 ggplot() +  
   aes(x = high_income) +  
-  aes(y = europe) +  
+  aes(y = asia) +  
 * geom_jitter(width = .3, height = .3)
 ```
 ]]
@@ -1573,10 +1573,10 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
 ggplot() +  
   aes(x = high_income) +  
-  aes(y = europe) +  
+  aes(y = asia) +  
   geom_jitter(width = .3, height = .3) +  
 * geom_count(color = "blue",
 *            alpha = .3)
@@ -1591,10 +1591,10 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
 ggplot() +  
   aes(x = high_income) +  
-  aes(y = europe) +  
+  aes(y = asia) +  
   geom_jitter(width = .3, height = .3) +  
   geom_count(color = "blue",  
              alpha = .3) +  
@@ -1617,7 +1617,7 @@ count: false
 .column[.content[
 
 ```r
-*ggplot(gm07_sample_50)
+*ggplot(gm_2007_sample)
 ```
 ]]
 .column[.content[
@@ -1629,8 +1629,8 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
-* aes(x = europe)
+ggplot(gm_2007_sample) +  
+* aes(x = asia)
 ```
 ]]
 .column[.content[
@@ -1642,8 +1642,8 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
-  aes(x = europe) +  
+ggplot(gm_2007_sample) +  
+  aes(x = asia) +  
 * aes(fill = high_income)
 ```
 ]]
@@ -1656,8 +1656,8 @@ count: false
 .column[.content[
 
 ```r
-ggplot(gm07_sample_50) +  
-  aes(x = europe) +  
+ggplot(gm_2007_sample) +  
+  aes(x = asia) +  
   aes(fill = high_income) +  
 * geom_bar(position = "dodge")
 ```
@@ -1711,25 +1711,25 @@ count: false
 
 ```r
 library(magrittr)  
-*gm07_sample_50
+*gm_2007_sample
 ```
 ]]
 .column[.content[
 
 ```
 # A tibble: 50 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -1740,9 +1740,9 @@ count: false
 
 ```r
 library(magrittr)  
-gm07_sample_50 %$%  
+gm_2007_sample %$%  
 * chisq.test(x = high_income,
-*            y = europe)
+*            y = asia)
 ```
 ]]
 .column[.content[
@@ -1751,8 +1751,8 @@ gm07_sample_50 %$%
 
 	Pearson's Chi-squared test with Yates' continuity correction
 
-data:  high_income and europe
-X-squared = 6.5108, df = 1, p-value = 0.01072
+data:  high_income and asia
+X-squared = 1.2672, df = 1, p-value = 0.2603
 ```
 ]]
 ---
@@ -1762,10 +1762,10 @@ count: false
 
 ```r
 library(magrittr)  
-gm07_sample_50 %$%  
+gm_2007_sample %$%  
   chisq.test(x = high_income,  
-             y = europe) -&gt;  
-*chi_sq_income_europe
+             y = asia) -&gt;  
+*chi_sq_income_asia
 ```
 ]]
 .column[.content[
@@ -1778,20 +1778,20 @@ count: false
 
 ```r
 library(magrittr)  
-gm07_sample_50 %$%  
+gm_2007_sample %$%  
   chisq.test(x = high_income,  
-             y = europe) -&gt;  
-chi_sq_income_europe  
-*chi_sq_income_europe$observed
+             y = asia) -&gt;  
+chi_sq_income_asia  
+*chi_sq_income_asia$observed
 ```
 ]]
 .column[.content[
 
 ```
-                 europe
-high_income       Europe not Europe
-  high income          7          6
-  not high income      5         32
+                 asia
+high_income       Asia not Asia
+  high income        6        7
+  not high income    9       28
 ```
 ]]
 ---
@@ -1801,11 +1801,11 @@ count: false
 
 ```r
 library(magrittr)  
-gm07_sample_50 %$%  
+gm_2007_sample %$%  
   chisq.test(x = high_income,  
-             y = europe) -&gt;  
-chi_sq_income_europe  
-chi_sq_income_europe$observed %&gt;%  
+             y = asia) -&gt;  
+chi_sq_income_asia  
+chi_sq_income_asia$observed %&gt;%  
 * vcd::mosaic()
 ```
 ]]
@@ -1823,16 +1823,16 @@ count: false
 .column[.content[
 
 ```r
-*chi_sq_income_europe$expected   # expectation under null
+*chi_sq_income_asia$expected   # expectation under null
 ```
 ]]
 .column[.content[
 
 ```
-                 europe
-high_income       Europe not Europe
-  high income       3.12       9.88
-  not high income   8.88      28.12
+                 asia
+high_income       Asia not Asia
+  high income      3.9      9.1
+  not high income 11.1     25.9
 ```
 ]]
 ---
@@ -1841,12 +1841,264 @@ count: false
 .column[.content[
 
 ```r
-chi_sq_income_europe$expected %&gt;%  # expectation under null
+chi_sq_income_asia$expected %&gt;%  # expectation under null
 * vcd::mosaic()
 ```
 ]]
 .column[.content[
 &lt;img src="basic_bivariate_statistical_tests_files/figure-html/mosaic_two_by_two_auto_2_output-1.png" width="432" /&gt;
+]]
+
+
+
+
+
+---
+
+class: split-40
+count: false
+.column[.content[
+
+```r
+*library(magrittr)
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+library(magrittr)  
+*gm_2007_sample
+```
+]]
+.column[.content[
+
+```
+# A tibble: 50 x 9
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
+# … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+library(magrittr)  
+gm_2007_sample %$%  
+* chisq.test(x = high_income,
+*            y = asia,
+*            correct = F)
+```
+]]
+.column[.content[
+
+```
+
+	Pearson's Chi-squared test
+
+data:  high_income and asia
+X-squared = 2.183, df = 1, p-value = 0.1395
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+library(magrittr)  
+gm_2007_sample %$%  
+  chisq.test(x = high_income,  
+             y = asia,  
+             correct = F)  
+* #
+* #
+* #
+* #
+*chi_sq_income_asia$expected
+```
+]]
+.column[.content[
+
+```
+
+	Pearson's Chi-squared test
+
+data:  high_income and asia
+X-squared = 2.183, df = 1, p-value = 0.1395
+```
+
+```
+                 asia
+high_income       Asia not Asia
+  high income      3.9      9.1
+  not high income 11.1     25.9
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+library(magrittr)  
+gm_2007_sample %$%  
+  chisq.test(x = high_income,  
+             y = asia,  
+             correct = F)  
+  #
+  #
+  #
+  #
+chi_sq_income_asia$expected %&gt;%  
+* `-`(chi_sq_income_asia$observed)
+```
+]]
+.column[.content[
+
+```
+
+	Pearson's Chi-squared test
+
+data:  high_income and asia
+X-squared = 2.183, df = 1, p-value = 0.1395
+```
+
+```
+                 asia
+high_income       Asia not Asia
+  high income     -2.1      2.1
+  not high income  2.1     -2.1
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+library(magrittr)  
+gm_2007_sample %$%  
+  chisq.test(x = high_income,  
+             y = asia,  
+             correct = F)  
+  #
+  #
+  #
+  #
+chi_sq_income_asia$expected %&gt;%  
+  `-`(chi_sq_income_asia$observed) %&gt;%  
+* `^`(2)
+```
+]]
+.column[.content[
+
+```
+
+	Pearson's Chi-squared test
+
+data:  high_income and asia
+X-squared = 2.183, df = 1, p-value = 0.1395
+```
+
+```
+                 asia
+high_income       Asia not Asia
+  high income     4.41     4.41
+  not high income 4.41     4.41
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+library(magrittr)  
+gm_2007_sample %$%  
+  chisq.test(x = high_income,  
+             y = asia,  
+             correct = F)  
+  #
+  #
+  #
+  #
+chi_sq_income_asia$expected %&gt;%  
+  `-`(chi_sq_income_asia$observed) %&gt;%  
+  `^`(2) %&gt;%  
+* `/`(chi_sq_income_asia$expected)
+```
+]]
+.column[.content[
+
+```
+
+	Pearson's Chi-squared test
+
+data:  high_income and asia
+X-squared = 2.183, df = 1, p-value = 0.1395
+```
+
+```
+                 asia
+high_income            Asia  not Asia
+  high income     1.1307692 0.4846154
+  not high income 0.3972973 0.1702703
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+library(magrittr)  
+gm_2007_sample %$%  
+  chisq.test(x = high_income,  
+             y = asia,  
+             correct = F)  
+  #
+  #
+  #
+  #
+chi_sq_income_asia$expected %&gt;%  
+  `-`(chi_sq_income_asia$observed) %&gt;%  
+  `^`(2) %&gt;%  
+  `/`(chi_sq_income_asia$expected) %&gt;%  
+* sum()
+```
+]]
+.column[.content[
+
+```
+
+	Pearson's Chi-squared test
+
+data:  high_income and asia
+X-squared = 2.183, df = 1, p-value = 0.1395
+```
+
+```
+[1] 2.182952
+```
 ]]
 
 
@@ -1884,25 +2136,25 @@ count: false
 
 ```r
 library(magrittr)  
-*gm07_sample_50
+*gm_2007_sample
 ```
 ]]
 .column[.content[
 
 ```
 # A tibble: 50 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -1913,7 +2165,7 @@ count: false
 
 ```r
 library(magrittr)  
-gm07_sample_50 %$%  
+gm_2007_sample %$%  
 *chisq.test(x = continent,
 *          y = high_income)
 ```
@@ -1935,7 +2187,7 @@ count: false
 
 ```r
 library(magrittr)  
-gm07_sample_50 %$%  
+gm_2007_sample %$%  
 chisq.test(x = continent,  
            y = high_income) -&gt;  
 *my_chi_sqr
@@ -1951,7 +2203,7 @@ count: false
 
 ```r
 library(magrittr)  
-gm07_sample_50 %$%  
+gm_2007_sample %$%  
 chisq.test(x = continent,  
            y = high_income) -&gt;  
 my_chi_sqr  
@@ -1976,7 +2228,7 @@ count: false
 
 ```r
 library(magrittr)  
-gm07_sample_50 %$%  
+gm_2007_sample %$%  
 chisq.test(x = continent,  
            y = high_income) -&gt;  
 my_chi_sqr  
@@ -2078,7 +2330,7 @@ count: false
 .column[.content[
 
 ```r
-*ggplot(data = gm07_sample_50)
+*ggplot(data = gm_2007_sample)
 ```
 ]]
 .column[.content[
@@ -2090,7 +2342,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(data = gm07_sample_50) +  
+ggplot(data = gm_2007_sample) +  
 * aes(x = gdppercap_log10)
 ```
 ]]
@@ -2103,7 +2355,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(data = gm07_sample_50) +  
+ggplot(data = gm_2007_sample) +  
   aes(x = gdppercap_log10) +  
 * aes(y = lifeExp)
 ```
@@ -2117,7 +2369,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(data = gm07_sample_50) +  
+ggplot(data = gm_2007_sample) +  
   aes(x = gdppercap_log10) +  
   aes(y = lifeExp) +  
 * geom_point()
@@ -2132,7 +2384,7 @@ count: false
 .column[.content[
 
 ```r
-ggplot(data = gm07_sample_50) +  
+ggplot(data = gm_2007_sample) +  
   aes(x = gdppercap_log10) +  
   aes(y = lifeExp) +  
   geom_point() +  
@@ -2189,25 +2441,25 @@ count: false
 .column[.content[
 
 ```r
-*gm07_sample_50
+*gm_2007_sample
 ```
 ]]
 .column[.content[
 
 ```
 # A tibble: 50 x 9
-   country continent  year lifeExp    pop gdpPercap high_income europe
-   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; 
- 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not E…
- 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not E…
- 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… not E…
- 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not E…
- 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not E…
- 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… not E…
- 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not E…
- 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not E…
- 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income Europe
-10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… not E…
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
 # … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
 ```
 ]]
@@ -2217,7 +2469,7 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
 * lm(formula = lifeExp ~ gdppercap_log10,
 *    data = .)
 ```
@@ -2240,7 +2492,7 @@ count: false
 .column[.content[
 
 ```r
-gm07_sample_50 %&gt;%  
+gm_2007_sample %&gt;%  
   lm(formula = lifeExp ~ gdppercap_log10,  
      data = .) %&gt;%  
 * summary()
