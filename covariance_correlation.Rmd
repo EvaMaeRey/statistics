@@ -1,0 +1,322 @@
+---
+title: "stats 101 flipbook"
+subtitle: "Visualizaing covariance, variance, standard deviation, correlation"
+author: "<br><br>Gina Reynolds, Feb 2020"
+date: "<br>"
+output:
+  xaringan::moon_reader:
+    chakra: libs/remark-latest.min.js
+    lib_dir: libs
+    css: [default, hygge, ninjutsu]
+    nature:
+      ratio: "16:9"
+      highlightLines: true
+---
+
+
+## Covariance 
+
+Covariance is a measure of the joint variability of two random variables. 
+
+Let's have a look at the *population* covariance equation over all:
+
+--
+
+$$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n} $$
+
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = F, 
+                      warning = F,  comment = "", 
+                      cache = F, fig.height = 7, 
+                      fig.width = 8)
+
+library(flipbookr)
+library(tidyverse)
+```
+
+
+---
+
+
+
+
+
+
+
+
+---
+
+```{r, include = F}
+set.seed(2020)
+library(tidyverse)
+create_x_y <- function(num = 20, 
+                       spread_x = 20,
+                       relationship = .1, 
+                       noise = 3
+                       ){
+  
+  tibble(x = rnorm(num, sd = spread_x) + 50 ) %>% 
+  mutate(y = relationship * x + rnorm(num, sd = noise)) %>% 
+  mutate(mean_x = mean(x)) %>% 
+  mutate(mean_y = mean(y)) %>% 
+  mutate(area = (x - mean_x)*(y - mean_y)) %>% 
+  mutate(mean_area = mean(area)) %>% 
+  mutate(sd_x = sd(x)) %>% 
+  mutate(sd_y = sd(y)) %>% 
+  mutate(some_x = sd_x) %>% 
+  mutate(some_y = mean_area/some_x) 
+  
+}
+
+
+data_calc_cor <- function(data){
+  
+  with(cor(x, y), data = data)
+  
+}
+
+data_create_scatterplot <- function(data, background_color = "palegreen4"){
+
+data %>% 
+    ggplot() + 
+  theme(legend.position = c(.8, .2)) +
+  aes(x = x) + 
+  aes(y = y) +
+  theme(rect = element_rect(fill = background_color)) + 
+  theme(text = element_text(color = "white", face = "italic", size = 15)) +
+  theme(panel.background = element_rect(fill = background_color)) +
+  theme(legend.key = element_rect(fill = background_color)) +
+  theme(legend.title = element_blank()) +
+  theme(axis.text = element_text(color = "white")) +
+  theme(axis.ticks = element_line(color = "white")) +
+  labs(title = "Covariance") +
+  theme(panel.grid = element_blank()) +
+  geom_point(size = 3, pch = 21, col = "white", fill = "white", lwd = 3, alpha = .6) + 
+  labs(caption = "Statistical Visualization: Gina Reynolds @EvaMaeRey ") 
+
+  
+}
+
+
+
+
+plot_draw_mean_x <- function(plot){
+  
+  plot + 
+  # 1. mean of x
+  geom_rug(aes(y = NULL), col = "white") +
+  geom_vline(aes(xintercept = mean(x)), 
+             lty = "dashed", col = "white")  
+  
+  
+}
+
+
+plot_draw_mean_y <- function(plot){
+  
+  plot + 
+  # 2. mean of y
+  geom_rug(col = "white", aes(x = NULL)) +
+  geom_hline(aes(yintercept = mean(y)), 
+             lty = "dashed", col = "white")
+  
+}
+
+
+plot_draw_differences_x <- function(plot){
+  
+  plot + 
+  # difference xi mean x
+  scale_color_manual(breaks = c(FALSE, TRUE), 
+                     label = c("Negative", "Positive"), 
+                     values = c("orchid4", "lightgoldenrod3") )  + 
+  geom_segment(aes(col = x > mean(x), 
+                   xend = mean(x), yend = y), 
+                   arrow = arrow(ends = "first", 
+                                 length = unit(0.1, "inches"))) +
+  labs(col = "")
+  
+    
+}
+
+
+plot_draw_differences_y <- function(plot){
+  
+  plot +
+  # difference yi mean y
+  geom_segment(aes(col = y > mean(y), 
+                   xend = x, yend = mean(y)), 
+                   arrow = arrow(ends = "first", 
+                                 length = unit(0.1, "inches"))) 
+    
+}
+
+
+plot_multiply_differences <- function(plot){
+  
+  plot + 
+  # multiply differences
+  aes(fill = area > 0) +
+  geom_rect(aes(xmin = mean(x), ymin = mean(y),  
+            ymax = y, xmax = x), 
+            alpha = .2  ) +
+  labs(fill = "") +
+  scale_fill_manual(breaks = c(FALSE, TRUE), 
+                    label = c("Negative", "Positive"),  
+                    values = c("orchid4", "lightgoldenrod3")) 
+  
+}
+    
+plot_take_average_rectangle <- function(plot, title = "Picture of covariance"){
+  
+  plot +      
+  # Average areas 
+  geom_rect(aes(
+           xmin = mean(x),
+           ymin = mean(y),
+           ymax = mean(some_y) + mean(y),
+           xmax = mean(some_x) + mean(x)
+           ),
+            color = "orange",
+          linetype = "dotted",
+           fill = "orange",
+            lwd = 1.5,
+            alpha = .2) +  #BREAK
+  labs(title = title)
+  
+}
+
+plot_normalize_x <- function(plot, data){
+  
+  plot + 
+  # Pearsons's Correlation 
+  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd(data$x))) +
+  geom_vline(xintercept = mean(data$x) + sd(data$x), lty = "dashed", color = "pink") +
+  geom_vline(xintercept = mean(data$x) - sd(data$x), lty = "dashed", color = "pink") 
+  
+}
+
+plot_normalize_y <- function(plot, data, title = "Picture of covariance and Pearson correlation coefficient"){
+  
+  plot + 
+  scale_y_continuous(sec.axis = sec_axis(~ (. -mean(data$y))/ sd(data$y))) +
+  geom_hline(yintercept = mean(data$y) + sd(data$y), lty = "dashed", color = "pink") +
+  geom_hline(yintercept = mean(data$y) - sd(data$y), lty = "dashed", color = "pink") + 
+  labs(title = title) 
+
+}
+
+
+```
+
+`r chunk_reveal("cov_steps", display_type = "output")`
+
+
+---
+
+
+
+```{r cov_steps, eval = F, echo=F}
+set.seed(199402)
+create_x_y(relationship = 0) ->
+  data
+data %>% 
+  data_create_scatterplot() %>% 
+  plot_draw_mean_x() %>% 
+  plot_draw_mean_y() %>% 
+  plot_draw_differences_x() %>% 
+  plot_draw_differences_y() %>% 
+  plot_multiply_differences() %>% 
+  plot_take_average_rectangle() 
+```
+
+---
+# 
+
+
+```{r}
+plot_change_ylab_to_x <- function(plot){
+  
+  plot +
+    labs(y = "x")
+  
+}
+
+plot_correct_aspect_ratio <- function(plot){
+  
+  plot + 
+    coord_equal()
+  
+}
+
+
+# plot_add_standard_deviation <- function(plot, title){
+#   
+#   plot + 
+#     
+#   
+#   
+# }
+
+```
+
+
+
+---
+
+
+`r flipbookr::chunk_reveal("variance_steps")`
+
+```{r variance_steps, eval = F, echo=F}
+set.seed(199402)
+create_x_y(relationship = 1,
+           noise = 0) ->
+  data
+data %>% 
+  data_create_scatterplot() %>% 
+  plot_change_ylab_to_x() %>% 
+  plot_correct_aspect_ratio() %>% 
+  plot_draw_mean_x() %>% 
+  plot_draw_mean_y() %>% 
+  plot_draw_differences_x() %>% 
+  plot_draw_differences_y() %>% 
+  plot_multiply_differences() %>% 
+  plot_take_average_rectangle() 
+```
+
+
+---
+
+`r chunk_reveal("cor_steps", break_type = 3, display_type = "output")`
+
+---
+
+
+`r chunk_reveal("cor_steps", break_type = 3, display_type = "output")`
+
+
+```{r cor_steps, eval = F, echo=F}
+create_x_y(relationship = 0) ->
+  data
+data %>% 
+  data_create_scatterplot() %>% 
+  plot_draw_mean_x() %>% 
+  plot_draw_mean_y() %>% 
+  plot_draw_differences_x() %>% 
+  plot_draw_differences_y() %>% 
+  plot_multiply_differences() %>% 
+  plot_take_average_rectangle() %>% 
+  plot_normalize_x(data = data) %>% 
+  plot_normalize_y(data = data)
+```
+
+
+
+
+
+```{css, eval = TRUE, echo = F}
+.remark-code{line-height: 1.5; font-size: 70%}
+```

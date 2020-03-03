@@ -1,0 +1,256 @@
+---
+title: "Minimal Galton Board"
+author: "Gina Reynolds"
+date: "6/29/2019"
+output:
+  xaringan::moon_reader:
+    chakra: libs/remark-latest.min.js
+    lib_dir: libs
+    css: ["kunoichi", "ninjutsu"]
+    nature:
+      ratio: 16:10
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r setup, include=F}
+# knitr::opts_chunk$set(fig.width = 6, message = F, warning = F, 
+#                       comment = "", cache = F)
+
+```
+
+
+
+
+```{r}
+library(flipbookr)
+
+library(tidyverse)
+# options(gganimate.nframes = 400, scipen = 10)
+```
+
+---
+
+# Define paramters
+
+```{r}
+n <- 70  # number of ball bearnings 
+stop_level <- 10 # number of perturbation levels 
+                # make it an even number
+levels <- 44 # greater than stop_levels
+```
+
+
+---
+
+# Write some code to describe the random-walk of ball bearings
+
+---
+
+
+`r chunk_reveal("ball_bearings")`
+
+
+```{r ball_bearings, include = F}
+set.seed(2019)
+crossing(unit_id = 1:n, 
+         level = 1:levels - 1) %>% 
+  mutate(perturbation =     # moves
+           sample(c(-1,1),  # left or right
+                  n(), # each ball at each level 
+                  replace = T)) %>%
+  group_by(unit_id) %>% # operations on each ball
+  mutate(perturbation = 
+           ifelse(row_number() == 1, 
+                  yes = 0, # start centered
+                  no = perturbation)) %>% 
+  # each ball should release one at a time
+  mutate(time = # displacing them in time w/ 
+           row_number() + 
+           # using unit id
+           unit_id * 3 - 1) %>% 
+  filter(time > 0) %>% 
+  mutate(x_position = # we get the x position
+           # by summing the cumulative distributions
+           cumsum(perturbation)) %>% 
+  # if ball is beyond the perturbation levels
+  mutate(x_position = # we overwrite the x position
+           ifelse(level <= stop_level,
+                  yes = x_position, 
+                  no = NA)) %>% 
+  # then fill in with the last x position
+  fill(x_position) %>% 
+  ungroup() ->
+ball_bearings
+```
+
+
+
+
+
+---
+
+# Now some code to count the number of ball bearings seen at the final level.
+
+We want to keep track of how many ball bearings end up in each position.
+
+---
+
+`r chunk_reveal("collect_ball_bearings")`
+
+
+```{r collect_ball_bearings, include = F}
+ball_bearings %>% 
+  filter(level == (levels - 1) ) %>% 
+  rename(final_time = time) %>% 
+  crossing(time = as.numeric(1:max(ball_bearings$time))) %>% 
+  group_by(time, x_position) %>% 
+  summarise(x_position_count = sum(time > final_time)) ->
+ball_bearings_collect
+```
+
+
+
+---
+
+`r chunk_reveal("architecture")`
+
+```{r architecture, include = F}
+# Lets make some pegs
+crossing(unit_id = 
+           -stop_level:stop_level, 
+         level = 1:stop_level) %>% 
+  mutate(transparent = 
+           (unit_id + level) %% 2) ->
+pegs
+# Lets make walls
+crossing(unit_id = 
+           -(stop_level + 1):(stop_level + 1), 
+         level = stop_level:levels) %>% 
+  mutate(transparent = 
+           unit_id %% 2) ->
+walls
+```
+
+
+
+
+---
+
+```{r}
+ball_bearings_size <- 2
+peg_size <- 3
+```
+
+
+---
+
+`r chunk_reveal("static_build")`
+
+```{r static_build, include = F}
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls, 
+             aes(x = unit_id, alpha = transparent), 
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs, 
+             aes(x = unit_id, alpha = transparent), 
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5, 
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5, 
+               y = 0, yend = 0) +
+  geom_abline(intercept = 1.5, 
+              slope = -1) +
+  geom_abline(intercept = 1.5, 
+              slope = 1) +
+  annotate(geom = "tile", 
+           height = 2, width = 2, 
+           x = 0 , y = -1.5) +
+  annotate(geom = "tile", 
+           height = 2, width = 1.75, 
+           x = 0 , y = -1.5, fill = "white") +
+  geom_rect(data = ball_bearings_collect,
+            mapping = aes(xmin = x_position - .35, 
+                          xmax = x_position + .35,
+                          ymax = max(ball_bearings$level) + 1 - x_position_count*1.5,
+                          ymin = max(ball_bearings$level) + 1,
+                          group = x_position, 
+                          y = NULL, x = NULL),
+            fill = "darkgrey") +
+  geom_point(size = ball_bearings_size, 
+             col = "steelblue") +
+  coord_equal() +
+  geom_hline(yintercept = stop_level, 
+             linetype = "dotted") +
+  scale_alpha_continuous(range = c(0, 1), guide = F) +
+  theme_void() ->
+g
+```
+
+
+
+---
+
+
+`r chunk_reveal("animation", break_type = "user")`
+
+```{r animation, eval = F, echo = F}
+g +  
+  gganimate::transition_time(time = time) + 
+  gganimate::shadow_wake(wake_length = .05) + 
+  gganimate::ease_aes("bounce-in-out") #BREAK
+```
+
+
+---
+
+# Binomial distribution
+
+Now the fast way to simulating...  
+
+---
+
+`r chunk_reveal("distribution")`
+
+```{r distribution, eval = F, echo = F}
+set.seed(1999)
+n_balls <- 1000
+n_perturb <- 200
+crossing(ball_id = 1:n_balls, 
+         1:n_perturb) %>% 
+  mutate(perturbation = 
+           sample(c(-1,1), 
+                  n(), 
+                  replace = T)) %>% 
+  group_by(ball_id) %>% 
+  summarise(x_position = 
+              sum(perturbation)) %>% 
+  ggplot() +
+  aes(x = x_position) +
+  geom_histogram(binwidth = 2, 
+                 col = "lightgrey",
+                 fill = "steelblue",
+                 alpha = .7) +
+  theme_minimal()
+```
+
+
+
+
+
+
+
+
+
+
+
+```{css, eval = TRUE, echo = F}
+.remark-code{line-height: 1.5; font-size: 50%}
+```

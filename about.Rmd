@@ -1,0 +1,39 @@
+---
+title: "Statistics in R"
+author: "Evangeline Reynolds"
+date: "3/2/2020"
+output: html_document
+---
+
+You might need some guidance for actually getting the statistical work done.
+
+## Building intuition 
+
+- [Galton Board: The binomial distribution](galton_board.html){target="_blank"}
+- [Covariance, Variance, Standard Deviation, Correlation](covariance_correlation.html){target="_blank"}
+- [Cool with Statistical Independence](statistical_independence.html){target="_blank"}
+
+## Statistical tests
+
+- [Basics of Bivariate Statistical Tests](basic_bivariate_statistical_test.html){target="_blank"}
+
+  - correlation test
+  - t.test
+  - anova
+  - chi-squared
+  
+## Modeling
+
+- [Ordinary Least Squares Modeling](ols.html){target="_blank"}
+- [Difference in Difference](difference_in_difference.html){target="_blank"}
+
+
+# Resampling methods
+
+- [Bootstrapped confidence intervals](bootstrap.html){target="_blank"}
+
+# External resources
+
+- [Data Manipulation](https://evamaerey.github.io/tidyverse_in_action/about){target="_blank"}
+- [Data Visualization](https://evamaerey.github.io/ggplot2_grammar_guide/about){target="_blank"}
+

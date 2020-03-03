@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Introduction to the Bootstrap</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Gina Reynolds, June 2019" />
+    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to the Bootstrap
+### Gina Reynolds, June 2019
+
+---
+
+
+
+
+
+
+
+---
+
+# Introduction
+
+This is a minimal example to demonstrate how to create a flipbook with data from #TidyTuesday.  It walks through data wrangling and plots pipelines made with the Tidyverse.  The functions that make this possible are the work of Emi Tanaka, Garrick Aden-Buie and myself, and are built for Xaringan, an Rmarkdown file type for creating presentation slides; the functions make use of the function `knitr:::knit_code$get()`.
+
+The code to create the flipbook is an .Rmd that you can download [**here**](https://raw.githubusercontent.com/EvaMaeRey/little_flipbooks_library/master/tidytuesday_minimal_example/tidytuesday_minimal_example.Rmd).
+
+---
+
+Interested in more flipbooks? Check out 
+
+- [the ggplot flipbook](https://evamaerey.github.io/ggplot_flipbook/ggplot_flipbook_xaringan.html)
+- [The Tidyverse in Action](https://evamaerey.github.io/tidyverse_in_action/tidyverse_in_action.html)
+
+
+
+
+For more about Xaringan:
+
+- [Xaringan presentation slides](https://slides.yihui.name/xaringan/)
+
+The sequential workflow of the Tidyverse makes incremental display of pipelines and ggplot statements ideal:  
+
+- [www.tidyverse.org](https://www.tidyverse.org/)
+
+
+---
+
+---
+
+# Set up
+
+Okay. Let's load the the `reveal for xaringan` functions for "flipbooking" and the `tidyverse`.
+
+
+```r
+library(flipbookr)
+```
+
+And load the tidyverse.
+
+
+```r
+library(tidyverse)
+```
+
+---
+
+&lt;img src="bootstrap_files/figure-html/sample-1.png" width="100%" /&gt;
+
+class: split-40
+count: false
+.column[.content[
+
+```r
+*set.seed(2019)
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(2019)  
+*tibble(x = rnorm(30))
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 30 x 1
+          x
+      &lt;dbl&gt;
+   1  0.739
+   2 -0.515
+   3 -1.64 
+   4  0.916
+   5 -1.27 
+   6  0.738
+   7 -0.783
+   8  0.509
+   9 -1.49 
+  10 -0.319
+  # … with 20 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(2019)  
+tibble(x = rnorm(30)) %&gt;%  
+* mutate(y = x * .4 + rnorm(30))
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 30 x 2
+          x       y
+      &lt;dbl&gt;   &lt;dbl&gt;
+   1  0.739 -0.639 
+   2 -0.515  0.424 
+   3 -1.64   0.105 
+   4  0.916 -0.145 
+   5 -1.27   0.495 
+   6  0.738 -0.0881
+   7 -0.783 -0.790 
+   8  0.509  0.458 
+   9 -1.49  -1.76  
+  10 -0.319 -0.566 
+  # … with 20 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(2019)  
+tibble(x = rnorm(30)) %&gt;%  
+  mutate(y = x * .4 + rnorm(30)) %&gt;%  
+* mutate(id = 1:n())
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 30 x 3
+          x       y    id
+      &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;
+   1  0.739 -0.639      1
+   2 -0.515  0.424      2
+   3 -1.64   0.105      3
+   4  0.916 -0.145      4
+   5 -1.27   0.495      5
+   6  0.738 -0.0881     6
+   7 -0.783 -0.790      7
+   8  0.509  0.458      8
+   9 -1.49  -1.76       9
+  10 -0.319 -0.566     10
+  # … with 20 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(2019)  
+tibble(x = rnorm(30)) %&gt;%  
+  mutate(y = x * .4 + rnorm(30)) %&gt;%  
+  mutate(id = 1:n()) -&gt;  
+*my_data
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(2019)  
+tibble(x = rnorm(30)) %&gt;%  
+  mutate(y = x * .4 + rnorm(30)) %&gt;%  
+  mutate(id = 1:n()) -&gt;  
+my_data  
+*ggplot(data = my_data)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/sample_auto_6_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(2019)  
+tibble(x = rnorm(30)) %&gt;%  
+  mutate(y = x * .4 + rnorm(30)) %&gt;%  
+  mutate(id = 1:n()) -&gt;  
+my_data  
+ggplot(data = my_data) +  
+* aes(x = x)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/sample_auto_7_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(2019)  
+tibble(x = rnorm(30)) %&gt;%  
+  mutate(y = x * .4 + rnorm(30)) %&gt;%  
+  mutate(id = 1:n()) -&gt;  
+my_data  
+ggplot(data = my_data) +  
+  aes(x = x) +  
+* aes(y = y)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/sample_auto_8_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(2019)  
+tibble(x = rnorm(30)) %&gt;%  
+  mutate(y = x * .4 + rnorm(30)) %&gt;%  
+  mutate(id = 1:n()) -&gt;  
+my_data  
+ggplot(data = my_data) +  
+  aes(x = x) +  
+  aes(y = y) +  
+* geom_point()
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/sample_auto_9_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(2019)  
+tibble(x = rnorm(30)) %&gt;%  
+  mutate(y = x * .4 + rnorm(30)) %&gt;%  
+  mutate(id = 1:n()) -&gt;  
+my_data  
+ggplot(data = my_data) +  
+  aes(x = x) +  
+  aes(y = y) +  
+  geom_point() +  
+* geom_smooth(method = lm, se = F)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/sample_auto_10_output-1.png" width="100%" /&gt;
+]]
+
+---
+
+class: split-40
+count: false
+.column[.content[
+
+```r
+*my_data
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 30 x 3
+          x       y    id
+      &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;
+   1  0.739 -0.639      1
+   2 -0.515  0.424      2
+   3 -1.64   0.105      3
+   4  0.916 -0.145      4
+   5 -1.27   0.495      5
+   6  0.738 -0.0881     6
+   7 -0.783 -0.790      7
+   8  0.509  0.458      8
+   9 -1.49  -1.76       9
+  10 -0.319 -0.566     10
+  # … with 20 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+my_data %&gt;%  
+* crossing(boot_sample_id = 1:100)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 3,000 x 4
+         x     y    id boot_sample_id
+     &lt;dbl&gt; &lt;dbl&gt; &lt;int&gt;          &lt;int&gt;
+   1 -2.26 -1.23    20              1
+   2 -2.26 -1.23    20              2
+   3 -2.26 -1.23    20              3
+   4 -2.26 -1.23    20              4
+   5 -2.26 -1.23    20              5
+   6 -2.26 -1.23    20              6
+   7 -2.26 -1.23    20              7
+   8 -2.26 -1.23    20              8
+   9 -2.26 -1.23    20              9
+  10 -2.26 -1.23    20             10
+  # … with 2,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+my_data %&gt;%  
+  crossing(boot_sample_id = 1:100) %&gt;%  
+* arrange(boot_sample_id)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 3,000 x 4
+          x      y    id boot_sample_id
+      &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;          &lt;int&gt;
+   1 -2.26  -1.23     20              1
+   2 -1.80  -1.51     27              1
+   3 -1.77  -0.568    18              1
+   4 -1.64   0.105     3              1
+   5 -1.62   0.173    30              1
+   6 -1.49  -1.76      9              1
+   7 -1.27   0.495     5              1
+   8 -1.12  -0.355    13              1
+   9 -0.808 -1.18     25              1
+  10 -0.783 -0.790     7              1
+  # … with 2,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+my_data %&gt;%  
+  crossing(boot_sample_id = 1:100) %&gt;%  
+  arrange(boot_sample_id) %&gt;%  
+* group_by(boot_sample_id)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 3,000 x 4
+  # Groups:   boot_sample_id [100]
+          x      y    id boot_sample_id
+      &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;          &lt;int&gt;
+   1 -2.26  -1.23     20              1
+   2 -1.80  -1.51     27              1
+   3 -1.77  -0.568    18              1
+   4 -1.64   0.105     3              1
+   5 -1.62   0.173    30              1
+   6 -1.49  -1.76      9              1
+   7 -1.27   0.495     5              1
+   8 -1.12  -0.355    13              1
+   9 -0.808 -1.18     25              1
+  10 -0.783 -0.790     7              1
+  # … with 2,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+my_data %&gt;%  
+  crossing(boot_sample_id = 1:100) %&gt;%  
+  arrange(boot_sample_id) %&gt;%  
+  group_by(boot_sample_id) %&gt;%  
+* sample_frac(size = 1,
+*             replace = TRUE)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 3,000 x 4
+  # Groups:   boot_sample_id [100]
+          x        y    id boot_sample_id
+      &lt;dbl&gt;    &lt;dbl&gt; &lt;int&gt;          &lt;int&gt;
+   1  0.738 -0.0881      6              1
+   2 -0.515  0.424       2              1
+   3  0.878  1.21       17              1
+   4  0.371  0.354      16              1
+   5 -0.512 -0.733      26              1
+   6 -0.783 -0.790       7              1
+   7  2.64   1.08       29              1
+   8  0.867  0.00896    23              1
+   9  0.316  0.767      15              1
+  10  0.738 -0.0881      6              1
+  # … with 2,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+my_data %&gt;%  
+  crossing(boot_sample_id = 1:100) %&gt;%  
+  arrange(boot_sample_id) %&gt;%  
+  group_by(boot_sample_id) %&gt;%  
+  sample_frac(size = 1,  
+              replace = TRUE) %&gt;%  
+* arrange(boot_sample_id, id)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 3,000 x 4
+  # Groups:   boot_sample_id [100]
+          x       y    id boot_sample_id
+      &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;          &lt;int&gt;
+   1 -1.64   0.105      3              1
+   2  0.738 -0.0881     6              1
+   3  0.738 -0.0881     6              1
+   4  0.738 -0.0881     6              1
+   5 -0.783 -0.790      7              1
+   6 -0.783 -0.790      7              1
+   7 -0.783 -0.790      7              1
+   8 -1.49  -1.76       9              1
+   9 -1.49  -1.76       9              1
+  10 -0.319 -0.566     10              1
+  # … with 2,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+my_data %&gt;%  
+  crossing(boot_sample_id = 1:100) %&gt;%  
+  arrange(boot_sample_id) %&gt;%  
+  group_by(boot_sample_id) %&gt;%  
+  sample_frac(size = 1,  
+              replace = TRUE) %&gt;%  
+  arrange(boot_sample_id, id) %&gt;%  
+* group_by(id, boot_sample_id)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 3,000 x 4
+  # Groups:   id, boot_sample_id [1,916]
+          x       y    id boot_sample_id
+      &lt;dbl&gt;   &lt;dbl&gt; &lt;int&gt;          &lt;int&gt;
+   1  0.739 -0.639      1              1
+   2 -0.515  0.424      2              1
+   3 -0.515  0.424      2              1
+   4 -1.64   0.105      3              1
+   5 -1.64   0.105      3              1
+   6  0.916 -0.145      4              1
+   7  0.738 -0.0881     6              1
+   8 -0.783 -0.790      7              1
+   9  0.509  0.458      8              1
+  10  0.509  0.458      8              1
+  # … with 2,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+my_data %&gt;%  
+  crossing(boot_sample_id = 1:100) %&gt;%  
+  arrange(boot_sample_id) %&gt;%  
+  group_by(boot_sample_id) %&gt;%  
+  sample_frac(size = 1,  
+              replace = TRUE) %&gt;%  
+  arrange(boot_sample_id, id) %&gt;%  
+  group_by(id, boot_sample_id) %&gt;%  
+* mutate(times_sampled = n())
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 3,000 x 5
+  # Groups:   id, boot_sample_id [1,889]
+          x      y    id boot_sample_id times_sampled
+      &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;          &lt;int&gt;         &lt;int&gt;
+   1 -1.64   0.105     3              1             1
+   2  0.916 -0.145     4              1             3
+   3  0.916 -0.145     4              1             3
+   4  0.916 -0.145     4              1             3
+   5 -1.27   0.495     5              1             2
+   6 -1.27   0.495     5              1             2
+   7  0.509  0.458     8              1             3
+   8  0.509  0.458     8              1             3
+   9  0.509  0.458     8              1             3
+  10 -1.12  -0.355    13              1             1
+  # … with 2,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+my_data %&gt;%  
+  crossing(boot_sample_id = 1:100) %&gt;%  
+  arrange(boot_sample_id) %&gt;%  
+  group_by(boot_sample_id) %&gt;%  
+  sample_frac(size = 1,  
+              replace = TRUE) %&gt;%  
+  arrange(boot_sample_id, id) %&gt;%  
+  group_by(id, boot_sample_id) %&gt;%  
+  mutate(times_sampled = n()) -&gt;  
+*boot_samples
+```
+]]
+.column[.content[
+
+]]
+
+
+
+
+
+
+---
+
+# Ensemble plot
+
+
+
+&lt;img src="bootstrap_files/figure-html/plotboot-1.png" width="100%" /&gt;
+
+---
+
+class: split-40
+count: false
+.column[.content[
+
+```r
+*boot_samples
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 3,000 x 5
+  # Groups:   id, boot_sample_id [1,899]
+          x      y    id boot_sample_id times_sampled
+      &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;          &lt;int&gt;         &lt;int&gt;
+   1  0.739 -0.639     1              1             1
+   2  0.916 -0.145     4              1             2
+   3  0.916 -0.145     4              1             2
+   4 -1.27   0.495     5              1             3
+   5 -1.27   0.495     5              1             3
+   6 -1.27   0.495     5              1             3
+   7  0.509  0.458     8              1             2
+   8  0.509  0.458     8              1             2
+   9 -1.49  -1.76      9              1             3
+  10 -1.49  -1.76      9              1             3
+  # … with 2,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+* filter(boot_sample_id &lt;= 12)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 360 x 5
+  # Groups:   id, boot_sample_id [226]
+          x      y    id boot_sample_id times_sampled
+      &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;          &lt;int&gt;         &lt;int&gt;
+   1  0.739 -0.639     1              1             1
+   2  0.916 -0.145     4              1             2
+   3  0.916 -0.145     4              1             2
+   4 -1.27   0.495     5              1             3
+   5 -1.27   0.495     5              1             3
+   6 -1.27   0.495     5              1             3
+   7  0.509  0.458     8              1             2
+   8  0.509  0.458     8              1             2
+   9 -1.49  -1.76      9              1             3
+  10 -1.49  -1.76      9              1             3
+  # … with 350 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+* ggplot()
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_3_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+  ggplot() +  
+* aes(x = x)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_4_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+* aes(y = y)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_5_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+  aes(y = y) +  
+* geom_point(size = 3, col = "magenta")
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_6_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+  aes(y = y) +  
+  geom_point(size = 3, col = "magenta") +  
+* facet_wrap(~ paste("boot sample", boot_sample_id))
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_7_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+  aes(y = y) +  
+  geom_point(size = 3, col = "magenta") +  
+  facet_wrap(~ paste("boot sample", boot_sample_id)) +  
+* aes(label = paste0(times_sampled, "X"))
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_8_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+  aes(y = y) +  
+  geom_point(size = 3, col = "magenta") +  
+  facet_wrap(~ paste("boot sample", boot_sample_id)) +  
+  aes(label = paste0(times_sampled, "X")) +  
+* geom_text(size = 2, col = "grey", aes(alpha = NULL))
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_9_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+  aes(y = y) +  
+  geom_point(size = 3, col = "magenta") +  
+  facet_wrap(~ paste("boot sample", boot_sample_id)) +  
+  aes(label = paste0(times_sampled, "X")) +  
+  geom_text(size = 2, col = "grey", aes(alpha = NULL)) +  
+* aes(group = boot_sample_id)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_10_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+  aes(y = y) +  
+  geom_point(size = 3, col = "magenta") +  
+  facet_wrap(~ paste("boot sample", boot_sample_id)) +  
+  aes(label = paste0(times_sampled, "X")) +  
+  geom_text(size = 2, col = "grey", aes(alpha = NULL)) +  
+  aes(group = boot_sample_id) +  
+* aes(alpha = times_sampled)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_11_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+  aes(y = y) +  
+  geom_point(size = 3, col = "magenta") +  
+  facet_wrap(~ paste("boot sample", boot_sample_id)) +  
+  aes(label = paste0(times_sampled, "X")) +  
+  geom_text(size = 2, col = "grey", aes(alpha = NULL)) +  
+  aes(group = boot_sample_id) +  
+  aes(alpha = times_sampled) +  
+* geom_smooth(method = lm, se = F)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_12_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+  aes(y = y) +  
+  geom_point(size = 3, col = "magenta") +  
+  facet_wrap(~ paste("boot sample", boot_sample_id)) +  
+  aes(label = paste0(times_sampled, "X")) +  
+  geom_text(size = 2, col = "grey", aes(alpha = NULL)) +  
+  aes(group = boot_sample_id) +  
+  aes(alpha = times_sampled) +  
+  geom_smooth(method = lm, se = F) +  
+* ggdark::dark_mode()
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_13_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  filter(boot_sample_id &lt;= 12) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+  aes(y = y) +  
+  geom_point(size = 3, col = "magenta") +  
+  facet_wrap(~ paste("boot sample", boot_sample_id)) +  
+  aes(label = paste0(times_sampled, "X")) +  
+  geom_text(size = 2, col = "grey", aes(alpha = NULL)) +  
+  aes(group = boot_sample_id) +  
+  aes(alpha = times_sampled) +  
+  geom_smooth(method = lm, se = F) +  
+  ggdark::dark_mode() +  
+* theme(legend.position = "none")
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/plotboot_auto_14_output-1.png" width="100%" /&gt;
+]]
+
+---
+
+
+```r
+boot_model &lt;- function(df){
+  lm(y ~ x, data = df)
+}
+```
+
+
+
+
+---
+
+class: split-40
+count: false
+.column[.content[
+
+```r
+*boot_samples
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 3,000 x 5
+  # Groups:   id, boot_sample_id [1,899]
+          x      y    id boot_sample_id times_sampled
+      &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;          &lt;int&gt;         &lt;int&gt;
+   1  0.739 -0.639     1              1             1
+   2  0.916 -0.145     4              1             2
+   3  0.916 -0.145     4              1             2
+   4 -1.27   0.495     5              1             3
+   5 -1.27   0.495     5              1             3
+   6 -1.27   0.495     5              1             3
+   7  0.509  0.458     8              1             2
+   8  0.509  0.458     8              1             2
+   9 -1.49  -1.76      9              1             3
+  10 -1.49  -1.76      9              1             3
+  # … with 2,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+* group_by(boot_sample_id)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 3,000 x 5
+  # Groups:   boot_sample_id [100]
+          x      y    id boot_sample_id times_sampled
+      &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;          &lt;int&gt;         &lt;int&gt;
+   1  0.739 -0.639     1              1             1
+   2  0.916 -0.145     4              1             2
+   3  0.916 -0.145     4              1             2
+   4 -1.27   0.495     5              1             3
+   5 -1.27   0.495     5              1             3
+   6 -1.27   0.495     5              1             3
+   7  0.509  0.458     8              1             2
+   8  0.509  0.458     8              1             2
+   9 -1.49  -1.76      9              1             3
+  10 -1.49  -1.76      9              1             3
+  # … with 2,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  group_by(boot_sample_id) %&gt;%  
+* nest()
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 100 x 2
+  # Groups:   boot_sample_id [100]
+     boot_sample_id data             
+              &lt;int&gt; &lt;list&gt;           
+   1              1 &lt;tibble [30 × 4]&gt;
+   2              2 &lt;tibble [30 × 4]&gt;
+   3              3 &lt;tibble [30 × 4]&gt;
+   4              4 &lt;tibble [30 × 4]&gt;
+   5              5 &lt;tibble [30 × 4]&gt;
+   6              6 &lt;tibble [30 × 4]&gt;
+   7              7 &lt;tibble [30 × 4]&gt;
+   8              8 &lt;tibble [30 × 4]&gt;
+   9              9 &lt;tibble [30 × 4]&gt;
+  10             10 &lt;tibble [30 × 4]&gt;
+  # … with 90 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  group_by(boot_sample_id) %&gt;%  
+  nest() %&gt;%  
+* mutate(model = map(data, boot_model))   # model results are summarised in tidy dataframes using broom
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 100 x 3
+  # Groups:   boot_sample_id [100]
+     boot_sample_id data              model 
+              &lt;int&gt; &lt;list&gt;            &lt;list&gt;
+   1              1 &lt;tibble [30 × 4]&gt; &lt;lm&gt;  
+   2              2 &lt;tibble [30 × 4]&gt; &lt;lm&gt;  
+   3              3 &lt;tibble [30 × 4]&gt; &lt;lm&gt;  
+   4              4 &lt;tibble [30 × 4]&gt; &lt;lm&gt;  
+   5              5 &lt;tibble [30 × 4]&gt; &lt;lm&gt;  
+   6              6 &lt;tibble [30 × 4]&gt; &lt;lm&gt;  
+   7              7 &lt;tibble [30 × 4]&gt; &lt;lm&gt;  
+   8              8 &lt;tibble [30 × 4]&gt; &lt;lm&gt;  
+   9              9 &lt;tibble [30 × 4]&gt; &lt;lm&gt;  
+  10             10 &lt;tibble [30 × 4]&gt; &lt;lm&gt;  
+  # … with 90 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  group_by(boot_sample_id) %&gt;%  
+  nest() %&gt;%  
+  mutate(model = map(data, boot_model)) %&gt;%  # model results are summarised in tidy dataframes using broom
+* mutate(glance  = map(model, broom::glance),
+*        augment = map(model, broom::augment),
+*        tidy    = map(model, broom::tidy))
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 100 x 6
+  # Groups:   boot_sample_id [100]
+     boot_sample_id data          model  glance         augment       tidy        
+              &lt;int&gt; &lt;list&gt;        &lt;list&gt; &lt;list&gt;         &lt;list&gt;        &lt;list&gt;      
+   1              1 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   2              2 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   3              3 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   4              4 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   5              5 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   6              6 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   7              7 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   8              8 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   9              9 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+  10             10 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+  # … with 90 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples %&gt;%  
+  group_by(boot_sample_id) %&gt;%  
+  nest() %&gt;%  
+  mutate(model = map(data, boot_model)) %&gt;%  # model results are summarised in tidy dataframes using broom
+  mutate(glance  = map(model, broom::glance),  
+         augment = map(model, broom::augment),  
+         tidy    = map(model, broom::tidy)) -&gt;  
+*boot_samples_models
+```
+]]
+.column[.content[
+
+]]
+
+---
+
+# Slope coefficient confidence interval
+
+
+&lt;img src="bootstrap_files/figure-html/confint-1.png" width="100%" /&gt;
+
+---
+
+class: split-40
+count: false
+.column[.content[
+
+```r
+*boot_samples_models
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 100 x 6
+  # Groups:   boot_sample_id [100]
+     boot_sample_id data          model  glance         augment       tidy        
+              &lt;int&gt; &lt;list&gt;        &lt;list&gt; &lt;list&gt;         &lt;list&gt;        &lt;list&gt;      
+   1              1 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   2              2 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   3              3 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   4              4 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   5              5 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   6              6 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   7              7 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   8              8 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   9              9 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+  10             10 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+  # … with 90 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+* unnest(tidy)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 200 x 10
+  # Groups:   boot_sample_id [100]
+     boot_sample_id data  model glance augment term  estimate std.error statistic
+              &lt;int&gt; &lt;lis&gt; &lt;lis&gt; &lt;list&gt; &lt;list&gt;  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+   1              1 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… (Int… -0.0613      0.180   -0.340 
+   2              1 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x      0.560       0.171    3.28  
+   3              2 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… (Int…  0.0738      0.139    0.532 
+   4              2 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x      0.549       0.107    5.14  
+   5              3 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… (Int…  0.0708      0.132    0.538 
+   6              3 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x      0.410       0.121    3.39  
+   7              4 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… (Int…  0.00706     0.143    0.0495
+   8              4 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x      0.403       0.109    3.70  
+   9              5 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… (Int… -0.0901      0.134   -0.674 
+  10              5 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x      0.601       0.135    4.45  
+  # … with 190 more rows, and 1 more variable: p.value &lt;dbl&gt;
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+* filter(term == "x")
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 100 x 10
+  # Groups:   boot_sample_id [100]
+     boot_sample_id data  model glance augment term  estimate std.error statistic
+              &lt;int&gt; &lt;lis&gt; &lt;lis&gt; &lt;list&gt; &lt;list&gt;  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+   1              1 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x        0.560     0.171      3.28
+   2              2 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x        0.549     0.107      5.14
+   3              3 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x        0.410     0.121      3.39
+   4              4 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x        0.403     0.109      3.70
+   5              5 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x        0.601     0.135      4.45
+   6              6 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x        0.444     0.126      3.53
+   7              7 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x        0.473     0.158      3.00
+   8              8 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x        0.281     0.163      1.72
+   9              9 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x        0.599     0.115      5.19
+  10             10 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x        0.353     0.114      3.10
+  # … with 90 more rows, and 1 more variable: p.value &lt;dbl&gt;
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  filter(term == "x") -&gt;  
+*x_estimates
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  filter(term == "x") -&gt;  
+x_estimates  
+*ggplot(data = x_estimates)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/confint_auto_5_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  filter(term == "x") -&gt;  
+x_estimates  
+ggplot(data = x_estimates) +  
+* aes(x = estimate)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/confint_auto_6_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  filter(term == "x") -&gt;  
+x_estimates  
+ggplot(data = x_estimates) +  
+  aes(x = estimate) +  
+* geom_histogram()
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/confint_auto_7_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  filter(term == "x") -&gt;  
+x_estimates  
+ggplot(data = x_estimates) +  
+  aes(x = estimate) +  
+  geom_histogram() +  
+* geom_rug()
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/confint_auto_8_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  filter(term == "x") -&gt;  
+x_estimates  
+ggplot(data = x_estimates) +  
+  aes(x = estimate) +  
+  geom_histogram() +  
+  geom_rug() +  
+* geom_vline(xintercept =
+*              quantile(x_estimates$estimate,
+*                       probs = c(.05, .95)),
+*            col = "red",
+*            linetype = "dashed")
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/confint_auto_9_output-1.png" width="100%" /&gt;
+]]
+
+---
+
+&lt;img src="bootstrap_files/figure-html/confintplus-1.png" width="100%" /&gt;
+
+
+class: split-40
+count: false
+.column[.content[
+
+```r
+*boot_samples_models
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 100 x 6
+  # Groups:   boot_sample_id [100]
+     boot_sample_id data          model  glance         augment       tidy        
+              &lt;int&gt; &lt;list&gt;        &lt;list&gt; &lt;list&gt;         &lt;list&gt;        &lt;list&gt;      
+   1              1 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   2              2 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   3              3 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   4              4 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   5              5 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   6              6 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   7              7 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   8              8 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+   9              9 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+  10             10 &lt;tibble [30 … &lt;lm&gt;   &lt;tibble [1 × … &lt;tibble [30 … &lt;tibble [2 …
+  # … with 90 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+* unnest(tidy)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 200 x 10
+  # Groups:   boot_sample_id [100]
+     boot_sample_id data  model glance augment term  estimate std.error statistic
+              &lt;int&gt; &lt;lis&gt; &lt;lis&gt; &lt;list&gt; &lt;list&gt;  &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+   1              1 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… (Int… -0.0613      0.180   -0.340 
+   2              1 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x      0.560       0.171    3.28  
+   3              2 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… (Int…  0.0738      0.139    0.532 
+   4              2 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x      0.549       0.107    5.14  
+   5              3 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… (Int…  0.0708      0.132    0.538 
+   6              3 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x      0.410       0.121    3.39  
+   7              4 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… (Int…  0.00706     0.143    0.0495
+   8              4 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x      0.403       0.109    3.70  
+   9              5 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… (Int… -0.0901      0.134   -0.674 
+  10              5 &lt;tib… &lt;lm&gt;  &lt;tibb… &lt;tibbl… x      0.601       0.135    4.45  
+  # … with 190 more rows, and 1 more variable: p.value &lt;dbl&gt;
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+* select(boot_sample_id, estimate, term)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 200 x 3
+  # Groups:   boot_sample_id [100]
+     boot_sample_id estimate term       
+              &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;      
+   1              1 -0.0613  (Intercept)
+   2              1  0.560   x          
+   3              2  0.0738  (Intercept)
+   4              2  0.549   x          
+   5              3  0.0708  (Intercept)
+   6              3  0.410   x          
+   7              4  0.00706 (Intercept)
+   8              4  0.403   x          
+   9              5 -0.0901  (Intercept)
+  10              5  0.601   x          
+  # … with 190 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  select(boot_sample_id, estimate, term) %&gt;%  
+* spread(key = term, value = estimate)
+```
+]]
+.column[.content[
+
+```
+  # A tibble: 100 x 3
+  # Groups:   boot_sample_id [100]
+     boot_sample_id `(Intercept)`     x
+              &lt;int&gt;         &lt;dbl&gt; &lt;dbl&gt;
+   1              1      -0.0613  0.560
+   2              2       0.0738  0.549
+   3              3       0.0708  0.410
+   4              4       0.00706 0.403
+   5              5      -0.0901  0.601
+   6              6      -0.131   0.444
+   7              7      -0.0508  0.473
+   8              8       0.191   0.281
+   9              9      -0.102   0.599
+  10             10       0.105   0.353
+  # … with 90 more rows
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  select(boot_sample_id, estimate, term) %&gt;%  
+  spread(key = term, value = estimate) %&gt;%  
+* ggplot()
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/confintplus_auto_5_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  select(boot_sample_id, estimate, term) %&gt;%  
+  spread(key = term, value = estimate) %&gt;%  
+  ggplot() +  
+* aes(x = x)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/confintplus_auto_6_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  select(boot_sample_id, estimate, term) %&gt;%  
+  spread(key = term, value = estimate) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+* aes(y = `(Intercept)`)
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/confintplus_auto_7_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  select(boot_sample_id, estimate, term) %&gt;%  
+  spread(key = term, value = estimate) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+  aes(y = `(Intercept)`) +  
+* geom_point()
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/confintplus_auto_8_output-1.png" width="100%" /&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+boot_samples_models %&gt;%  
+  unnest(tidy) %&gt;%  
+  select(boot_sample_id, estimate, term) %&gt;%  
+  spread(key = term, value = estimate) %&gt;%  
+  ggplot() +  
+  aes(x = x) +  
+  aes(y = `(Intercept)`) +  
+  geom_point() +  
+* geom_density_2d()
+```
+]]
+.column[.content[
+&lt;img src="bootstrap_files/figure-html/confintplus_auto_9_output-1.png" width="100%" /&gt;
+]]
+
+---
+
+
+&lt;style type="text/css"&gt;
+.remark-code{line-height: 1.5; font-size: 80%}
+&lt;/style&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="libs/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:10",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

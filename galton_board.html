@@ -1,0 +1,2046 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Minimal Galton Board</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Gina Reynolds" />
+    <link href="libs/remark-css-0.0.1/kunoichi.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Minimal Galton Board
+### Gina Reynolds
+### 6/29/2019
+
+---
+
+
+
+```r
+source("https://raw.githubusercontent.com/EvaMaeRey/little_flipbooks_library/master/xaringan_reveal_parentheses_balanced.R")
+```
+
+
+
+
+
+
+
+
+```r
+library(tidyverse)
+options(gganimate.nframes = 400, scipen = 10)
+```
+
+---
+
+# Define paramters
+
+
+```r
+n &lt;- 70  # number of ball bearnings 
+stop_level &lt;- 10 # number of perturbation levels 
+                # make it an even number
+levels &lt;- 44 # greater than stop_levels
+```
+
+
+---
+
+# Write some code to describe the random-walk of ball bearings
+
+---
+
+
+
+
+
+---
+
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+*set.seed(2019)
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(2019)
+*crossing(unit_id = 1:n,
+*        level = 1:levels - 1)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 3,080 x 2
+   unit_id level
+     &lt;int&gt; &lt;dbl&gt;
+ 1       1     0
+ 2       1     1
+ 3       1     2
+ 4       1     3
+ 5       1     4
+ 6       1     5
+ 7       1     6
+ 8       1     7
+ 9       1     8
+10       1     9
+# … with 3,070 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(2019)
+crossing(unit_id = 1:n,
+         level = 1:levels - 1) %&gt;%
+* mutate(perturbation =  # moves
+*          sample(c(-1,1),  # left or right
+*                 n(),  # each ball at each level
+*                 replace = T))
+```
+]]
+.column[.content[
+
+```
+# A tibble: 3,080 x 3
+   unit_id level perturbation
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt;
+ 1       1     0            1
+ 2       1     1            1
+ 3       1     2           -1
+ 4       1     3            1
+ 5       1     4           -1
+ 6       1     5           -1
+ 7       1     6            1
+ 8       1     7           -1
+ 9       1     8           -1
+10       1     9            1
+# … with 3,070 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(2019)
+crossing(unit_id = 1:n,
+         level = 1:levels - 1) %&gt;%
+  mutate(perturbation =  # moves
+           sample(c(-1,1),  # left or right
+                  n(),  # each ball at each level
+                  replace = T)) %&gt;%
+* group_by(unit_id)   # operations on each ball
+```
+]]
+.column[.content[
+
+```
+# A tibble: 3,080 x 3
+# Groups:   unit_id [70]
+   unit_id level perturbation
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt;
+ 1       1     0            1
+ 2       1     1            1
+ 3       1     2           -1
+ 4       1     3            1
+ 5       1     4           -1
+ 6       1     5           -1
+ 7       1     6            1
+ 8       1     7           -1
+ 9       1     8           -1
+10       1     9            1
+# … with 3,070 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(2019)
+crossing(unit_id = 1:n,
+         level = 1:levels - 1) %&gt;%
+  mutate(perturbation =  # moves
+           sample(c(-1,1),  # left or right
+                  n(),  # each ball at each level
+                  replace = T)) %&gt;%
+  group_by(unit_id) %&gt;%  # operations on each ball
+* mutate(perturbation =
+*          ifelse(row_number() == 1,
+*                 yes = 0,  # start centered
+*                 no = perturbation))
+```
+]]
+.column[.content[
+
+```
+# A tibble: 3,080 x 3
+# Groups:   unit_id [70]
+   unit_id level perturbation
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt;
+ 1       1     0            0
+ 2       1     1            1
+ 3       1     2           -1
+ 4       1     3            1
+ 5       1     4           -1
+ 6       1     5           -1
+ 7       1     6            1
+ 8       1     7           -1
+ 9       1     8           -1
+10       1     9            1
+# … with 3,070 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(2019)
+crossing(unit_id = 1:n,
+         level = 1:levels - 1) %&gt;%
+  mutate(perturbation =  # moves
+           sample(c(-1,1),  # left or right
+                  n(),  # each ball at each level
+                  replace = T)) %&gt;%
+  group_by(unit_id) %&gt;%  # operations on each ball
+  mutate(perturbation =
+           ifelse(row_number() == 1,
+                  yes = 0,  # start centered
+                  no = perturbation)) %&gt;%
+* # each ball should release one at a time
+* mutate(time =  # displacing them in time w/
+*          row_number() +
+* # using unit id
+*          unit_id * 3 - 1)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 3,080 x 4
+# Groups:   unit_id [70]
+   unit_id level perturbation  time
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
+ 1       1     0            0     3
+ 2       1     1            1     4
+ 3       1     2           -1     5
+ 4       1     3            1     6
+ 5       1     4           -1     7
+ 6       1     5           -1     8
+ 7       1     6            1     9
+ 8       1     7           -1    10
+ 9       1     8           -1    11
+10       1     9            1    12
+# … with 3,070 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(2019)
+crossing(unit_id = 1:n,
+         level = 1:levels - 1) %&gt;%
+  mutate(perturbation =  # moves
+           sample(c(-1,1),  # left or right
+                  n(),  # each ball at each level
+                  replace = T)) %&gt;%
+  group_by(unit_id) %&gt;%  # operations on each ball
+  mutate(perturbation =
+           ifelse(row_number() == 1,
+                  yes = 0,  # start centered
+                  no = perturbation)) %&gt;%
+  # each ball should release one at a time
+  mutate(time =  # displacing them in time w/
+           row_number() +
+  # using unit id
+           unit_id * 3 - 1) %&gt;%
+* filter(time &gt; 0)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 3,080 x 4
+# Groups:   unit_id [70]
+   unit_id level perturbation  time
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;
+ 1       1     0            0     3
+ 2       1     1            1     4
+ 3       1     2           -1     5
+ 4       1     3            1     6
+ 5       1     4           -1     7
+ 6       1     5           -1     8
+ 7       1     6            1     9
+ 8       1     7           -1    10
+ 9       1     8           -1    11
+10       1     9            1    12
+# … with 3,070 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(2019)
+crossing(unit_id = 1:n,
+         level = 1:levels - 1) %&gt;%
+  mutate(perturbation =  # moves
+           sample(c(-1,1),  # left or right
+                  n(),  # each ball at each level
+                  replace = T)) %&gt;%
+  group_by(unit_id) %&gt;%  # operations on each ball
+  mutate(perturbation =
+           ifelse(row_number() == 1,
+                  yes = 0,  # start centered
+                  no = perturbation)) %&gt;%
+  # each ball should release one at a time
+  mutate(time =  # displacing them in time w/
+           row_number() +
+  # using unit id
+           unit_id * 3 - 1) %&gt;%
+  filter(time &gt; 0) %&gt;%
+* mutate(x_position =  # we get the x position
+* # by summing the cumulative distributions
+*          cumsum(perturbation))
+```
+]]
+.column[.content[
+
+```
+# A tibble: 3,080 x 5
+# Groups:   unit_id [70]
+   unit_id level perturbation  time x_position
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1       1     0            0     3          0
+ 2       1     1            1     4          1
+ 3       1     2           -1     5          0
+ 4       1     3            1     6          1
+ 5       1     4           -1     7          0
+ 6       1     5           -1     8         -1
+ 7       1     6            1     9          0
+ 8       1     7           -1    10         -1
+ 9       1     8           -1    11         -2
+10       1     9            1    12         -1
+# … with 3,070 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(2019)
+crossing(unit_id = 1:n,
+         level = 1:levels - 1) %&gt;%
+  mutate(perturbation =  # moves
+           sample(c(-1,1),  # left or right
+                  n(),  # each ball at each level
+                  replace = T)) %&gt;%
+  group_by(unit_id) %&gt;%  # operations on each ball
+  mutate(perturbation =
+           ifelse(row_number() == 1,
+                  yes = 0,  # start centered
+                  no = perturbation)) %&gt;%
+  # each ball should release one at a time
+  mutate(time =  # displacing them in time w/
+           row_number() +
+  # using unit id
+           unit_id * 3 - 1) %&gt;%
+  filter(time &gt; 0) %&gt;%
+  mutate(x_position =  # we get the x position
+  # by summing the cumulative distributions
+           cumsum(perturbation)) %&gt;%
+* # if ball is beyond the perturbation levels
+* mutate(x_position =  # we overwrite the x position
+*          ifelse(level &lt;= stop_level,
+*                 yes = x_position,
+*                 no = NA))
+```
+]]
+.column[.content[
+
+```
+# A tibble: 3,080 x 5
+# Groups:   unit_id [70]
+   unit_id level perturbation  time x_position
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1       1     0            0     3          0
+ 2       1     1            1     4          1
+ 3       1     2           -1     5          0
+ 4       1     3            1     6          1
+ 5       1     4           -1     7          0
+ 6       1     5           -1     8         -1
+ 7       1     6            1     9          0
+ 8       1     7           -1    10         -1
+ 9       1     8           -1    11         -2
+10       1     9            1    12         -1
+# … with 3,070 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(2019)
+crossing(unit_id = 1:n,
+         level = 1:levels - 1) %&gt;%
+  mutate(perturbation =  # moves
+           sample(c(-1,1),  # left or right
+                  n(),  # each ball at each level
+                  replace = T)) %&gt;%
+  group_by(unit_id) %&gt;%  # operations on each ball
+  mutate(perturbation =
+           ifelse(row_number() == 1,
+                  yes = 0,  # start centered
+                  no = perturbation)) %&gt;%
+  # each ball should release one at a time
+  mutate(time =  # displacing them in time w/
+           row_number() +
+  # using unit id
+           unit_id * 3 - 1) %&gt;%
+  filter(time &gt; 0) %&gt;%
+  mutate(x_position =  # we get the x position
+  # by summing the cumulative distributions
+           cumsum(perturbation)) %&gt;%
+  # if ball is beyond the perturbation levels
+  mutate(x_position =  # we overwrite the x position
+           ifelse(level &lt;= stop_level,
+                  yes = x_position,
+                  no = NA)) %&gt;%
+* # then fill in with the last x position
+* fill(x_position)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 3,080 x 5
+# Groups:   unit_id [70]
+   unit_id level perturbation  time x_position
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1       1     0            0     3          0
+ 2       1     1            1     4          1
+ 3       1     2           -1     5          0
+ 4       1     3            1     6          1
+ 5       1     4           -1     7          0
+ 6       1     5           -1     8         -1
+ 7       1     6            1     9          0
+ 8       1     7           -1    10         -1
+ 9       1     8           -1    11         -2
+10       1     9            1    12         -1
+# … with 3,070 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(2019)
+crossing(unit_id = 1:n,
+         level = 1:levels - 1) %&gt;%
+  mutate(perturbation =  # moves
+           sample(c(-1,1),  # left or right
+                  n(),  # each ball at each level
+                  replace = T)) %&gt;%
+  group_by(unit_id) %&gt;%  # operations on each ball
+  mutate(perturbation =
+           ifelse(row_number() == 1,
+                  yes = 0,  # start centered
+                  no = perturbation)) %&gt;%
+  # each ball should release one at a time
+  mutate(time =  # displacing them in time w/
+           row_number() +
+  # using unit id
+           unit_id * 3 - 1) %&gt;%
+  filter(time &gt; 0) %&gt;%
+  mutate(x_position =  # we get the x position
+  # by summing the cumulative distributions
+           cumsum(perturbation)) %&gt;%
+  # if ball is beyond the perturbation levels
+  mutate(x_position =  # we overwrite the x position
+           ifelse(level &lt;= stop_level,
+                  yes = x_position,
+                  no = NA)) %&gt;%
+  # then fill in with the last x position
+  fill(x_position) %&gt;%
+* ungroup()
+```
+]]
+.column[.content[
+
+```
+# A tibble: 3,080 x 5
+   unit_id level perturbation  time x_position
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1       1     0            0     3          0
+ 2       1     1            1     4          1
+ 3       1     2           -1     5          0
+ 4       1     3            1     6          1
+ 5       1     4           -1     7          0
+ 6       1     5           -1     8         -1
+ 7       1     6            1     9          0
+ 8       1     7           -1    10         -1
+ 9       1     8           -1    11         -2
+10       1     9            1    12         -1
+# … with 3,070 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(2019)
+crossing(unit_id = 1:n,
+         level = 1:levels - 1) %&gt;%
+  mutate(perturbation =  # moves
+           sample(c(-1,1),  # left or right
+                  n(),  # each ball at each level
+                  replace = T)) %&gt;%
+  group_by(unit_id) %&gt;%  # operations on each ball
+  mutate(perturbation =
+           ifelse(row_number() == 1,
+                  yes = 0,  # start centered
+                  no = perturbation)) %&gt;%
+  # each ball should release one at a time
+  mutate(time =  # displacing them in time w/
+           row_number() +
+  # using unit id
+           unit_id * 3 - 1) %&gt;%
+  filter(time &gt; 0) %&gt;%
+  mutate(x_position =  # we get the x position
+  # by summing the cumulative distributions
+           cumsum(perturbation)) %&gt;%
+  # if ball is beyond the perturbation levels
+  mutate(x_position =  # we overwrite the x position
+           ifelse(level &lt;= stop_level,
+                  yes = x_position,
+                  no = NA)) %&gt;%
+  # then fill in with the last x position
+  fill(x_position) %&gt;%
+  ungroup() -&gt;
+*ball_bearings
+```
+]]
+.column[.content[
+
+]]
+
+---
+
+# Now some code to count the number of ball bearings seen at the final level.
+
+We want to keep track of how many ball bearings end up in each position.
+
+---
+
+
+
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+*ball_bearings
+```
+]]
+.column[.content[
+
+```
+# A tibble: 3,080 x 5
+   unit_id level perturbation  time x_position
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1       1     0            0     3          0
+ 2       1     1            1     4          1
+ 3       1     2           -1     5          0
+ 4       1     3            1     6          1
+ 5       1     4           -1     7          0
+ 6       1     5           -1     8         -1
+ 7       1     6            1     9          0
+ 8       1     7           -1    10         -1
+ 9       1     8           -1    11         -2
+10       1     9            1    12         -1
+# … with 3,070 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ball_bearings %&gt;%
+* filter(level == (levels - 1) )
+```
+]]
+.column[.content[
+
+```
+# A tibble: 70 x 5
+   unit_id level perturbation  time x_position
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1       1    43            1    46          0
+ 2       2    43            1    49         -4
+ 3       3    43           -1    52          2
+ 4       4    43            1    55         -4
+ 5       5    43           -1    58         -2
+ 6       6    43            1    61         -2
+ 7       7    43            1    64         -2
+ 8       8    43           -1    67          0
+ 9       9    43           -1    70          2
+10      10    43           -1    73          0
+# … with 60 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ball_bearings %&gt;%
+  filter(level == (levels - 1) ) %&gt;%
+* rename(final_time = time)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 70 x 5
+   unit_id level perturbation final_time x_position
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+ 1       1    43            1         46          0
+ 2       2    43            1         49         -4
+ 3       3    43           -1         52          2
+ 4       4    43            1         55         -4
+ 5       5    43           -1         58         -2
+ 6       6    43            1         61         -2
+ 7       7    43            1         64         -2
+ 8       8    43           -1         67          0
+ 9       9    43           -1         70          2
+10      10    43           -1         73          0
+# … with 60 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ball_bearings %&gt;%
+  filter(level == (levels - 1) ) %&gt;%
+  rename(final_time = time) %&gt;%
+* crossing(time = as.numeric(1:max(ball_bearings$time)))
+```
+]]
+.column[.content[
+
+```
+# A tibble: 17,710 x 6
+   unit_id level perturbation final_time x_position  time
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+ 1       1    43            1         46          0     1
+ 2       1    43            1         46          0     2
+ 3       1    43            1         46          0     3
+ 4       1    43            1         46          0     4
+ 5       1    43            1         46          0     5
+ 6       1    43            1         46          0     6
+ 7       1    43            1         46          0     7
+ 8       1    43            1         46          0     8
+ 9       1    43            1         46          0     9
+10       1    43            1         46          0    10
+# … with 17,700 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ball_bearings %&gt;%
+  filter(level == (levels - 1) ) %&gt;%
+  rename(final_time = time) %&gt;%
+  crossing(time = as.numeric(1:max(ball_bearings$time))) %&gt;%
+* group_by(time, x_position)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 17,710 x 6
+# Groups:   time, x_position [2,024]
+   unit_id level perturbation final_time x_position  time
+     &lt;int&gt; &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+ 1       1    43            1         46          0     1
+ 2       1    43            1         46          0     2
+ 3       1    43            1         46          0     3
+ 4       1    43            1         46          0     4
+ 5       1    43            1         46          0     5
+ 6       1    43            1         46          0     6
+ 7       1    43            1         46          0     7
+ 8       1    43            1         46          0     8
+ 9       1    43            1         46          0     9
+10       1    43            1         46          0    10
+# … with 17,700 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ball_bearings %&gt;%
+  filter(level == (levels - 1) ) %&gt;%
+  rename(final_time = time) %&gt;%
+  crossing(time = as.numeric(1:max(ball_bearings$time))) %&gt;%
+  group_by(time, x_position) %&gt;%
+* summarise(x_position_count = sum(time &gt; final_time))
+```
+]]
+.column[.content[
+
+```
+# A tibble: 2,024 x 3
+# Groups:   time [?]
+    time x_position x_position_count
+   &lt;dbl&gt;      &lt;dbl&gt;            &lt;int&gt;
+ 1     1         -8                0
+ 2     1         -6                0
+ 3     1         -4                0
+ 4     1         -2                0
+ 5     1          0                0
+ 6     1          2                0
+ 7     1          4                0
+ 8     1          6                0
+ 9     2         -8                0
+10     2         -6                0
+# … with 2,014 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ball_bearings %&gt;%
+  filter(level == (levels - 1) ) %&gt;%
+  rename(final_time = time) %&gt;%
+  crossing(time = as.numeric(1:max(ball_bearings$time))) %&gt;%
+  group_by(time, x_position) %&gt;%
+  summarise(x_position_count = sum(time &gt; final_time)) -&gt;
+*ball_bearings_collect
+```
+]]
+.column[.content[
+
+]]
+
+
+---
+
+
+
+
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+* # Lets make some pegs
+*crossing(unit_id =
+*          -stop_level:stop_level,
+*        level = 1:stop_level)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 210 x 2
+   unit_id level
+     &lt;int&gt; &lt;int&gt;
+ 1     -10     1
+ 2     -10     2
+ 3     -10     3
+ 4     -10     4
+ 5     -10     5
+ 6     -10     6
+ 7     -10     7
+ 8     -10     8
+ 9     -10     9
+10     -10    10
+# … with 200 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+  # Lets make some pegs
+crossing(unit_id =
+           -stop_level:stop_level,
+         level = 1:stop_level) %&gt;%
+* mutate(transparent =
+*          (unit_id + level) %% 2)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 210 x 3
+   unit_id level transparent
+     &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+ 1     -10     1           1
+ 2     -10     2           0
+ 3     -10     3           1
+ 4     -10     4           0
+ 5     -10     5           1
+ 6     -10     6           0
+ 7     -10     7           1
+ 8     -10     8           0
+ 9     -10     9           1
+10     -10    10           0
+# … with 200 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+  # Lets make some pegs
+crossing(unit_id =
+           -stop_level:stop_level,
+         level = 1:stop_level) %&gt;%
+  mutate(transparent =
+           (unit_id + level) %% 2) -&gt;
+*pegs
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+  # Lets make some pegs
+crossing(unit_id =
+           -stop_level:stop_level,
+         level = 1:stop_level) %&gt;%
+  mutate(transparent =
+           (unit_id + level) %% 2) -&gt;
+pegs
+* # Lets make walls
+*crossing(unit_id =
+*          -(stop_level + 1):(stop_level + 1),
+*        level = stop_level:levels)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 805 x 2
+   unit_id level
+     &lt;int&gt; &lt;int&gt;
+ 1     -11    10
+ 2     -11    11
+ 3     -11    12
+ 4     -11    13
+ 5     -11    14
+ 6     -11    15
+ 7     -11    16
+ 8     -11    17
+ 9     -11    18
+10     -11    19
+# … with 795 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+  # Lets make some pegs
+crossing(unit_id =
+           -stop_level:stop_level,
+         level = 1:stop_level) %&gt;%
+  mutate(transparent =
+           (unit_id + level) %% 2) -&gt;
+pegs
+  # Lets make walls
+crossing(unit_id =
+           -(stop_level + 1):(stop_level + 1),
+         level = stop_level:levels) %&gt;%
+* mutate(transparent =
+*          unit_id %% 2)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 805 x 3
+   unit_id level transparent
+     &lt;int&gt; &lt;int&gt;       &lt;dbl&gt;
+ 1     -11    10           1
+ 2     -11    11           1
+ 3     -11    12           1
+ 4     -11    13           1
+ 5     -11    14           1
+ 6     -11    15           1
+ 7     -11    16           1
+ 8     -11    17           1
+ 9     -11    18           1
+10     -11    19           1
+# … with 795 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+  # Lets make some pegs
+crossing(unit_id =
+           -stop_level:stop_level,
+         level = 1:stop_level) %&gt;%
+  mutate(transparent =
+           (unit_id + level) %% 2) -&gt;
+pegs
+  # Lets make walls
+crossing(unit_id =
+           -(stop_level + 1):(stop_level + 1),
+         level = stop_level:levels) %&gt;%
+  mutate(transparent =
+           unit_id %% 2) -&gt;
+*walls
+```
+]]
+.column[.content[
+
+]]
+
+
+---
+
+
+```r
+ball_bearings_size &lt;- 2
+peg_size &lt;- 3
+```
+
+---
+
+
+
+---
+
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+*ggplot(ball_bearings)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_1-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+* aes(y = level)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_2-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+* aes(x = x_position)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_3-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+* scale_y_reverse()
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_4-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+* aes(group = unit_id)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_5-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+* geom_point(data = walls,
+*            aes(x = unit_id, alpha = transparent),
+*            col = "grey30", size = peg_size)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_8-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+* geom_point(data = pegs,
+*            aes(x = unit_id, alpha = transparent),
+*            col = "grey30", size = peg_size)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_11-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+* geom_segment(x = -sqrt(n), xend = -1.5,
+*              y = 0, yend = 0)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_13-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+* geom_segment(x = sqrt(n), xend = 1.5,
+*              y = 0, yend = 0)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_15-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5,
+               y = 0, yend = 0) +
+* geom_abline(intercept = 1.5,
+*             slope = -1)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_17-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5,
+               y = 0, yend = 0) +
+  geom_abline(intercept = 1.5,
+              slope = -1) +
+* geom_abline(intercept = 1.5,
+*             slope = 1)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_19-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5,
+               y = 0, yend = 0) +
+  geom_abline(intercept = 1.5,
+              slope = -1) +
+  geom_abline(intercept = 1.5,
+              slope = 1) +
+* annotate(geom = "tile",
+*          height = 2, width = 2,
+*          x = 0 , y = -1.5)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_22-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5,
+               y = 0, yend = 0) +
+  geom_abline(intercept = 1.5,
+              slope = -1) +
+  geom_abline(intercept = 1.5,
+              slope = 1) +
+  annotate(geom = "tile",
+           height = 2, width = 2,
+           x = 0 , y = -1.5) +
+* annotate(geom = "tile",
+*          height = 2, width = 1.75,
+*          x = 0 , y = -1.5, fill = "white")
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_25-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5,
+               y = 0, yend = 0) +
+  geom_abline(intercept = 1.5,
+              slope = -1) +
+  geom_abline(intercept = 1.5,
+              slope = 1) +
+  annotate(geom = "tile",
+           height = 2, width = 2,
+           x = 0 , y = -1.5) +
+  annotate(geom = "tile",
+           height = 2, width = 1.75,
+           x = 0 , y = -1.5, fill = "white") +
+* geom_rect(data = ball_bearings_collect,
+*           mapping = aes(xmin = x_position - .35,
+*                         xmax = x_position + .35,
+*                         ymax = max(ball_bearings$level) + 1 - x_position_count*1.5,
+*                         ymin = max(ball_bearings$level) + 1,
+*                         group = x_position,
+*                         y = NULL, x = NULL),
+*           fill = "darkgrey")
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_33-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5,
+               y = 0, yend = 0) +
+  geom_abline(intercept = 1.5,
+              slope = -1) +
+  geom_abline(intercept = 1.5,
+              slope = 1) +
+  annotate(geom = "tile",
+           height = 2, width = 2,
+           x = 0 , y = -1.5) +
+  annotate(geom = "tile",
+           height = 2, width = 1.75,
+           x = 0 , y = -1.5, fill = "white") +
+  geom_rect(data = ball_bearings_collect,
+            mapping = aes(xmin = x_position - .35,
+                          xmax = x_position + .35,
+                          ymax = max(ball_bearings$level) + 1 - x_position_count*1.5,
+                          ymin = max(ball_bearings$level) + 1,
+                          group = x_position,
+                          y = NULL, x = NULL),
+            fill = "darkgrey") +
+* geom_point(size = ball_bearings_size,
+*            col = "steelblue")
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_35-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5,
+               y = 0, yend = 0) +
+  geom_abline(intercept = 1.5,
+              slope = -1) +
+  geom_abline(intercept = 1.5,
+              slope = 1) +
+  annotate(geom = "tile",
+           height = 2, width = 2,
+           x = 0 , y = -1.5) +
+  annotate(geom = "tile",
+           height = 2, width = 1.75,
+           x = 0 , y = -1.5, fill = "white") +
+  geom_rect(data = ball_bearings_collect,
+            mapping = aes(xmin = x_position - .35,
+                          xmax = x_position + .35,
+                          ymax = max(ball_bearings$level) + 1 - x_position_count*1.5,
+                          ymin = max(ball_bearings$level) + 1,
+                          group = x_position,
+                          y = NULL, x = NULL),
+            fill = "darkgrey") +
+  geom_point(size = ball_bearings_size,
+             col = "steelblue") +
+* coord_equal()
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_36-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5,
+               y = 0, yend = 0) +
+  geom_abline(intercept = 1.5,
+              slope = -1) +
+  geom_abline(intercept = 1.5,
+              slope = 1) +
+  annotate(geom = "tile",
+           height = 2, width = 2,
+           x = 0 , y = -1.5) +
+  annotate(geom = "tile",
+           height = 2, width = 1.75,
+           x = 0 , y = -1.5, fill = "white") +
+  geom_rect(data = ball_bearings_collect,
+            mapping = aes(xmin = x_position - .35,
+                          xmax = x_position + .35,
+                          ymax = max(ball_bearings$level) + 1 - x_position_count*1.5,
+                          ymin = max(ball_bearings$level) + 1,
+                          group = x_position,
+                          y = NULL, x = NULL),
+            fill = "darkgrey") +
+  geom_point(size = ball_bearings_size,
+             col = "steelblue") +
+  coord_equal() +
+* geom_hline(yintercept = stop_level,
+*            linetype = "dotted")
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_38-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5,
+               y = 0, yend = 0) +
+  geom_abline(intercept = 1.5,
+              slope = -1) +
+  geom_abline(intercept = 1.5,
+              slope = 1) +
+  annotate(geom = "tile",
+           height = 2, width = 2,
+           x = 0 , y = -1.5) +
+  annotate(geom = "tile",
+           height = 2, width = 1.75,
+           x = 0 , y = -1.5, fill = "white") +
+  geom_rect(data = ball_bearings_collect,
+            mapping = aes(xmin = x_position - .35,
+                          xmax = x_position + .35,
+                          ymax = max(ball_bearings$level) + 1 - x_position_count*1.5,
+                          ymin = max(ball_bearings$level) + 1,
+                          group = x_position,
+                          y = NULL, x = NULL),
+            fill = "darkgrey") +
+  geom_point(size = ball_bearings_size,
+             col = "steelblue") +
+  coord_equal() +
+  geom_hline(yintercept = stop_level,
+             linetype = "dotted") +
+* scale_alpha_continuous(range = c(0, 1), guide = F)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_39-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5,
+               y = 0, yend = 0) +
+  geom_abline(intercept = 1.5,
+              slope = -1) +
+  geom_abline(intercept = 1.5,
+              slope = 1) +
+  annotate(geom = "tile",
+           height = 2, width = 2,
+           x = 0 , y = -1.5) +
+  annotate(geom = "tile",
+           height = 2, width = 1.75,
+           x = 0 , y = -1.5, fill = "white") +
+  geom_rect(data = ball_bearings_collect,
+            mapping = aes(xmin = x_position - .35,
+                          xmax = x_position + .35,
+                          ymax = max(ball_bearings$level) + 1 - x_position_count*1.5,
+                          ymin = max(ball_bearings$level) + 1,
+                          group = x_position,
+                          y = NULL, x = NULL),
+            fill = "darkgrey") +
+  geom_point(size = ball_bearings_size,
+             col = "steelblue") +
+  coord_equal() +
+  geom_hline(yintercept = stop_level,
+             linetype = "dotted") +
+  scale_alpha_continuous(range = c(0, 1), guide = F) +
+* theme_void()
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_static_build_40-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+ggplot(ball_bearings) +
+  aes(y = level) +
+  aes(x = x_position) +
+  scale_y_reverse() +
+  aes(group = unit_id) +
+  geom_point(data = walls,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_point(data = pegs,
+             aes(x = unit_id, alpha = transparent),
+             col = "grey30", size = peg_size) +
+  geom_segment(x = -sqrt(n), xend = -1.5,
+               y = 0, yend = 0) +
+  geom_segment(x = sqrt(n), xend = 1.5,
+               y = 0, yend = 0) +
+  geom_abline(intercept = 1.5,
+              slope = -1) +
+  geom_abline(intercept = 1.5,
+              slope = 1) +
+  annotate(geom = "tile",
+           height = 2, width = 2,
+           x = 0 , y = -1.5) +
+  annotate(geom = "tile",
+           height = 2, width = 1.75,
+           x = 0 , y = -1.5, fill = "white") +
+  geom_rect(data = ball_bearings_collect,
+            mapping = aes(xmin = x_position - .35,
+                          xmax = x_position + .35,
+                          ymax = max(ball_bearings$level) + 1 - x_position_count*1.5,
+                          ymin = max(ball_bearings$level) + 1,
+                          group = x_position,
+                          y = NULL, x = NULL),
+            fill = "darkgrey") +
+  geom_point(size = ball_bearings_size,
+             col = "steelblue") +
+  coord_equal() +
+  geom_hline(yintercept = stop_level,
+             linetype = "dotted") +
+  scale_alpha_continuous(range = c(0, 1), guide = F) +
+  theme_void() -&gt;
+g#&lt;&lt;
+```
+]]
+.column[.content[
+
+]]
+
+---
+
+
+
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+*g +
+* gganimate::transition_time(time = time) +
+* gganimate::shadow_wake(wake_length = .05) +
+* gganimate::ease_aes("bounce-in-out")
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_animation_4-1.gif)&lt;!-- --&gt;
+]]
+
+---
+
+# Binomial distribution
+
+Now the fast way to simulating...  
+
+---
+
+
+
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+*set.seed(1999)
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(1999)
+*n_balls &lt;- 1000
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(1999)
+n_balls &lt;- 1000
+*n_perturb &lt;- 200
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(1999)
+n_balls &lt;- 1000
+n_perturb &lt;- 200
+*crossing(ball_id = 1:n_balls,
+*        1:n_perturb)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 200,000 x 2
+   ball_id `1:n_perturb`
+     &lt;int&gt;         &lt;int&gt;
+ 1       1             1
+ 2       1             2
+ 3       1             3
+ 4       1             4
+ 5       1             5
+ 6       1             6
+ 7       1             7
+ 8       1             8
+ 9       1             9
+10       1            10
+# … with 199,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(1999)
+n_balls &lt;- 1000
+n_perturb &lt;- 200
+crossing(ball_id = 1:n_balls,
+         1:n_perturb) %&gt;%
+* mutate(perturbation =
+*          sample(c(-1,1),
+*                 n(),
+*                 replace = T))
+```
+]]
+.column[.content[
+
+```
+# A tibble: 200,000 x 3
+   ball_id `1:n_perturb` perturbation
+     &lt;int&gt;         &lt;int&gt;        &lt;dbl&gt;
+ 1       1             1            1
+ 2       1             2            1
+ 3       1             3           -1
+ 4       1             4           -1
+ 5       1             5            1
+ 6       1             6            1
+ 7       1             7            1
+ 8       1             8            1
+ 9       1             9            1
+10       1            10            1
+# … with 199,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(1999)
+n_balls &lt;- 1000
+n_perturb &lt;- 200
+crossing(ball_id = 1:n_balls,
+         1:n_perturb) %&gt;%
+  mutate(perturbation =
+           sample(c(-1,1),
+                  n(),
+                  replace = T)) %&gt;%
+* group_by(ball_id)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 200,000 x 3
+# Groups:   ball_id [1,000]
+   ball_id `1:n_perturb` perturbation
+     &lt;int&gt;         &lt;int&gt;        &lt;dbl&gt;
+ 1       1             1            1
+ 2       1             2            1
+ 3       1             3           -1
+ 4       1             4           -1
+ 5       1             5            1
+ 6       1             6            1
+ 7       1             7            1
+ 8       1             8            1
+ 9       1             9            1
+10       1            10            1
+# … with 199,990 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(1999)
+n_balls &lt;- 1000
+n_perturb &lt;- 200
+crossing(ball_id = 1:n_balls,
+         1:n_perturb) %&gt;%
+  mutate(perturbation =
+           sample(c(-1,1),
+                  n(),
+                  replace = T)) %&gt;%
+  group_by(ball_id) %&gt;%
+* summarise(x_position =
+*             sum(perturbation))
+```
+]]
+.column[.content[
+
+```
+# A tibble: 1,000 x 2
+   ball_id x_position
+     &lt;int&gt;      &lt;dbl&gt;
+ 1       1         30
+ 2       2         20
+ 3       3         12
+ 4       4         -8
+ 5       5         -8
+ 6       6         10
+ 7       7         20
+ 8       8         12
+ 9       9          4
+10      10         24
+# … with 990 more rows
+```
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(1999)
+n_balls &lt;- 1000
+n_perturb &lt;- 200
+crossing(ball_id = 1:n_balls,
+         1:n_perturb) %&gt;%
+  mutate(perturbation =
+           sample(c(-1,1),
+                  n(),
+                  replace = T)) %&gt;%
+  group_by(ball_id) %&gt;%
+  summarise(x_position =
+              sum(perturbation)) %&gt;%
+* ggplot()
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_distribution_13-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(1999)
+n_balls &lt;- 1000
+n_perturb &lt;- 200
+crossing(ball_id = 1:n_balls,
+         1:n_perturb) %&gt;%
+  mutate(perturbation =
+           sample(c(-1,1),
+                  n(),
+                  replace = T)) %&gt;%
+  group_by(ball_id) %&gt;%
+  summarise(x_position =
+              sum(perturbation)) %&gt;%
+  ggplot() +
+* aes(x = x_position)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_distribution_14-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(1999)
+n_balls &lt;- 1000
+n_perturb &lt;- 200
+crossing(ball_id = 1:n_balls,
+         1:n_perturb) %&gt;%
+  mutate(perturbation =
+           sample(c(-1,1),
+                  n(),
+                  replace = T)) %&gt;%
+  group_by(ball_id) %&gt;%
+  summarise(x_position =
+              sum(perturbation)) %&gt;%
+  ggplot() +
+  aes(x = x_position) +
+* geom_histogram(binwidth = 2,
+*                col = "lightgrey",
+*                fill = "steelblue",
+*                alpha = .7)
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_distribution_18-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+
+.column[.content[
+
+```r
+set.seed(1999)
+n_balls &lt;- 1000
+n_perturb &lt;- 200
+crossing(ball_id = 1:n_balls,
+         1:n_perturb) %&gt;%
+  mutate(perturbation =
+           sample(c(-1,1),
+                  n(),
+                  replace = T)) %&gt;%
+  group_by(ball_id) %&gt;%
+  summarise(x_position =
+              sum(perturbation)) %&gt;%
+  ggplot() +
+  aes(x = x_position) +
+  geom_histogram(binwidth = 2,
+                 col = "lightgrey",
+                 fill = "steelblue",
+                 alpha = .7) +
+* theme_minimal()
+```
+]]
+.column[.content[
+![](galton_board_files/figure-html/output_distribution_19-1.png)&lt;!-- --&gt;
+]]
+
+
+
+
+
+
+
+
+
+
+&lt;style type="text/css"&gt;
+.remark-code{line-height: 1.5; font-size: 50%}
+&lt;/style&gt;
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:10",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

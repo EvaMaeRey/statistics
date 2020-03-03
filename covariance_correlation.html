@@ -13,7 +13,7 @@
 class: center, middle, inverse, title-slide
 
 # stats 101 flipbook
-## Visualizaing covariance, correlation
+## Visualizaing covariance, variance, standard deviation, correlation
 ### <br><br>Gina Reynolds, Feb 2020
 ### <br>
 
@@ -51,69 +51,451 @@ $$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n} $$
 
 
 count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_1_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_2_output-1.png)&lt;!-- --&gt;
----
-count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_3_output-1.png)&lt;!-- --&gt;
----
-count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_4_output-1.png)&lt;!-- --&gt;
----
-count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_5_output-1.png)&lt;!-- --&gt;
----
-count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_6_output-1.png)&lt;!-- --&gt;
----
-count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_7_output-1.png)&lt;!-- --&gt;
----
-count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_8_output-1.png)&lt;!-- --&gt;
----
-count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_9_output-1.png)&lt;!-- --&gt;
----
-count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_10_output-1.png)&lt;!-- --&gt;
----
-count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_11_output-1.png)&lt;!-- --&gt;
----
-count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_user_12_output-1.png)&lt;!-- --&gt;
 
 ```
-[1] 0.2260455
-```
-
-
----
-
-count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_3_1_output-1.png)&lt;!-- --&gt;
-
-```
-[1] -0.03767441
+# A tibble: 20 x 10
+       x      y mean_x  mean_y    area mean_area  sd_x  sd_y some_x some_y
+   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1  68.2 -1.98    53.8 -0.0155  -28.3       8.21  23.4  3.42   23.4  0.350
+ 2  45.2  0.625   53.8 -0.0155   -5.46      8.21  23.4  3.42   23.4  0.350
+ 3  26.4  3.50    53.8 -0.0155  -96.2       8.21  23.4  3.42   23.4  0.350
+ 4  90.7 -4.08    53.8 -0.0155 -150.        8.21  23.4  3.42   23.4  0.350
+ 5  58.0 -2.02    53.8 -0.0155   -8.43      8.21  23.4  3.42   23.4  0.350
+ 6  41.6 -0.321   53.8 -0.0155    3.72      8.21  23.4  3.42   23.4  0.350
+ 7  67.7  7.33    53.8 -0.0155  102.        8.21  23.4  3.42   23.4  0.350
+ 8 -10.4 -3.46    53.8 -0.0155  221.        8.21  23.4  3.42   23.4  0.350
+ 9  65.4 -2.19    53.8 -0.0155  -25.3       8.21  23.4  3.42   23.4  0.350
+10  53.3 -2.10    53.8 -0.0155    1.07      8.21  23.4  3.42   23.4  0.350
+11  58.5  1.87    53.8 -0.0155    8.84      8.21  23.4  3.42   23.4  0.350
+12  45.9 -1.19    53.8 -0.0155    9.19      8.21  23.4  3.42   23.4  0.350
+13  73.9  1.54    53.8 -0.0155   31.3       8.21  23.4  3.42   23.4  0.350
+14  60.1 -6.83    53.8 -0.0155  -43.5       8.21  23.4  3.42   23.4  0.350
+15  99.0  1.57    53.8 -0.0155   71.8       8.21  23.4  3.42   23.4  0.350
+16  44.2  3.47    53.8 -0.0155  -33.3       8.21  23.4  3.42   23.4  0.350
+17  45.0  1.48    53.8 -0.0155  -13.2       8.21  23.4  3.42   23.4  0.350
+18  35.9 -3.43    53.8 -0.0155   60.9       8.21  23.4  3.42   23.4  0.350
+19  39.8  0.716   53.8 -0.0155  -10.2       8.21  23.4  3.42   23.4  0.350
+20  66.9  5.18    53.8 -0.0155   68.2       8.21  23.4  3.42   23.4  0.350
 ```
 ---
 count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_3_2_output-1.png)&lt;!-- --&gt;
+
+---
+count: false
 
 ```
-[1] -0.304365
+# A tibble: 20 x 10
+       x      y mean_x  mean_y    area mean_area  sd_x  sd_y some_x some_y
+   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1  68.2 -1.98    53.8 -0.0155  -28.3       8.21  23.4  3.42   23.4  0.350
+ 2  45.2  0.625   53.8 -0.0155   -5.46      8.21  23.4  3.42   23.4  0.350
+ 3  26.4  3.50    53.8 -0.0155  -96.2       8.21  23.4  3.42   23.4  0.350
+ 4  90.7 -4.08    53.8 -0.0155 -150.        8.21  23.4  3.42   23.4  0.350
+ 5  58.0 -2.02    53.8 -0.0155   -8.43      8.21  23.4  3.42   23.4  0.350
+ 6  41.6 -0.321   53.8 -0.0155    3.72      8.21  23.4  3.42   23.4  0.350
+ 7  67.7  7.33    53.8 -0.0155  102.        8.21  23.4  3.42   23.4  0.350
+ 8 -10.4 -3.46    53.8 -0.0155  221.        8.21  23.4  3.42   23.4  0.350
+ 9  65.4 -2.19    53.8 -0.0155  -25.3       8.21  23.4  3.42   23.4  0.350
+10  53.3 -2.10    53.8 -0.0155    1.07      8.21  23.4  3.42   23.4  0.350
+11  58.5  1.87    53.8 -0.0155    8.84      8.21  23.4  3.42   23.4  0.350
+12  45.9 -1.19    53.8 -0.0155    9.19      8.21  23.4  3.42   23.4  0.350
+13  73.9  1.54    53.8 -0.0155   31.3       8.21  23.4  3.42   23.4  0.350
+14  60.1 -6.83    53.8 -0.0155  -43.5       8.21  23.4  3.42   23.4  0.350
+15  99.0  1.57    53.8 -0.0155   71.8       8.21  23.4  3.42   23.4  0.350
+16  44.2  3.47    53.8 -0.0155  -33.3       8.21  23.4  3.42   23.4  0.350
+17  45.0  1.48    53.8 -0.0155  -13.2       8.21  23.4  3.42   23.4  0.350
+18  35.9 -3.43    53.8 -0.0155   60.9       8.21  23.4  3.42   23.4  0.350
+19  39.8  0.716   53.8 -0.0155  -10.2       8.21  23.4  3.42   23.4  0.350
+20  66.9  5.18    53.8 -0.0155   68.2       8.21  23.4  3.42   23.4  0.350
 ```
 ---
 count: false
-![](covariance_correlation_files/figure-html/cov_first_steps_3_3_output-1.png)&lt;!-- --&gt;
+![](covariance_correlation_files/figure-html/cov_steps_auto_5_output-1.png)&lt;!-- --&gt;
+---
+count: false
+![](covariance_correlation_files/figure-html/cov_steps_auto_6_output-1.png)&lt;!-- --&gt;
+---
+count: false
+![](covariance_correlation_files/figure-html/cov_steps_auto_7_output-1.png)&lt;!-- --&gt;
+---
+count: false
+![](covariance_correlation_files/figure-html/cov_steps_auto_8_output-1.png)&lt;!-- --&gt;
+---
+count: false
+![](covariance_correlation_files/figure-html/cov_steps_auto_9_output-1.png)&lt;!-- --&gt;
+---
+count: false
+![](covariance_correlation_files/figure-html/cov_steps_auto_10_output-1.png)&lt;!-- --&gt;
+---
+count: false
+![](covariance_correlation_files/figure-html/cov_steps_auto_11_output-1.png)&lt;!-- --&gt;
+
+
+---
+
+
+
+
+
+---
+# 
+
+
+
+```r
+plot_change_ylab_to_x &lt;- function(plot){
+  
+  plot +
+    labs(y = "x")
+  
+}
+
+plot_correct_aspect_ratio &lt;- function(plot){
+  
+  plot + 
+    coord_equal()
+  
+}
+
+
+# plot_add_standard_deviation &lt;- function(plot, title){
+#   
+#   plot + 
+#     
+#   
+#   
+# }
+```
+
+
+
+---
+
+
+class: split-40
+count: false
+.column[.content[
+
+```r
+*set.seed(199402)
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(199402)  
+*create_x_y(relationship = 1,
+*          noise = 0)
+```
+]]
+.column[.content[
 
 ```
-[1] -0.06748101
+# A tibble: 20 x 10
+       x     y mean_x mean_y     area mean_area  sd_x  sd_y some_x some_y
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1  68.2  68.2   53.8   53.8  209.         522.  23.4  23.4   23.4   22.3
+ 2  45.2  45.2   53.8   53.8   72.6        522.  23.4  23.4   23.4   22.3
+ 3  26.4  26.4   53.8   53.8  749.         522.  23.4  23.4   23.4   22.3
+ 4  90.7  90.7   53.8   53.8 1366.         522.  23.4  23.4   23.4   22.3
+ 5  58.0  58.0   53.8   53.8   17.7        522.  23.4  23.4   23.4   22.3
+ 6  41.6  41.6   53.8   53.8  149.         522.  23.4  23.4   23.4   22.3
+ 7  67.7  67.7   53.8   53.8  194.         522.  23.4  23.4   23.4   22.3
+ 8 -10.4 -10.4   53.8   53.8 4118.         522.  23.4  23.4   23.4   22.3
+ 9  65.4  65.4   53.8   53.8  136.         522.  23.4  23.4   23.4   22.3
+10  53.3  53.3   53.8   53.8    0.265      522.  23.4  23.4   23.4   22.3
+11  58.5  58.5   53.8   53.8   22.0        522.  23.4  23.4   23.4   22.3
+12  45.9  45.9   53.8   53.8   61.4        522.  23.4  23.4   23.4   22.3
+13  73.9  73.9   53.8   53.8  406.         522.  23.4  23.4   23.4   22.3
+14  60.1  60.1   53.8   53.8   40.7        522.  23.4  23.4   23.4   22.3
+15  99.0  99.0   53.8   53.8 2045.         522.  23.4  23.4   23.4   22.3
+16  44.2  44.2   53.8   53.8   91.5        522.  23.4  23.4   23.4   22.3
+17  45.0  45.0   53.8   53.8   77.4        522.  23.4  23.4   23.4   22.3
+18  35.9  35.9   53.8   53.8  318.         522.  23.4  23.4   23.4   22.3
+19  39.8  39.8   53.8   53.8  195.         522.  23.4  23.4   23.4   22.3
+20  66.9  66.9   53.8   53.8  172.         522.  23.4  23.4   23.4   22.3
 ```
+]]
+---
+class: split-40
+count: false
+.column[.content[
 
+```r
+set.seed(199402)  
+create_x_y(relationship = 1,  
+           noise = 0) -&gt;  
+* data
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 1,  
+           noise = 0) -&gt;  
+  data  
+*data
+```
+]]
+.column[.content[
+
+```
+# A tibble: 20 x 10
+       x     y mean_x mean_y     area mean_area  sd_x  sd_y some_x some_y
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1  68.2  68.2   53.8   53.8  209.         522.  23.4  23.4   23.4   22.3
+ 2  45.2  45.2   53.8   53.8   72.6        522.  23.4  23.4   23.4   22.3
+ 3  26.4  26.4   53.8   53.8  749.         522.  23.4  23.4   23.4   22.3
+ 4  90.7  90.7   53.8   53.8 1366.         522.  23.4  23.4   23.4   22.3
+ 5  58.0  58.0   53.8   53.8   17.7        522.  23.4  23.4   23.4   22.3
+ 6  41.6  41.6   53.8   53.8  149.         522.  23.4  23.4   23.4   22.3
+ 7  67.7  67.7   53.8   53.8  194.         522.  23.4  23.4   23.4   22.3
+ 8 -10.4 -10.4   53.8   53.8 4118.         522.  23.4  23.4   23.4   22.3
+ 9  65.4  65.4   53.8   53.8  136.         522.  23.4  23.4   23.4   22.3
+10  53.3  53.3   53.8   53.8    0.265      522.  23.4  23.4   23.4   22.3
+11  58.5  58.5   53.8   53.8   22.0        522.  23.4  23.4   23.4   22.3
+12  45.9  45.9   53.8   53.8   61.4        522.  23.4  23.4   23.4   22.3
+13  73.9  73.9   53.8   53.8  406.         522.  23.4  23.4   23.4   22.3
+14  60.1  60.1   53.8   53.8   40.7        522.  23.4  23.4   23.4   22.3
+15  99.0  99.0   53.8   53.8 2045.         522.  23.4  23.4   23.4   22.3
+16  44.2  44.2   53.8   53.8   91.5        522.  23.4  23.4   23.4   22.3
+17  45.0  45.0   53.8   53.8   77.4        522.  23.4  23.4   23.4   22.3
+18  35.9  35.9   53.8   53.8  318.         522.  23.4  23.4   23.4   22.3
+19  39.8  39.8   53.8   53.8  195.         522.  23.4  23.4   23.4   22.3
+20  66.9  66.9   53.8   53.8  172.         522.  23.4  23.4   23.4   22.3
+```
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 1,  
+           noise = 0) -&gt;  
+  data  
+data %&gt;%  
+* data_create_scatterplot()
+```
+]]
+.column[.content[
+![](covariance_correlation_files/figure-html/variance_steps_auto_5_output-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 1,  
+           noise = 0) -&gt;  
+  data  
+data %&gt;%  
+  data_create_scatterplot() %&gt;%  
+* plot_change_ylab_to_x()
+```
+]]
+.column[.content[
+![](covariance_correlation_files/figure-html/variance_steps_auto_6_output-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 1,  
+           noise = 0) -&gt;  
+  data  
+data %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_change_ylab_to_x() %&gt;%  
+* plot_correct_aspect_ratio()
+```
+]]
+.column[.content[
+![](covariance_correlation_files/figure-html/variance_steps_auto_7_output-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 1,  
+           noise = 0) -&gt;  
+  data  
+data %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_change_ylab_to_x() %&gt;%  
+  plot_correct_aspect_ratio() %&gt;%  
+* plot_draw_mean_x()
+```
+]]
+.column[.content[
+![](covariance_correlation_files/figure-html/variance_steps_auto_8_output-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 1,  
+           noise = 0) -&gt;  
+  data  
+data %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_change_ylab_to_x() %&gt;%  
+  plot_correct_aspect_ratio() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+* plot_draw_mean_y()
+```
+]]
+.column[.content[
+![](covariance_correlation_files/figure-html/variance_steps_auto_9_output-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 1,  
+           noise = 0) -&gt;  
+  data  
+data %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_change_ylab_to_x() %&gt;%  
+  plot_correct_aspect_ratio() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+* plot_draw_differences_x()
+```
+]]
+.column[.content[
+![](covariance_correlation_files/figure-html/variance_steps_auto_10_output-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 1,  
+           noise = 0) -&gt;  
+  data  
+data %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_change_ylab_to_x() %&gt;%  
+  plot_correct_aspect_ratio() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+  plot_draw_differences_x() %&gt;%  
+* plot_draw_differences_y()
+```
+]]
+.column[.content[
+![](covariance_correlation_files/figure-html/variance_steps_auto_11_output-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 1,  
+           noise = 0) -&gt;  
+  data  
+data %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_change_ylab_to_x() %&gt;%  
+  plot_correct_aspect_ratio() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+  plot_draw_differences_x() %&gt;%  
+  plot_draw_differences_y() %&gt;%  
+* plot_multiply_differences()
+```
+]]
+.column[.content[
+![](covariance_correlation_files/figure-html/variance_steps_auto_12_output-1.png)&lt;!-- --&gt;
+]]
+---
+class: split-40
+count: false
+.column[.content[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 1,  
+           noise = 0) -&gt;  
+  data  
+data %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_change_ylab_to_x() %&gt;%  
+  plot_correct_aspect_ratio() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+  plot_draw_differences_x() %&gt;%  
+  plot_draw_differences_y() %&gt;%  
+  plot_multiply_differences() %&gt;%  
+* plot_take_average_rectangle()
+```
+]]
+.column[.content[
+![](covariance_correlation_files/figure-html/variance_steps_auto_13_output-1.png)&lt;!-- --&gt;
+]]
+
+
+
+
+---
+
+count: false
+![](covariance_correlation_files/figure-html/cor_steps_3_1_output-1.png)&lt;!-- --&gt;
+---
+count: false
+![](covariance_correlation_files/figure-html/cor_steps_3_2_output-1.png)&lt;!-- --&gt;
+---
+count: false
+![](covariance_correlation_files/figure-html/cor_steps_3_3_output-1.png)&lt;!-- --&gt;
+
+---
+
+
+count: false
+![](covariance_correlation_files/figure-html/cor_steps_3_1_output-1.png)&lt;!-- --&gt;
+---
+count: false
+![](covariance_correlation_files/figure-html/cor_steps_3_2_output-1.png)&lt;!-- --&gt;
+---
+count: false
+![](covariance_correlation_files/figure-html/cor_steps_3_3_output-1.png)&lt;!-- --&gt;
 
 
 
