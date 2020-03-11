@@ -15,12 +15,14 @@ You might need some guidance for actually getting the statistical work done.
 
 ## Statistical tests
 
-- [Basics of Bivariate Statistical Tests](basic_bivariate_statistical_test.html){target="_blank"}
+- [Basics of Bivariate Statistical Tests](basic_bivariate_statistical_tests.html){target="_blank"}
 
   - correlation test
   - t.test
   - anova
   - chi-squared
+  
+  
   
 ## Modeling
 
