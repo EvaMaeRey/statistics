@@ -1,0 +1,335 @@
+---
+title: "Central Limit Theorem"
+subtitle: "'the wonderful form of cosmic order'"
+author: "Gina Reynolds, March 2020"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, hygge, ninjutsu]
+    nature:
+      ratio: 16:10
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r setup, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scracth can be time consuming
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = T, fig.retina = 3)
+library(flipbookr)
+library(tidyverse)
+clt_theme <- theme_minimal() + 
+  theme(plot.background = element_rect("grey96", color = "grey90")) 
+```
+
+
+---
+
+> [I know of scarcely anything so apt to impress the imagination as the wonderful form of cosmic order expressed by the "Law of Frequency of Error". The law would have been personified by the Greeks and deified, if they had known of it. It reigns with serenity and in complete self-effacement, amidst the wildest confusion. The huger the mob, and the greater the apparent anarchy, the more perfect is its sway. It is the supreme law of Unreason. Whenever a large sample of chaotic elements are taken in hand and marshalled in the order of their magnitude, an unsuspected and most beautiful form of regularity proves to have been latent all along. - Galton]
+
+
+---
+class: middle, center
+
+# Mean of random sample from normal distribution
+
+
+---
+
+
+`r chunk_reveal("rnorm1", break_type = 1)`
+
+```{r rnorm1, include = F}
+tibble(var = rnorm(50000)) %>% 
+  ggplot() +
+  aes(x = var) +
+  geom_rug() +
+  geom_histogram(alpha = .15) +
+  clt_theme +
+  geom_rug(data = . %>% 
+             summarise(mean_var = mean(var)),
+           mapping = aes(x = mean_var),
+           color = "red",
+           size = 2) +
+  scale_x_continuous(limits = c(-3.5,3.5)) 
+```
+
+---
+
+
+`r chunk_reveal("rnorm", break_type = 20)`
+
+```{r rnorm, include = F}
+tibble(var = rnorm(50)) %>% 
+  ggplot() +
+  aes(x = var) +
+  geom_rug() +
+  geom_histogram(alpha = .15) +
+  clt_theme +
+  geom_rug(data = . %>% 
+             summarise(mean_var = mean(var)),
+           mapping = aes(x = mean_var),
+           color = "goldenrod",
+           size = 2) +
+  scale_y_continuous(limits = c(0,12)) +
+  scale_x_continuous(limits = c(-3.5,3.5)) 
+```
+
+---
+
+
+`r chunk_reveal("rnorm_sample", break_type = 1)`
+
+```{r rnorm_sample, include = F}
+tibble(trial = 1:1000) %>% 
+  crossing(unit_id = 1:50) %>% 
+  group_by(trial) %>% 
+  mutate(var = rnorm(1:50)) %>% 
+  summarise(sample_mean = mean(var)) %>% 
+  ggplot() +
+  aes(x = sample_mean) +
+  geom_rug(color = "goldenrod",
+           alpha = .2) +
+  geom_histogram(alpha = .6,
+                 fill = "goldenrod", aes(y = ..density..)
+                 ) +
+  geom_density(color = "grey") +
+  clt_theme +
+  scale_x_continuous(limits = c(-3.5,3.5))
+```
+
+
+
+---
+class: middle, center
+
+# Mean of random sample from uniform distribution
+
+---
+
+`r chunk_reveal("runif1", break_type = 1)`
+
+```{r runif1, include = F}
+tibble(var = runif(100000)) %>% 
+  ggplot() +
+  aes(x = var) +
+  geom_rug() +
+  geom_histogram(alpha = .15,
+                 color = "white") +
+  clt_theme +
+  geom_rug(data = . %>% 
+             summarise(mean_var = mean(var)),
+           mapping = aes(x = mean_var),
+           color = "red",
+           size = 2) +
+  scale_x_continuous(limits = c(-.05,1.05))
+```
+
+
+---
+
+`r chunk_reveal("runif", break_type = 20)`
+
+```{r runif, include = F}
+tibble(var = runif(50)) %>% 
+  ggplot() +
+  aes(x = var) +
+  geom_rug() +
+  geom_histogram(alpha = .15) +
+  clt_theme +
+  geom_rug(data = . %>% 
+             summarise(mean_var = mean(var)),
+           mapping = aes(x = mean_var),
+           color = "goldenrod",
+           size = 2) +
+  scale_y_continuous(limits = c(0,12)) +
+  scale_x_continuous(limits = c(-.05,1.05))
+```
+
+
+---
+
+
+`r chunk_reveal("runif_sample", break_type = 1)`
+
+```{r runif_sample, include = F}
+tibble(trial = 1:1000) %>% 
+  crossing(unit_id = 1:50) %>% 
+  group_by(trial) %>% 
+  mutate(var = runif(1:50)) %>% 
+  summarise(sample_mean = mean(var)) %>% 
+  ggplot() +
+  aes(x = sample_mean) +
+  geom_rug(color = "goldenrod",
+           alpha = .2) +
+  geom_histogram(alpha = .6,
+                 fill = "goldenrod", aes(y = ..density..)
+                 ) +
+  geom_density(color = "grey") +
+  clt_theme +
+  scale_x_continuous(limits = c(-.05,1.05))
+```
+
+
+---
+class: middle, center
+
+# Mean of random sample from skewed distribution
+
+
+---
+
+`r chunk_reveal("skew1", break_type = 1)`
+
+```{r skew1, include = F}
+tibble(var = runif(3000)^3) %>% 
+  ggplot() +
+  aes(x = var) +
+  geom_rug() +
+  geom_histogram(alpha = .15) +
+  clt_theme +
+  geom_rug(data = . %>% 
+             summarise(mean_var = mean(var)),
+           mapping = aes(x = mean_var),
+           color = "red",
+           size = 2) +
+  scale_x_continuous(limits = c(-.05,1.05))
+```
+
+---
+
+`r chunk_reveal("skew", break_type = 20)`
+
+```{r skew, include = F}
+tibble(var = runif(50)^3) %>% 
+  ggplot() +
+  aes(x = var) +
+  geom_rug() +
+  geom_histogram(alpha = .15) +
+  clt_theme +
+  geom_rug(data = . %>% 
+             summarise(mean_var = mean(var)),
+           mapping = aes(x = mean_var),
+           color = "goldenrod",
+           size = 2) +
+  scale_y_continuous(limits = c(0,15)) +
+  scale_x_continuous(limits = c(-.05,1.05))
+```
+
+---
+
+
+`r chunk_reveal("skew_sample", break_type = 1)`
+
+
+```{r skew_sample, include = F}
+tibble(trial = 1:1000) %>% 
+  crossing(unit_id = 1:50) %>% 
+  group_by(trial) %>% 
+  mutate(var = runif(1:50)^3) %>% 
+  summarise(sample_mean = mean(var)) %>% 
+  ggplot() +
+  aes(x = sample_mean) +
+  geom_rug(color = "goldenrod",
+           alpha = .2) +
+  geom_histogram(alpha = .6,
+                 fill = "goldenrod", 
+                 aes(y = ..density..)
+                 ) +
+  geom_density(color = "grey") +
+  clt_theme +
+  scale_x_continuous(limits = c(-.05,1.05))
+```
+
+
+
+
+---
+class: middle, center
+
+# Mean of random sample from bimodal distribution
+
+
+---
+
+`r chunk_reveal("bimodal1", break_type = 1)`
+
+```{r bimodal1, include = F}
+tibble(var = c(rnorm(3000), 
+               rnorm(2000, mean = 4))) %>% 
+  ggplot() +
+  aes(x = var) +
+  geom_rug() +
+  geom_histogram(alpha = .15) +
+  clt_theme +
+  geom_rug(data = . %>% 
+             summarise(mean_var = mean(var)),
+           mapping = aes(x = mean_var),
+           color = "red",
+           size = 2) +
+  scale_x_continuous(limits = c(-3.5,7.3))
+```
+
+
+
+---
+
+`r chunk_reveal("bimodal", break_type = 20)`
+
+```{r bimodal, include = F}
+tibble(var = c(rnorm(30), 
+               rnorm(20, mean = 4))) %>% 
+  ggplot() +
+  aes(x = var) +
+  geom_rug() +
+  geom_histogram(alpha = .15) +
+  clt_theme +
+  geom_rug(data = . %>% 
+             summarise(mean_var = mean(var)),
+           mapping = aes(x = mean_var),
+           color = "goldenrod",
+           size = 2) +
+  scale_y_continuous(limits = c(0,12)) +
+  scale_x_continuous(limits = c(-3.5,7.3))
+```
+
+---
+
+
+`r chunk_reveal("bimodal_sample", break_type = 1)`
+
+```{r bimodal_sample, include = F}
+tibble(trial = 1:1000) %>% 
+  crossing(unit_id = 1:50) %>% 
+  group_by(trial) %>% 
+  mutate(var = c(rnorm(30), 
+               rnorm(20, mean = 4))) %>% 
+  summarise(sample_mean = mean(var)) %>% 
+  ggplot() +
+  aes(x = sample_mean) +
+  geom_rug(color = "goldenrod",
+           alpha = .2) +
+  geom_histogram(alpha = .6,
+                 fill = "goldenrod", 
+                 aes(y = ..density..)
+                 ) +
+  geom_density(color = "grey") +
+  clt_theme +
+  scale_x_continuous(limits = c(-3.5,7.3))
+```
+
+
+---
+class: center, middle
+
+
+*The flipbooked portion of this presentation was created with the new {flipbookr} package.  Learn more: https://evamaerey.github.io/flipbooks/about*  
+
+---
+
+```{css, eval = TRUE, echo = FALSE}
+.remark-code{line-height: 1.5; font-size: 80%}
+```
