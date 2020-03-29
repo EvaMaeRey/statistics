@@ -2,7 +2,10 @@
 title: "Statistics in R"
 author: "Evangeline Reynolds"
 date: "3/2/2020"
-output: html_document
+output: 
+  html_document:
+    theme: yeti
+    highlight: monochrome
 ---
 
 You might need some guidance for actually getting the statistical work done.

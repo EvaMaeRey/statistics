@@ -21,7 +21,7 @@ output:
 ```{r, include = F}
 library(tidyverse)
 library(flipbookr)
-knitr::opts_chunk$set(cache = T)
+knitr::opts_chunk$set(cache = F, comment = "")
 ```
 
 ---
@@ -331,7 +331,117 @@ stargazer::stargazer(
 
 
 
+---
+
+# the maths!
+
+---
+
+`r chunk_reveal("automatically")`
+
+```{r automatically, include = F}
+# create artificial data set
+#  set seed for reproducibility
+set.seed(501)
+ 
+#  head_size in cm
+rnorm(n = 20, mean = 30, sd = 10) ->
+  head_size
+ 
+#  tail_length in kilogram the relationship between head_size
+#  and tail_length is completely random
+head_size *
+  rnorm(20, 0, sd = 15) + 
+  80  ->
+tail_length
+ 
+#  join head_size and tail_length in data frame
+data.frame(head_size, tail_length) ->
+  df
+
+lm(tail_length ~ head_size, data = df) %>% 
+  summary() ->
+reg
+```
+
+---
+
+beta = ((X'X)^(-1))X'y
+res = y - beta1 - beta2*X2
+VCV = (1/(n-k))res'res(X'X)^(-1)
+
+---
+
+`r chunk_reveal("manual")`
+
+
+
+```{r manual, include = F}
+## build OLS estimator manually
+ 
+#  define X matrix and y vector
+cbind(1, df$head_size) %>% 
+  as.matrix() -> 
+  X 
+as.matrix(df$tail_length) ->
+  y
+ 
+#  estimate the coeficients beta
+t(X) %*% X %>% 
+solve() %*% 
+  t(X) %*% 
+  y ->
+  beta
+ 
+## calculate residuals
+y - 
+  beta[1] - 
+  (beta[2] * X[,2]) %>% 
+as.matrix() ->
+  res
+
+## define the number of observations and the number of
+#  parameters 
+nrow(df) -> 
+  n
+
+ncol(X) ->
+  k
+ 
+## calculate the Variance-Covariance matrix VCV
+
+1/(n - k) * 
+  as.numeric(t(res) %*% res) * 
+  solve(t(X) %*% X) ->
+VCV
+ 
+## calculate standard errors se of coefficients
+diag(VCV) %>% 
+  sqrt() ->
+se
+ 
+## calculate the p-values
+rbind(2*pt(abs(beta[1]/se[1]), df = n - k,
+                      lower.tail = FALSE),
+                 2*pt(abs(beta[2]/se[2]), df = n - k,
+                      lower.tail = FALSE)) ->
+  p_value
+ 
+## combine all necessary information
+as.data.frame(cbind(c("(Intercept)","head_size"),
+                                beta,se,p_value)) ->
+  output
+c("Coefficients:","Estimate", 
+                   "Std. Error","Pr(>|t|)") ->
+  names(output)
+ 
+#compare automatic lm and manual output
+output
+summary(reg)
+```
+
+
 
 ```{css, eval = TRUE, echo = F}
-.remark-code{line-height: 1.5; font-size: 80%}
+.remark-code{line-head_size: 1.5; font-size: 80%}
 ```
