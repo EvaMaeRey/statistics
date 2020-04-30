@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
   <head>
     <title>Basic Bivariate Statistical Tests</title>
     <meta charset="utf-8" />
@@ -13,14 +13,14 @@
 class: center, middle, inverse, title-slide
 
 # Basic Bivariate Statistical Tests
-## made with flipbookr and xaringan
+## Last Updated, April 30, 2020
 ### Gina Reynolds, January 2020
 
 ---
 
 
 
-In this resouce, we will ask several questions:
+In this resource, we will ask several questions:
 
 - How do we visualize the relationship between two variables?
 
@@ -34,10 +34,59 @@ In this resouce, we will ask several questions:
 
 --
 
-- Given this, should I consider the relationship too likely to have arisen just by chance? Is the p-value &lt; `\(\alpha\)`? Do I reject the null or not?
+- Given this, should I consider the relationship too likely to have arisen just by chance? Is the p-value &lt; `\(\alpha\)`? Given this, should I reject the null or not?
 
 ---
 
+# Visualization
+
+- use ggplot2
+- mostly one variable on x and one on y (but not always, other options too)
+
+---
+
+# Quantifying strength of relationships
+
+
+--
+
+- Correlation Coefficient (-1, 0, 1)
+
+--
+
+- Difference-in-means and t-statistic
+
+--
+
+- Chi-Squared
+
+---
+
+# Statistical inference
+
+How likely is it that such a strong relationship as the one I observe (or stronger) is just the product of chance. 
+
+--
+
+If the null is true (often statistical independence), then how likely is it to observe stuch a strong relationship.
+
+---
+
+# Basic Statistical tests
+
+- Correlation test
+
+--
+
+- ttest
+
+--
+
+- chi squared test
+
+
+
+---
 
 
 
@@ -54,6 +103,9 @@ library(tidyverse)
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -66,6 +118,9 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -95,6 +150,9 @@ set.seed(2019)
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -125,6 +183,9 @@ gapminder %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -156,6 +217,9 @@ gapminder %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -188,6 +252,9 @@ gapminder %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -224,6 +291,9 @@ gapminder %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -264,6 +334,9 @@ gapminder %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -306,6 +379,9 @@ gapminder %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -349,6 +425,9 @@ gapminder %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -368,7 +447,7 @@ gapminder %&gt;%
   mutate(gdppercap_log10 =  
            log10(gdpPercap)) %&gt;%  
   sample_n(50, replace = F) -&gt;  
-*gm_2007_sample
+*gm_2007_sample_50
 ```
 ]]
 .column[.content[
@@ -388,10 +467,13 @@ Does information about the value of "x" tell me information about the probable v
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-*gm_2007_sample
+*gm_2007_sample_50
 ```
 ]]
 .column[.content[
@@ -416,10 +498,13 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
 * ggplot()
 ```
 ]]
@@ -429,10 +514,13 @@ gm_2007_sample %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
   ggplot() +  
 * aes(x = gdppercap_log10)
 ```
@@ -443,10 +531,13 @@ gm_2007_sample %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
   ggplot() +  
   aes(x = gdppercap_log10) +  
 * aes(y = lifeExp)
@@ -458,14 +549,18 @@ gm_2007_sample %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
   ggplot() +  
   aes(x = gdppercap_log10) +  
   aes(y = lifeExp) +  
 * geom_point(alpha = .5,
+*            size = 5,
 *            color = "magenta")
 ```
 ]]
@@ -475,16 +570,20 @@ gm_2007_sample %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
   ggplot() +  
   aes(x = gdppercap_log10) +  
   aes(y = lifeExp) +  
   geom_point(alpha = .5,  
+             size = 5,  
              color = "magenta") +  
-* theme_minimal()
+* theme_minimal(base_size = 15)
 ```
 ]]
 .column[.content[
@@ -526,12 +625,15 @@ Note: The normalized version of covariance is Pearson's correlation coefficient.
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 *cor.test(
-* x = gm_2007_sample$gdppercap_log10,
-* y = gm_2007_sample$lifeExp
+* x = gm_2007_sample_50$gdppercap_log10,
+* y = gm_2007_sample_50$lifeExp
 * )
 ```
 ]]
@@ -541,7 +643,7 @@ count: false
 
 	Pearson's product-moment correlation
 
-data:  gm_2007_sample$gdppercap_log10 and gm_2007_sample$lifeExp
+data:  gm_2007_sample_50$gdppercap_log10 and gm_2007_sample_50$lifeExp
 t = 14.437, df = 48, p-value &lt; 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
@@ -554,14 +656,19 @@ sample estimates:
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 cor.test(  
-  x = gm_2007_sample$gdppercap_log10,  
-  y = gm_2007_sample$lifeExp  
+  x = gm_2007_sample_50$gdppercap_log10,  
+  y = gm_2007_sample_50$lifeExp  
   )  
-* # using a new pipe from the magrittr package
+
+
+# using a new pipe from the magrittr package
 *library(magrittr)
 ```
 ]]
@@ -571,7 +678,7 @@ cor.test(
 
 	Pearson's product-moment correlation
 
-data:  gm_2007_sample$gdppercap_log10 and gm_2007_sample$lifeExp
+data:  gm_2007_sample_50$gdppercap_log10 and gm_2007_sample_50$lifeExp
 t = 14.437, df = 48, p-value &lt; 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
@@ -584,16 +691,21 @@ sample estimates:
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 cor.test(  
-  x = gm_2007_sample$gdppercap_log10,  
-  y = gm_2007_sample$lifeExp  
+  x = gm_2007_sample_50$gdppercap_log10,  
+  y = gm_2007_sample_50$lifeExp  
   )  
-  # using a new pipe from the magrittr package
+
+
+# using a new pipe from the magrittr package
 library(magrittr)  
-*gm_2007_sample   # state what data vars come from
+*gm_2007_sample_50   # state what data vars come from
 ```
 ]]
 .column[.content[
@@ -602,7 +714,7 @@ library(magrittr)
 
 	Pearson's product-moment correlation
 
-data:  gm_2007_sample$gdppercap_log10 and gm_2007_sample$lifeExp
+data:  gm_2007_sample_50$gdppercap_log10 and gm_2007_sample_50$lifeExp
 t = 14.437, df = 48, p-value &lt; 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
@@ -632,16 +744,21 @@ sample estimates:
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 cor.test(  
-  x = gm_2007_sample$gdppercap_log10,  
-  y = gm_2007_sample$lifeExp  
+  x = gm_2007_sample_50$gdppercap_log10,  
+  y = gm_2007_sample_50$lifeExp  
   )  
-  # using a new pipe from the magrittr package
+
+
+# using a new pipe from the magrittr package
 library(magrittr)  
-gm_2007_sample %$%  # state what data vars come from
+gm_2007_sample_50 %$%  # state what data vars come from
 * cor.test(x = gdppercap_log10,
 *          y = lifeExp)
 ```
@@ -652,7 +769,7 @@ gm_2007_sample %$%  # state what data vars come from
 
 	Pearson's product-moment correlation
 
-data:  gm_2007_sample$gdppercap_log10 and gm_2007_sample$lifeExp
+data:  gm_2007_sample_50$gdppercap_log10 and gm_2007_sample_50$lifeExp
 t = 14.437, df = 48, p-value &lt; 2.2e-16
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
@@ -690,10 +807,13 @@ class: inverse, center, middle
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-*ggplot(gm_2007_sample)
+*ggplot(gm_2007_sample_50)
 ```
 ]]
 .column[.content[
@@ -702,10 +822,13 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
 * aes(y = lifeExp)
 ```
 ]]
@@ -715,10 +838,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(y = lifeExp) +  
 * aes(x = asia)
 ```
@@ -729,10 +855,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(y = lifeExp) +  
   aes(x = asia) +  
 * aes(fill = asia)
@@ -744,10 +873,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(y = lifeExp) +  
   aes(x = asia) +  
   aes(fill = asia) +  
@@ -760,10 +892,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(y = lifeExp) +  
   aes(x = asia) +  
   aes(fill = asia) +  
@@ -776,6 +911,34 @@ ggplot(gm_2007_sample) +
 .column[.content[
 &lt;img src="basic_bivariate_statistical_tests_files/figure-html/t_plot_auto_6_output-1.png" width="432" /&gt;
 ]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+ggplot(gm_2007_sample_50) +  
+  aes(y = lifeExp) +  
+  aes(x = asia) +  
+  aes(fill = asia) +  
+  geom_boxplot() +  
+  geom_jitter(height = 0,  
+              width = .2,  
+              alpha = .3) +  
+* geom_point(data  = . %&gt;%
+*              group_by(asia) %&gt;%
+*              summarize(mean_life_exp = mean(lifeExp)),
+*            aes(y = mean_life_exp),
+*            color = "goldenrod",
+*            size = 5)
+```
+]]
+.column[.content[
+&lt;img src="basic_bivariate_statistical_tests_files/figure-html/t_plot_auto_7_output-1.png" width="432" /&gt;
+]]
 
 
 
@@ -787,10 +950,13 @@ ggplot(gm_2007_sample) +
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-*ggplot(gm_2007_sample)
+*ggplot(gm_2007_sample_50)
 ```
 ]]
 .column[.content[
@@ -799,10 +965,13 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
 * aes(x = lifeExp)
 ```
 ]]
@@ -812,10 +981,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(x = lifeExp) +  
 * aes(fill = asia)
 ```
@@ -826,10 +998,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(x = lifeExp) +  
   aes(fill = asia) +  
 * aes(col = asia)
@@ -841,10 +1016,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(x = lifeExp) +  
   aes(fill = asia) +  
   aes(col = asia) +  
@@ -857,10 +1035,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(x = lifeExp) +  
   aes(fill = asia) +  
   aes(col = asia) +  
@@ -874,10 +1055,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(x = lifeExp) +  
   aes(fill = asia) +  
   aes(col = asia) +  
@@ -888,6 +1072,32 @@ ggplot(gm_2007_sample) +
 ]]
 .column[.content[
 &lt;img src="basic_bivariate_statistical_tests_files/figure-html/hist_2_auto_7_output-1.png" width="432" /&gt;
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+ggplot(gm_2007_sample_50) +  
+  aes(x = lifeExp) +  
+  aes(fill = asia) +  
+  aes(col = asia) +  
+  geom_histogram(alpha = .2) +  
+  facet_wrap(~ asia, nrow = 2) +  
+  geom_rug() +  
+* geom_vline(data  = . %&gt;%
+*              group_by(asia) %&gt;%
+*              summarize(mean_life_exp = mean(lifeExp)),
+*            aes(xintercept = mean_life_exp),
+*            linetype = "dashed")
+```
+]]
+.column[.content[
+&lt;img src="basic_bivariate_statistical_tests_files/figure-html/hist_2_auto_8_output-1.png" width="432" /&gt;
 ]]
 
 
@@ -914,10 +1124,13 @@ ggplot(gm_2007_sample) +
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-*gm_2007_sample
+*gm_2007_sample_50
 ```
 ]]
 .column[.content[
@@ -942,10 +1155,13 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
 * t.test(formula = lifeExp ~ asia,
 *        data = .)
 ```
@@ -979,10 +1195,13 @@ class: inverse, center, middle
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-*ggplot(gm_2007_sample)
+*ggplot(gm_2007_sample_50)
 ```
 ]]
 .column[.content[
@@ -991,10 +1210,13 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
 * aes(y = lifeExp)
 ```
 ]]
@@ -1004,10 +1226,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(y = lifeExp) +  
 * aes(x = continent)
 ```
@@ -1018,10 +1243,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(y = lifeExp) +  
   aes(x = continent) +  
 * aes(fill = continent)
@@ -1033,10 +1261,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(y = lifeExp) +  
   aes(x = continent) +  
   aes(fill = continent) +  
@@ -1049,10 +1280,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(y = lifeExp) +  
   aes(x = continent) +  
   aes(fill = continent) +  
@@ -1068,10 +1302,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(y = lifeExp) +  
   aes(x = continent) +  
   aes(fill = continent) +  
@@ -1088,10 +1325,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(y = lifeExp) +  
   aes(x = continent) +  
   aes(fill = continent) +  
@@ -1105,6 +1345,35 @@ ggplot(gm_2007_sample) +
 ]]
 .column[.content[
 &lt;img src="basic_bivariate_statistical_tests_files/figure-html/multi_box_auto_8_output-1.png" width="432" /&gt;
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+ggplot(gm_2007_sample_50) +  
+  aes(y = lifeExp) +  
+  aes(x = continent) +  
+  aes(fill = continent) +  
+  geom_boxplot() +  
+  geom_jitter(height = 0,  
+              width = .2,  
+              alpha = .3) +  
+  theme_minimal() +  
+  theme(legend.position = "none") +  
+* geom_vline(data  = . %&gt;%
+*              group_by(asia) %&gt;%
+*              summarize(mean_life_exp = mean(lifeExp)),
+*            aes(xintercept = mean_life_exp),
+*            linetype = "dashed")
+```
+]]
+.column[.content[
+&lt;img src="basic_bivariate_statistical_tests_files/figure-html/multi_box_auto_9_output-1.png" width="432" /&gt;
 ]]
 
 
@@ -1122,11 +1391,14 @@ Are there any difference in means for the groups that are strong enough to say t
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-* # the model itself
-*gm_2007_sample
+# the model itself
+*gm_2007_sample_50
 ```
 ]]
 .column[.content[
@@ -1151,11 +1423,14 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-  # the model itself
-gm_2007_sample %&gt;%  
+# the model itself
+gm_2007_sample_50 %&gt;%  
 *aov(formula = lifeExp ~ continent,
 *   data = .)
 ```
@@ -1178,11 +1453,14 @@ Estimated effects may be unbalanced
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-  # the model itself
-gm_2007_sample %&gt;%  
+# the model itself
+gm_2007_sample_50 %&gt;%  
 aov(formula = lifeExp ~ continent,  
     data = .) -&gt;  
 *a 
@@ -1194,15 +1472,18 @@ aov(formula = lifeExp ~ continent,
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-  # the model itself
-gm_2007_sample %&gt;%  
+# the model itself
+gm_2007_sample_50 %&gt;%  
 aov(formula = lifeExp ~ continent,  
     data = .) -&gt;  
 a  
-* # the summary of the analysis of variance
+# the summary of the analysis of variance
 *summary(a)
 ```
 ]]
@@ -1277,13 +1558,16 @@ class: inverse, center, middle
 
 ### contingency table
 
-Creating a contingency table with base R is pretty straightforward. We are using the dollar sign to point to a column in the dataframe gm_2007_sample.
+Creating a contingency table with base R is pretty straightforward. We are using the dollar sign to point to a column in the dataframe gm_2007_sample_50.
 
 
 ---
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -1296,6 +1580,9 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -1325,6 +1612,9 @@ library(magrittr)
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -1346,6 +1636,9 @@ x          high income not high income
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -1374,10 +1667,13 @@ You can do this in the tidyverse too.  With a few more steps.
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-*gm_2007_sample
+*gm_2007_sample_50
 ```
 ]]
 .column[.content[
@@ -1402,10 +1698,13 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
 * group_by(asia, high_income)
 ```
 ]]
@@ -1432,10 +1731,13 @@ gm_2007_sample %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
   group_by(asia, high_income) %&gt;%  
 * count()
 ```
@@ -1456,10 +1758,13 @@ gm_2007_sample %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
   group_by(asia, high_income) %&gt;%  
   count() %&gt;%  
 * spread(high_income, n)
@@ -1484,10 +1789,13 @@ gm_2007_sample %&gt;%
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-*gm_2007_sample
+*gm_2007_sample_50
 ```
 ]]
 .column[.content[
@@ -1512,10 +1820,13 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
 *ggplot()
 ```
 ]]
@@ -1525,10 +1836,13 @@ gm_2007_sample %&gt;%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
 ggplot() +  
 * aes(x = high_income)
 ```
@@ -1539,10 +1853,13 @@ ggplot() +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
 ggplot() +  
   aes(x = high_income) +  
 * aes(y = asia)
@@ -1554,10 +1871,13 @@ ggplot() +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
 ggplot() +  
   aes(x = high_income) +  
   aes(y = asia) +  
@@ -1570,10 +1890,13 @@ ggplot() +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
 ggplot() +  
   aes(x = high_income) +  
   aes(y = asia) +  
@@ -1588,10 +1911,13 @@ ggplot() +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
 ggplot() +  
   aes(x = high_income) +  
   aes(y = asia) +  
@@ -1614,10 +1940,13 @@ ggplot() +
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-*ggplot(gm_2007_sample)
+*ggplot(gm_2007_sample_50)
 ```
 ]]
 .column[.content[
@@ -1626,10 +1955,13 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
 * aes(x = asia)
 ```
 ]]
@@ -1639,10 +1971,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(x = asia) +  
 * aes(fill = high_income)
 ```
@@ -1653,10 +1988,13 @@ ggplot(gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(gm_2007_sample) +  
+ggplot(gm_2007_sample_50) +  
   aes(x = asia) +  
   aes(fill = high_income) +  
 * geom_bar(position = "dodge")
@@ -1695,6 +2033,9 @@ test statistic: Chi-squared statistic
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -1707,11 +2048,14 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-*gm_2007_sample
+*gm_2007_sample_50
 ```
 ]]
 .column[.content[
@@ -1736,11 +2080,14 @@ library(magrittr)
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
 * chisq.test(x = high_income,
 *            y = asia)
 ```
@@ -1758,11 +2105,14 @@ X-squared = 1.2672, df = 1, p-value = 0.2603
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
   chisq.test(x = high_income,  
              y = asia) -&gt;  
 *chi_sq_income_asia
@@ -1774,11 +2124,14 @@ gm_2007_sample %$%
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
   chisq.test(x = high_income,  
              y = asia) -&gt;  
 chi_sq_income_asia  
@@ -1797,11 +2150,14 @@ high_income       Asia not Asia
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
   chisq.test(x = high_income,  
              y = asia) -&gt;  
 chi_sq_income_asia  
@@ -1820,6 +2176,9 @@ chi_sq_income_asia$observed %&gt;%
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -1838,6 +2197,9 @@ high_income       Asia not Asia
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -1857,6 +2219,9 @@ chi_sq_income_asia$expected %&gt;%  # expectation under null
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -1869,11 +2234,14 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-*gm_2007_sample
+*gm_2007_sample_50
 ```
 ]]
 .column[.content[
@@ -1898,11 +2266,14 @@ library(magrittr)
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
 * chisq.test(x = high_income,
 *            y = asia,
 *            correct = F)
@@ -1921,18 +2292,21 @@ X-squared = 2.183, df = 1, p-value = 0.1395
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
   chisq.test(x = high_income,  
              y = asia,  
              correct = F)  
-* #
-* #
-* #
-* #
+
+
+
+
 *chi_sq_income_asia$expected
 ```
 ]]
@@ -1956,18 +2330,21 @@ high_income       Asia not Asia
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
   chisq.test(x = high_income,  
              y = asia,  
              correct = F)  
-  #
-  #
-  #
-  #
+
+
+
+
 chi_sq_income_asia$expected %&gt;%  
 * `-`(chi_sq_income_asia$observed)
 ```
@@ -1992,18 +2369,21 @@ high_income       Asia not Asia
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
   chisq.test(x = high_income,  
              y = asia,  
              correct = F)  
-  #
-  #
-  #
-  #
+
+
+
+
 chi_sq_income_asia$expected %&gt;%  
   `-`(chi_sq_income_asia$observed) %&gt;%  
 * `^`(2)
@@ -2029,18 +2409,21 @@ high_income       Asia not Asia
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
   chisq.test(x = high_income,  
              y = asia,  
              correct = F)  
-  #
-  #
-  #
-  #
+
+
+
+
 chi_sq_income_asia$expected %&gt;%  
   `-`(chi_sq_income_asia$observed) %&gt;%  
   `^`(2) %&gt;%  
@@ -2067,18 +2450,21 @@ high_income            Asia  not Asia
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
   chisq.test(x = high_income,  
              y = asia,  
              correct = F)  
-  #
-  #
-  #
-  #
+
+
+
+
 chi_sq_income_asia$expected %&gt;%  
   `-`(chi_sq_income_asia$observed) %&gt;%  
   `^`(2) %&gt;%  
@@ -2118,6 +2504,9 @@ test statistic: Chi-squared statistic
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -2130,11 +2519,14 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-*gm_2007_sample
+*gm_2007_sample_50
 ```
 ]]
 .column[.content[
@@ -2159,11 +2551,14 @@ library(magrittr)
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
 *chisq.test(x = continent,
 *          y = high_income)
 ```
@@ -2181,11 +2576,14 @@ X-squared = 16.13, df = 3, p-value = 0.001067
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
 chisq.test(x = continent,  
            y = high_income) -&gt;  
 *my_chi_sqr
@@ -2197,11 +2595,14 @@ chisq.test(x = continent,
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
 chisq.test(x = continent,  
            y = high_income) -&gt;  
 my_chi_sqr  
@@ -2222,11 +2623,14 @@ continent  high income not high income
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
 chisq.test(x = continent,  
            y = high_income) -&gt;  
 my_chi_sqr  
@@ -2246,6 +2650,9 @@ my_chi_sqr$observed %&gt;%
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -2266,6 +2673,9 @@ continent  high income not high income
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
@@ -2325,10 +2735,13 @@ There are many more statistics not covered here, that address different situatio
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-*ggplot(data = gm_2007_sample)
+*ggplot(data = gm_2007_sample_50)
 ```
 ]]
 .column[.content[
@@ -2337,10 +2750,13 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(data = gm_2007_sample) +  
+ggplot(data = gm_2007_sample_50) +  
 * aes(x = gdppercap_log10)
 ```
 ]]
@@ -2350,10 +2766,13 @@ ggplot(data = gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(data = gm_2007_sample) +  
+ggplot(data = gm_2007_sample_50) +  
   aes(x = gdppercap_log10) +  
 * aes(y = lifeExp)
 ```
@@ -2364,10 +2783,13 @@ ggplot(data = gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(data = gm_2007_sample) +  
+ggplot(data = gm_2007_sample_50) +  
   aes(x = gdppercap_log10) +  
   aes(y = lifeExp) +  
 * geom_point()
@@ -2379,10 +2801,13 @@ ggplot(data = gm_2007_sample) +
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-ggplot(data = gm_2007_sample) +  
+ggplot(data = gm_2007_sample_50) +  
   aes(x = gdppercap_log10) +  
   aes(y = lifeExp) +  
   geom_point() +  
@@ -2436,10 +2861,13 @@ class: inverse, center, middle
 
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-*gm_2007_sample
+*gm_2007_sample_50
 ```
 ]]
 .column[.content[
@@ -2464,10 +2892,13 @@ count: false
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
 * lm(formula = lifeExp ~ gdppercap_log10,
 *    data = .)
 ```
@@ -2487,10 +2918,13 @@ Coefficients:
 ---
 class: split-40
 count: false
+ 
+
+ 
 .column[.content[
 
 ```r
-gm_2007_sample %&gt;%  
+gm_2007_sample_50 %&gt;%  
   lm(formula = lifeExp ~ gdppercap_log10,  
      data = .) %&gt;%  
 * summary()
@@ -2573,9 +3007,35 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     deleted = true;
   });
-})();</script>
-
-<script>
+})();
+(function() {
+  "use strict"
+  /* Replace <script> tags in slides area to make them executable
+   *
+   * Runs after post-processing of markdown source into slides and replaces only
+   * <script>s on the last slide of continued slides using the .has-continuation
+   * class added by xaringan. Finally, any <script>s in the slides area that
+   * aren't executed are commented out.
+   */
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+  var scriptsNotExecuted = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container.has-continuation script'
+  );
+  if (!scriptsNotExecuted.length) return;
+  for (var i = 0; i < scriptsNotExecuted.length; i++) {
+    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
+    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
+  }
+})();
 (function() {
   var links = document.getElementsByTagName('a');
   for (var i = 0; i < links.length; i++) {
@@ -2584,7 +3044,23 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
   }
 })();
-</script>
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {

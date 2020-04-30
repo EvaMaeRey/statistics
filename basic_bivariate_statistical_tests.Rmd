@@ -1,7 +1,7 @@
 ---
 title: "Basic Bivariate Statistical Tests"
-subtitle: "made with flipbookr and xaringan"
 author: "Gina Reynolds, January 2020"
+subtitle: "Last Updated, April 30, 2020"
 output:
   xaringan::moon_reader:
     chakra: libs/remark-latest.min.js
@@ -15,7 +15,7 @@ output:
 ---
 
 
-In this resouce, we will ask several questions:
+In this resource, we will address several questions:
 
 - How do we visualize the relationship between two variables?
 
@@ -29,15 +29,64 @@ In this resouce, we will ask several questions:
 
 --
 
-- Given this, should I consider the relationship too likely to have arisen just by chance? Is the p-value < $\alpha$? Do I reject the null or not?
+- Given this, should I consider the relationship too likely to have arisen just by chance? Is the p-value < $\alpha$? Given this, should I reject the null or not?
 
 ---
 
+# Visualization
+
+- use ggplot2
+- mostly one variable on x and one on y (but not always, other options too)
+
+---
+
+# Quantifying strength of relationships
+
+
+--
+
+- Correlation Coefficient (-1, 0, 1)
+
+--
+
+- Difference-in-means and t-statistic
+
+--
+
+- Chi-Squared
+
+---
+
+# Statistical inference
+
+How likely is it that such a strong relationship as the one I observe (or stronger) is just the product of chance. 
+
+--
+
+If the null is true (often statistical independence), then how likely is it to observe stuch a strong relationship.
+
+---
+
+# Basic Statistical tests
+
+- Correlation test
+
+--
+
+- ttest
+
+--
+
+- chi squared test
+
+
+
+---
 
 ```{r setup, include = F}
 # This is the recommended set up for flipbooks
 # you might think about setting cache to TRUE as you gain practice --- building flipbooks from scracth can be time consuming
-knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = F, fig.retina = 3)
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = T, fig.retina = 3)
 library(flipbookr)
 library(tidyverse)
 ```
@@ -71,7 +120,7 @@ gapminder %>%
   mutate(gdppercap_log10 = 
            log10(gdpPercap)) %>% 
   sample_n(50, replace = F) ->
-gm_2007_sample
+gm_2007_sample_50
 ```
 
 ---
@@ -87,13 +136,14 @@ Does information about the value of "x" tell me information about the probable v
 
 
 ```{r plot_1, include = F}
-gm_2007_sample %>% 
+gm_2007_sample_50 %>% 
   ggplot() + 
   aes(x = gdppercap_log10) +
   aes(y = lifeExp) + 
   geom_point(alpha = .5,
+             size = 5,
              color = "magenta") +
-  theme_minimal()
+  theme_minimal(base_size = 15)
 ```
 
 
@@ -129,14 +179,14 @@ knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/thumb/b/
 
 ```{r tidy_cor, include = F}
 cor.test(
-  x = gm_2007_sample$gdppercap_log10,
-  y = gm_2007_sample$lifeExp
+  x = gm_2007_sample_50$gdppercap_log10,
+  y = gm_2007_sample_50$lifeExp
   )
 
 
 # using a new pipe from the magrittr package
 library(magrittr)
-gm_2007_sample %$% # state what data vars come from
+gm_2007_sample_50 %$% # state what data vars come from
   cor.test(x = gdppercap_log10,  
            y = lifeExp)
 ```
@@ -153,14 +203,20 @@ class: inverse, center, middle
 `r chunk_reveal("t_plot")`
 
 ```{r t_plot, include = F}
-ggplot(gm_2007_sample) + 
+ggplot(gm_2007_sample_50) + 
   aes(y = lifeExp) +
   aes(x = asia) +
   aes(fill = asia) +
   geom_boxplot() +
   geom_jitter(height = 0, 
               width = .2, 
-              alpha = .3)
+              alpha = .3) +
+  geom_point(data  = . %>% 
+               group_by(asia) %>% 
+               summarize(mean_life_exp = mean(lifeExp)),
+             aes(y = mean_life_exp),
+             color = "goldenrod",
+             size = 5)
 ```
 
 ---
@@ -173,13 +229,18 @@ ggplot(gm_2007_sample) +
 
 
 ```{r hist_2, include = F}
-ggplot(gm_2007_sample) + 
+ggplot(gm_2007_sample_50) + 
   aes(x = lifeExp) +
   aes(fill = asia) +
   aes(col = asia) + 
   geom_histogram(alpha = .2) +
   facet_wrap(~ asia, nrow = 2) +
-  geom_rug() 
+  geom_rug() +
+  geom_vline(data  = . %>% 
+               group_by(asia) %>% 
+               summarize(mean_life_exp = mean(lifeExp)),
+             aes(xintercept = mean_life_exp),
+             linetype = "dashed")
 ```
 
 
@@ -191,7 +252,6 @@ ggplot(gm_2007_sample) +
 ```{r, out.width="35%", fig.cap="William_Sealy_Gosset - via wikipedia", echo = F, fig.show='hold'}
 knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/4/42/William_Sealy_Gosset.jpg")
 knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/6/65/William_Gosset_plaque_in_Guinness_storehouse_tour%2C_Ireland.jpg")
-
 ```
 
 
@@ -206,7 +266,7 @@ knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/6/65/Wil
 
 
 ```{r t_test, include = F}
-gm_2007_sample %>% 
+gm_2007_sample_50 %>% 
   t.test(formula = lifeExp ~ asia, 
          data = .) 
 ```
@@ -222,7 +282,7 @@ class: inverse, center, middle
 
 
 ```{r multi_box, include = F}
-ggplot(gm_2007_sample) + 
+ggplot(gm_2007_sample_50) + 
   aes(y = lifeExp) +
   aes(x = continent) +
   aes(fill = continent) +
@@ -231,7 +291,12 @@ ggplot(gm_2007_sample) +
               width = .2, 
               alpha = .3) +
   theme_minimal() +
-  theme(legend.position = "none")
+  theme(legend.position = "none") +
+  geom_vline(data  = . %>% 
+               group_by(asia) %>% 
+               summarize(mean_life_exp = mean(lifeExp)),
+             aes(xintercept = mean_life_exp),
+             linetype = "dashed")
 ```
 
 ---
@@ -249,7 +314,7 @@ Are there any difference in means for the groups that are strong enough to say t
 
 ```{r aov, include = F}
 # the model itself
-gm_2007_sample %>% 
+gm_2007_sample_50 %>% 
 aov(formula = lifeExp ~ continent, 
     data = .) ->
 a
@@ -297,7 +362,7 @@ class: inverse, center, middle
 
 ### contingency table
 
-Creating a contingency table with base R is pretty straightforward. We are using the dollar sign to point to a column in the dataframe gm_2007_sample.
+Creating a contingency table with base R is pretty straightforward. We are using the dollar sign to point to a column in the dataframe gm_2007_sample_50.
 
 
 ---
@@ -326,7 +391,7 @@ You can do this in the tidyverse too.  With a few more steps.
 
 
 ```{r tidy_contingency, include = F}
-gm_2007_sample %>% 
+gm_2007_sample_50 %>% 
   group_by(asia, high_income) %>% 
   count() %>% 
   spread(high_income, n)
@@ -338,7 +403,7 @@ gm_2007_sample %>%
 
 
 ```{r jitter, include = F}
-gm_2007_sample %>% 
+gm_2007_sample_50 %>% 
 ggplot() +
   aes(x = high_income) +
   aes(y = asia) +
@@ -356,7 +421,7 @@ ggplot() +
 
 
 ```{r news, include = F}
-ggplot(gm_2007_sample) +
+ggplot(gm_2007_sample_50) +
   aes(x = asia) +
   aes(fill = high_income) + 
   geom_bar(position = "dodge")
@@ -391,7 +456,7 @@ test statistic: Chi-squared statistic
 
 ```{r chi_two_by_two, include = F}
 library(magrittr)
-gm_2007_sample %$%
+gm_2007_sample_50 %$%
   chisq.test(x = high_income,
              y = asia) ->
 chi_sq_income_asia
@@ -417,14 +482,14 @@ chi_sq_income_asia$expected %>% # expectation under null
 
 ```{r chi_calc, include = F}
 library(magrittr)
-gm_2007_sample %$%
+gm_2007_sample_50 %$%
   chisq.test(x = high_income,
              y = asia, 
              correct = F)
-#
-#
-#
-#
+
+
+
+
 chi_sq_income_asia$expected %>% 
   `-`(chi_sq_income_asia$observed) %>% 
   `^`(2) %>% 
@@ -449,7 +514,7 @@ test statistic: Chi-squared statistic
 
 ```{r chi_mult_cat, include = F}
 library(magrittr)
-gm_2007_sample %$%
+gm_2007_sample_50 %$%
 chisq.test(x = continent,
            y = high_income) ->
 my_chi_sqr
@@ -513,7 +578,7 @@ There are many more statistics not covered here, that address different situatio
 
 
 ```{r picture_lm, include = F}
-ggplot(data = gm_2007_sample) + 
+ggplot(data = gm_2007_sample_50) + 
   aes(x = gdppercap_log10) +
   aes(y = lifeExp) +
   geom_point() + 
@@ -562,7 +627,7 @@ class: inverse, center, middle
 
 
 ```{r lm, include = F}
-gm_2007_sample %>% 
+gm_2007_sample_50 %>% 
   lm(formula = lifeExp ~ gdppercap_log10, 
      data = .) %>% 
   summary()
