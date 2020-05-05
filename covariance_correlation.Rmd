@@ -81,14 +81,14 @@ data_calc_cor <- function(data){
 data_create_scatterplot <- function(data, background_color = "palegreen4"){
 
 data %>% 
-    ggplot() + 
-  theme(legend.position = c(.8, .2)) +
+  ggplot() + 
+  theme(legend.position = c(.1, .9)) +
   aes(x = x) + 
   aes(y = y) +
   theme(rect = element_rect(fill = background_color)) + 
   theme(text = element_text(color = "white", face = "italic", size = 15)) +
   theme(panel.background = element_rect(fill = background_color)) +
-  theme(legend.key = element_rect(fill = background_color)) +
+  theme(legend.key = element_blank()) + #element_rect(fill = background_color)) +
   theme(legend.title = element_blank()) +
   theme(axis.text = element_text(color = "white")) +
   theme(axis.ticks = element_line(color = "white")) +
@@ -193,7 +193,7 @@ plot_normalize_x <- function(plot, data){
   
   plot + 
   # Pearsons's Correlation 
-  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd(data$x))) +
+  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd(data$x)), name = "sd y") +
   geom_vline(xintercept = mean(data$x) + sd(data$x), lty = "dashed", color = "pink") +
   geom_vline(xintercept = mean(data$x) - sd(data$x), lty = "dashed", color = "pink") 
   
@@ -202,11 +202,24 @@ plot_normalize_x <- function(plot, data){
 plot_normalize_y <- function(plot, data, title = "Picture of covariance and Pearson correlation coefficient"){
   
   plot + 
-  scale_y_continuous(sec.axis = sec_axis(~ (. -mean(data$y))/ sd(data$y))) +
+  scale_y_continuous(sec.axis = sec_axis(~ (. -mean(data$y))/ sd(data$y)), name = "sd y") +
   geom_hline(yintercept = mean(data$y) + sd(data$y), lty = "dashed", color = "pink") +
   geom_hline(yintercept = mean(data$y) - sd(data$y), lty = "dashed", color = "pink") + 
-  labs(title = title) 
+  labs(title = title) +
+  coord_fixed(ratio =  sd(data$x)/sd(data$y) )
 
+}
+
+
+plot_max_correlation <- function(plot, data){
+  
+  plot + 
+    annotate(geom = "rect",
+             alpha = .4, 
+             xmin = data$mean_x[1], xmax = data$mean_x[1] + data$sd_x[1],
+             ymin = data$mean_y[1], ymax = data$mean_y[1] + data$sd_y[1],
+             fill = "orange")
+  
 }
 
 
@@ -310,7 +323,8 @@ data %>%
   plot_multiply_differences() %>% 
   plot_take_average_rectangle() %>% 
   plot_normalize_x(data = data) %>% 
-  plot_normalize_y(data = data)
+  plot_normalize_y(data = data) %>% 
+  plot_max_correlation(data = data)
 ```
 
 

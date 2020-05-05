@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Pvalue</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Gina Reynolds, April 2020" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+class: left, top, inverse
+background-image: url(https://images.unsplash.com/photo-1498604636225-6b87a314baa0?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1569&amp;q=80)
+background-size: cover
+
+# .right.Large[Statistical Significance and p-values]
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+
+
+#### .left[Gina Reynolds&lt;br&gt;Photo Credit: Toa Heftiba
+
+---
+# Statistical independence
+
+&gt; In probability theory, two events are independent, statistically independent, or stochastically independent if the occurrence of one does not affect the probability of occurrence of the other.
+
+--
+
+&gt; Similarly, two random variables are independent if the realization of one does not affect the probability distribution of the other.
+
+---
+## "A statistically significant relationship"
+
+- When you have *evidence* of statistical *dependence*. 
+
+--
+
+- When the probability of observing of observing such a strong relationship --- or stronger --- under *statistical independence* (the null) is quite small.  
+
+--
+
+- How small is small enough?  It depends what `\(\alpha\)` is... .01, .05, .1?
+
+https://www.youtube.com/watch?v=gSyGVDMcg-U
+
+---
+## Hypotheses
+
+Hypothesis testing:
+
+- A null hypothsis: `\(Ho\)` (Often statistical independence)
+- Alternate hypothesis: `\(Ha\)` (Statistical dependence)
+
+---
+## Rejecting the null hypothesis
+
+- Comparison will be made with expectation about null (often no relationship).  Such a strong relationship is unlikely to be observed by chance in a sample, if there is *not* dependence.  
+
+---
+
+- If data deviates from expecations given null (if observed relationships very surprising given null)
+
+--
+
+   - we reject the null (there is no relationship - statistical independence)
+
+--
+
+   - and accept the alternative (there is a relationship - statistical dependence)
+
+---
+## P-Value
+
+"The probability that, given the null, a relationship as strong or stronger than that observed, would be observed."
+
+http://fivethirtyeight.com/features/not-even-scientists-can-easily-explain-p-values/
+
+
+
+---
+# Inception: Lady tasting tea insight
+
+- "P-value"
+- "null hypothesis"
+- "statistical significance" (at significance level, alpha level)
+- Test: "Fisher's exact"
+
+---
+# Players
+
+Phycologist (algae studies) Muriel Bristol:  Prefered milk poured first.
+
+--
+
+Ronald Fisher - mathematically astute, but problematic
+
+![via wikipedia](https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Youngronaldfisher2.JPG/220px-Youngronaldfisher2.JPG)
+
+
+---
+# The experiment
+
+- 8 cups
+- randomly fill 4 with milk first, 4 with tea first
+- ask Bristol to identify which four milk and which for tea first
+- assess evidence that Bristol can tell what is poured first
+
+---
+
+How many does she need to get correct to provide good evidence that she can really tell the difference? 
+
+
+---
+# Null hypothesis and p-value
+
+Ho - There is no relationship between my variables.  Statistical independence. 
+
+--
+
+p-value - "the probability that you would observe a relationship as strong as or stronger than the observed relationship, if no relationship actually exists (i.e. if the null is true)."
+
+
+---
+
+Fisher on the null hypothesis - "never proved or established, but is possibly disproved, in the course of experimentation."  *The Design of Experiments*
+
+
+---
+# Rejecting the null
+
+If we reject the null hypothesis, `\(H_0\)`, then we accept the alternative hypothesis `\(H_A\)`, that there is a relationship between two variables. 
+
+---
+# Lab
+
+- What might we have observed under the null
+- Compare to actual result 
+- Do we reject the null (establishing statistical significance)?
+
+---
+# Problem solving techniques
+
+- Analytic: Hypergeometric distribution
+- Computational: Simulation (lab)
+
+
+---
+class: inverse, center, middle
+
+
+## The set up
+
+
+---
+
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+*set.seed(90210)
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+set.seed(90210)  
+# truth
+*sample(c("tea", "tea", "tea", "tea",
+*        "milk", "milk", "milk", "milk"))
+```
+]]
+.column[.content[
+
+```
+[1] "tea"  "milk" "tea"  "milk" "tea"  "milk" "tea"  "milk"
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+set.seed(90210)  
+# truth
+sample(c("tea", "tea", "tea", "tea",  
+         "milk", "milk", "milk", "milk"))  
+
+# lady's responses
+*sample(c("tea", "tea", "tea", "tea",
+*        "milk", "milk", "milk", "milk"))
+```
+]]
+.column[.content[
+
+```
+[1] "tea"  "milk" "tea"  "milk" "tea"  "milk" "tea"  "milk"
+```
+
+```
+[1] "milk" "milk" "tea"  "tea"  "tea"  "milk" "milk" "tea" 
+```
+]]
+
+
+
+
+---
+class: inverse, center, middle
+
+# Single realization - how many correct?
+
+
+---
+
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+*set.seed(90210)
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+set.seed(90210)  
+# truth
+*sample(c("tea", "tea", "tea", "tea",
+*        "milk", "milk", "milk", "milk"))
+```
+]]
+.column[.content[
+
+```
+[1] "tea"  "milk" "tea"  "milk" "tea"  "milk" "tea"  "milk"
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+set.seed(90210)  
+# truth
+sample(c("tea", "tea", "tea", "tea",  
+         "milk", "milk", "milk", "milk")) -&gt;  
+* truth
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+set.seed(90210)  
+# truth
+sample(c("tea", "tea", "tea", "tea",  
+         "milk", "milk", "milk", "milk")) -&gt;  
+  truth  
+
+# lady's responses
+*sample(c("tea", "tea", "tea", "tea",
+*        "milk", "milk", "milk", "milk"))
+```
+]]
+.column[.content[
+
+```
+[1] "milk" "milk" "tea"  "tea"  "tea"  "milk" "milk" "tea" 
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+set.seed(90210)  
+# truth
+sample(c("tea", "tea", "tea", "tea",  
+         "milk", "milk", "milk", "milk")) -&gt;  
+  truth  
+
+# lady's responses
+sample(c("tea", "tea", "tea", "tea",  
+         "milk", "milk", "milk", "milk")) -&gt;  
+* guess
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+set.seed(90210)  
+# truth
+sample(c("tea", "tea", "tea", "tea",  
+         "milk", "milk", "milk", "milk")) -&gt;  
+  truth  
+
+# lady's responses
+sample(c("tea", "tea", "tea", "tea",  
+         "milk", "milk", "milk", "milk")) -&gt;  
+  guess  
+
+*sum(truth == guess)
+```
+]]
+.column[.content[
+
+```
+[1] 4
+```
+]]
+
+
+
+
+---
+class: inverse, center, middle
+
+# intro to the 'for loop' (DRY)
+
+--
+
+# doing a task several times
+
+--
+
+# 'for i in 1:5 ...'
+
+--
+
+# do what's in the 'curly braces' repeatedly
+
+--
+
+# syntax...
+
+
+
+---
+
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+*set.seed(90210)
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+set.seed(90210)  
+*for (i in 1:10){
+
+* print(i)
+
+* }
+```
+]]
+.column[.content[
+
+```
+[1] 1
+[1] 2
+[1] 3
+[1] 4
+[1] 5
+[1] 6
+[1] 7
+[1] 8
+[1] 9
+[1] 10
+```
+]]
+
+
+
+
+---
+class: inverse, center, middle
+
+# Many realizations under guessing
+
+---
+
+
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+*set.seed(90210)
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+set.seed(90210)  
+*for (i in 1:10){
+# truth
+*truth &lt;- sample(c("tea", "tea", "tea", "tea", "milk", "milk", "milk", "milk"))
+
+# lady's responses
+*guess &lt;- sample(c("tea", "tea", "tea", "tea", "milk", "milk", "milk", "milk"))
+
+*print(paste("trial", i))
+*print(truth == guess)
+*print(sum(truth == guess))
+*} 
+```
+]]
+.column[.content[
+
+```
+[1] "trial 1"
+[1] FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE
+[1] 4
+[1] "trial 2"
+[1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1] "trial 3"
+[1]  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1] "trial 4"
+[1]  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+[1] 4
+[1] "trial 5"
+[1]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[1] 2
+[1] "trial 6"
+[1]  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[1] 2
+[1] "trial 7"
+[1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1] "trial 8"
+[1]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE
+[1] 4
+[1] "trial 9"
+[1]  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+[1] 6
+[1] "trial 10"
+[1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+[1] 4
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+set.seed(90210)  
+for (i in 1:10){  
+# truth
+truth &lt;- sample(c("tea", "tea", "tea", "tea", "milk", "milk", "milk", "milk"))  
+
+# lady's responses
+guess &lt;- sample(c("tea", "tea", "tea", "tea", "milk", "milk", "milk", "milk"))  
+
+print(paste("trial", i))  
+print(truth == guess)  
+print(sum(truth == guess))  
+}  
+```
+]]
+.column[.content[
+
+```
+[1] "trial 1"
+[1] FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE
+[1] 4
+[1] "trial 2"
+[1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1] "trial 3"
+[1]  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1] "trial 4"
+[1]  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+[1] 4
+[1] "trial 5"
+[1]  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+[1] 2
+[1] "trial 6"
+[1]  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[1] 2
+[1] "trial 7"
+[1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1] "trial 8"
+[1]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE
+[1] 4
+[1] "trial 9"
+[1]  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+[1] 6
+[1] "trial 10"
+[1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+[1] 4
+```
+]]
+
+
+
+
+---
+class: inverse, center, middle
+
+# Law of large numbers -&gt; approximates hypergeometric expectations (analytic solution)
+
+
+---
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+*for (i in 1:100){
+# truth
+*truth &lt;- sample(c("tea", "tea", "tea", "tea", "milk", "milk", "milk", "milk"))
+
+# lady's responses
+*guess &lt;- sample(c("tea", "tea", "tea", "tea", "milk", "milk", "milk", "milk"))
+
+*print(truth == guess)
+*print(sum(truth == guess))
+*} 
+```
+]]
+.column[.content[
+
+```
+[1]  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE
+[1] 4
+[1] FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+[1] 4
+[1]  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE
+[1] 4
+[1]  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE
+[1] 4
+[1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
+[1] 4
+[1] FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE
+[1] 4
+[1] FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE
+[1] 4
+[1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE
+[1] 2
+[1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE
+[1] 6
+[1] FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE
+[1] 4
+[1] FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE
+[1] 4
+[1]  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE
+[1] 4
+[1] FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE
+[1] 4
+[1] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
+[1] 2
+[1]  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE
+[1] 4
+[1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+[1] 2
+[1] FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE
+[1] 4
+[1] FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE  TRUE
+[1] 4
+[1] FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE
+[1] 4
+[1]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE
+[1] 4
+[1]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE
+[1] 4
+[1]  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE
+[1] 6
+[1] FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE
+[1] 4
+[1] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
+[1] 2
+[1]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE
+[1] 6
+[1]  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+[1] 6
+[1] FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE
+[1] 2
+[1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 6
+[1]  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE
+[1] 6
+[1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1] FALSE  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE
+[1] 4
+[1]  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+[1] 4
+[1]  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE
+[1] 6
+[1]  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+[1] 4
+[1] FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+[1] 4
+[1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 6
+[1]  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE
+[1] 4
+[1] FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1] FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE
+[1] 4
+[1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 6
+[1] FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+[1] 4
+[1] FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE
+[1] 4
+[1]  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE
+[1] 4
+[1]  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+[1] 2
+[1] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE
+[1] 4
+[1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1]  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1]  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
+[1] 2
+[1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 6
+[1] FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE
+[1] 2
+[1] FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE
+[1] 4
+[1] FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE
+[1] 4
+[1]  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE
+[1] 4
+[1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+[1] 2
+[1] FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1]  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE
+[1] 4
+[1]  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE
+[1] 4
+[1] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
+[1] 2
+[1]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+[1] 4
+[1]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[1] 2
+[1]  TRUE  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE
+[1] 6
+[1] FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+[1] 4
+[1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+[1] 8
+[1] FALSE  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE
+[1] 4
+[1]  TRUE  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+[1] 2
+[1]  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE
+[1] 4
+[1] FALSE  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE
+[1] 2
+[1] FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 6
+[1] FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1] FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE
+[1] 4
+[1]  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+[1] 4
+[1] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE
+[1] 4
+[1] FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE
+[1] 4
+[1] FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+[1] 4
+[1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+[1] 2
+[1] FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE
+[1] 4
+[1] FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 4
+[1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
+[1] 2
+[1] FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE
+[1] 4
+[1]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+[1] 4
+[1]  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+[1] 4
+[1]  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1] FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
+[1] 2
+[1] FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE
+[1] 2
+[1]  TRUE  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE
+[1] 6
+[1] FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE
+[1] 4
+[1]  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+[1] 2
+[1]  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE
+[1] 4
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+for (i in 1:100){  
+# truth
+truth &lt;- sample(c("tea", "tea", "tea", "tea", "milk", "milk", "milk", "milk"))  
+
+# lady's responses
+guess &lt;- sample(c("tea", "tea", "tea", "tea", "milk", "milk", "milk", "milk"))  
+
+print(truth == guess)  
+print(sum(truth == guess))  
+}  
+```
+]]
+.column[.content[
+
+```
+[1]  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+[1] 4
+[1]  TRUE FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE
+[1] 4
+[1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 6
+[1] FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE
+[1] 4
+[1]  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+[1] 6
+[1]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE
+[1] 6
+[1] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
+[1] 2
+[1] FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+[1] 4
+[1]  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE
+[1] 4
+[1]  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE
+[1] 4
+[1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+[1] 8
+[1]  TRUE  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE
+[1] 4
+[1]  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+[1] 6
+[1]  TRUE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE
+[1] 2
+[1] FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE
+[1] 2
+[1]  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+[1] 4
+[1] FALSE FALSE FALSE FALSE  TRUE FALSE FALSE  TRUE
+[1] 2
+[1] FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 6
+[1] FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE
+[1] 4
+[1] FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE
+[1] 4
+[1]  TRUE FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE
+[1] 4
+[1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE
+[1] 6
+[1]  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE
+[1] 4
+[1] FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE  TRUE
+[1] 4
+[1] FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE FALSE
+[1] 2
+[1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE
+[1] 6
+[1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+[1] 8
+[1] FALSE  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1]  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE
+[1] 6
+[1]  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 6
+[1]  TRUE  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE
+[1] 6
+[1]  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE
+[1] 4
+[1]  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+[1] 2
+[1]  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE
+[1] 4
+[1] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE
+[1] 2
+[1] FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+[1] 4
+[1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+[1] 8
+[1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 6
+[1] FALSE  TRUE FALSE FALSE  TRUE FALSE  TRUE  TRUE
+[1] 4
+[1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+[1] 8
+[1]  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 6
+[1]  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE
+[1] 4
+[1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+[1] 0
+[1]  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE  TRUE
+[1] 4
+[1]  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE  TRUE
+[1] 4
+[1]  TRUE FALSE FALSE  TRUE FALSE FALSE  TRUE  TRUE
+[1] 4
+[1]  TRUE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
+[1] 6
+[1]  TRUE  TRUE FALSE  TRUE  TRUE FALSE FALSE FALSE
+[1] 4
+[1]  TRUE  TRUE FALSE FALSE  TRUE  TRUE FALSE FALSE
+[1] 4
+[1]  TRUE FALSE FALSE  TRUE  TRUE FALSE  TRUE FALSE
+[1] 4
+[1]  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
+[1] 4
+[1] FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE
+[1] 4
+[1]  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE
+[1] 2
+[1] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE FALSE
+[1] 2
+[1] FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE
+[1] 2
+[1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1]  TRUE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+[1] 4
+[1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE
+[1] 6
+[1]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE
+[1] 2
+[1] FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE
+[1] 4
+[1] FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE
+[1] 4
+[1]  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE  TRUE
+[1] 4
+[1]  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE
+[1] 6
+[1] FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE
+[1] 6
+[1] FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE
+[1] 4
+[1]  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1]  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
+[1] 4
+[1]  TRUE  TRUE  TRUE FALSE FALSE FALSE  TRUE FALSE
+[1] 4
+[1]  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1]  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE
+[1] 4
+[1]  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE FALSE
+[1] 4
+[1] FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE
+[1] 2
+[1] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
+[1] 2
+[1]  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE
+[1] 6
+[1] FALSE FALSE  TRUE FALSE  TRUE  TRUE  TRUE FALSE
+[1] 4
+[1]  TRUE FALSE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1] FALSE  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1] FALSE  TRUE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1] FALSE  TRUE  TRUE FALSE  TRUE FALSE FALSE  TRUE
+[1] 4
+[1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1]  TRUE FALSE FALSE  TRUE FALSE  TRUE FALSE  TRUE
+[1] 4
+[1] FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE  TRUE
+[1] 4
+[1]  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE
+[1] 6
+[1]  TRUE FALSE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+[1] 6
+[1] FALSE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE
+[1] 6
+[1]  TRUE FALSE  TRUE FALSE  TRUE FALSE FALSE  TRUE
+[1] 4
+[1] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE  TRUE
+[1] 2
+[1]  TRUE FALSE  TRUE FALSE FALSE  TRUE  TRUE FALSE
+[1] 4
+[1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE
+[1] 4
+[1] FALSE FALSE  TRUE FALSE FALSE  TRUE FALSE FALSE
+[1] 2
+[1] FALSE  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE
+[1] 4
+```
+]]
+
+
+
+
+---
+class: inverse, center, middle
+
+
+# Summarizing many realizations
+
+--
+
+# Collecting the result, num_trials
+
+---
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+*num_trials &lt;- 100
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+num_trials &lt;- 100  
+*rep(NA, num_trials)
+```
+]]
+.column[.content[
+
+```
+  [1] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+ [26] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+ [51] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+ [76] NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA NA
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+num_trials &lt;- 100  
+rep(NA, num_trials) -&gt;  
+* num_correct
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+num_trials &lt;- 100  
+rep(NA, num_trials) -&gt;  
+  num_correct  
+
+*for (i in 1:num_trials){
+# truth
+*truth &lt;- sample(c("tea", "tea", "tea", "tea", "milk", "milk", "milk", "milk"))
+
+# lady's responses
+*guess &lt;- sample(c("tea", "tea", "tea", "tea", "milk", "milk", "milk", "milk"))
+
+*num_correct[i] &lt;- sum(truth == guess)
+*} 
+```
+]]
+.column[.content[
+
+]]
+
+
+
+---
+class: inverse, center, middle
+
+# Interpreting the result: Bristol gets 6 correct cups...
+
+
+---
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+*library(tidyverse)
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(tidyverse)  
+*tibble(which_trial = 1:num_trials,
+*      num_correct)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 100 x 2
+   which_trial num_correct
+         &lt;int&gt;       &lt;int&gt;
+ 1           1           6
+ 2           2           6
+ 3           3           6
+ 4           4           6
+ 5           5           4
+ 6           6           2
+ 7           7           4
+ 8           8           2
+ 9           9           4
+10          10           8
+# … with 90 more rows
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(tidyverse)  
+tibble(which_trial = 1:num_trials,  
+       num_correct) -&gt;  
+*guessing_results
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(tidyverse)  
+tibble(which_trial = 1:num_trials,  
+       num_correct) -&gt;  
+guessing_results  
+
+*guessing_results
+```
+]]
+.column[.content[
+
+```
+# A tibble: 100 x 2
+   which_trial num_correct
+         &lt;int&gt;       &lt;int&gt;
+ 1           1           6
+ 2           2           6
+ 3           3           6
+ 4           4           6
+ 5           5           4
+ 6           6           2
+ 7           7           4
+ 8           8           2
+ 9           9           4
+10          10           8
+# … with 90 more rows
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(tidyverse)  
+tibble(which_trial = 1:num_trials,  
+       num_correct) -&gt;  
+guessing_results  
+
+guessing_results %&gt;%  
+* group_by(num_correct)
+```
+]]
+.column[.content[
+
+```
+# A tibble: 100 x 2
+# Groups:   num_correct [5]
+   which_trial num_correct
+         &lt;int&gt;       &lt;int&gt;
+ 1           1           6
+ 2           2           6
+ 3           3           6
+ 4           4           6
+ 5           5           4
+ 6           6           2
+ 7           7           4
+ 8           8           2
+ 9           9           4
+10          10           8
+# … with 90 more rows
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(tidyverse)  
+tibble(which_trial = 1:num_trials,  
+       num_correct) -&gt;  
+guessing_results  
+
+guessing_results %&gt;%  
+  group_by(num_correct) %&gt;%  
+* summarize(trials = n())
+```
+]]
+.column[.content[
+
+```
+# A tibble: 5 x 2
+  num_correct trials
+        &lt;int&gt;  &lt;int&gt;
+1           0      1
+2           2     15
+3           4     52
+4           6     29
+5           8      3
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(tidyverse)  
+tibble(which_trial = 1:num_trials,  
+       num_correct) -&gt;  
+guessing_results  
+
+guessing_results %&gt;%  
+  group_by(num_correct) %&gt;%  
+  summarize(trials = n()) -&gt;  
+*guessing_summary
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(tidyverse)  
+tibble(which_trial = 1:num_trials,  
+       num_correct) -&gt;  
+guessing_results  
+
+guessing_results %&gt;%  
+  group_by(num_correct) %&gt;%  
+  summarize(trials = n()) -&gt;  
+guessing_summary  
+
+*ggplot(data = guessing_results)
+```
+]]
+.column[.content[
+&lt;img src="pvalue_files/figure-html/part7_auto_8_output-1.png" width="432" /&gt;
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(tidyverse)  
+tibble(which_trial = 1:num_trials,  
+       num_correct) -&gt;  
+guessing_results  
+
+guessing_results %&gt;%  
+  group_by(num_correct) %&gt;%  
+  summarize(trials = n()) -&gt;  
+guessing_summary  
+
+ggplot(data = guessing_results) +  
+* aes(x = as_factor(num_correct))
+```
+]]
+.column[.content[
+&lt;img src="pvalue_files/figure-html/part7_auto_9_output-1.png" width="432" /&gt;
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(tidyverse)  
+tibble(which_trial = 1:num_trials,  
+       num_correct) -&gt;  
+guessing_results  
+
+guessing_results %&gt;%  
+  group_by(num_correct) %&gt;%  
+  summarize(trials = n()) -&gt;  
+guessing_summary  
+
+ggplot(data = guessing_results) +  
+  aes(x = as_factor(num_correct)) +  
+* geom_bar()
+```
+]]
+.column[.content[
+&lt;img src="pvalue_files/figure-html/part7_auto_10_output-1.png" width="432" /&gt;
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(tidyverse)  
+tibble(which_trial = 1:num_trials,  
+       num_correct) -&gt;  
+guessing_results  
+
+guessing_results %&gt;%  
+  group_by(num_correct) %&gt;%  
+  summarize(trials = n()) -&gt;  
+guessing_summary  
+
+ggplot(data = guessing_results) +  
+  aes(x = as_factor(num_correct)) +  
+  geom_bar()  
+
+*sum(guessing_results$num_correct &gt;= 6) / num_trials
+```
+]]
+.column[.content[
+&lt;img src="pvalue_files/figure-html/part7_auto_11_output-1.png" width="432" /&gt;
+
+```
+[1] 0.32
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(tidyverse)  
+tibble(which_trial = 1:num_trials,  
+       num_correct) -&gt;  
+guessing_results  
+
+guessing_results %&gt;%  
+  group_by(num_correct) %&gt;%  
+  summarize(trials = n()) -&gt;  
+guessing_summary  
+
+ggplot(data = guessing_results) +  
+  aes(x = as_factor(num_correct)) +  
+  geom_bar()  
+
+sum(guessing_results$num_correct &gt;= 6) / num_trials  
+```
+]]
+.column[.content[
+&lt;img src="pvalue_files/figure-html/part7_auto_12_output-1.png" width="432" /&gt;
+
+```
+[1] 0.32
+```
+]]
+
+
+
+
+
+
+---
+
+# Game Time
+
+https://evangelinereynolds.shinyapps.io/EyeBallIt/
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:10",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

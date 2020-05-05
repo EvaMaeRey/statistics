@@ -262,6 +262,15 @@ knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/6/65/Wil
 
 ---
 
+$$ t = \frac{(\bar x_1 - \bar x_2) - (\mu_1 - \mu_2) }{\sqrt(s_p^2/n_1 +s_p^2/n_2)} $$
+
+--
+
+$$ t = \frac{(\bar x_1 - \bar x_2)}{\sqrt(s_p^2/n_1 +s_p^2/n_2)} $$
+
+
+---
+
 `r chunk_reveal("t_test")`
 
 
@@ -270,6 +279,10 @@ gm_2007_sample_50 %>%
   t.test(formula = lifeExp ~ asia, 
          data = .) 
 ```
+
+
+
+
 
 ---
 class: inverse, center, middle

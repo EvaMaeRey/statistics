@@ -8,13 +8,14 @@ output:
     highlight: monochrome
 ---
 
-You might need some guidance for actually getting the statistical work done.
+You might need some guidance for getting the statistical work done.
 
 ## Building intuition 
 
 - [Galton Board: The binomial distribution](galton_board.html){target="_blank"}
 - [Covariance, Variance, Standard Deviation, Correlation](covariance_correlation.html){target="_blank"}
 - [Cool with Statistical Independence](statistical_independence.html){target="_blank"}
+- [p-value, for loop](pvalue.html){target="_blank"}
 
 ## Statistical tests
 
@@ -24,8 +25,6 @@ You might need some guidance for actually getting the statistical work done.
   - t.test
   - anova
   - chi-squared
-  
-  
   
 ## Modeling
 
