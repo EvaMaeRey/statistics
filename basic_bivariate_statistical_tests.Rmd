@@ -1,7 +1,7 @@
 ---
 title: "Basic Bivariate Statistical Tests"
 author: "Gina Reynolds, January 2020"
-subtitle: "Last Updated, April 30, 2020"
+subtitle: "Last Updated, May 19, 2020"
 output:
   xaringan::moon_reader:
     chakra: libs/remark-latest.min.js

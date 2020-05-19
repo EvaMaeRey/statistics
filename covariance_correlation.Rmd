@@ -59,8 +59,6 @@ library(tidyverse)
 ```
 
 
----
-
 ```{r, include = F}
 set.seed(2020)
 library(tidyverse)
@@ -201,6 +199,24 @@ plot_take_average_rectangle <- function(plot, title = "Picture of covariance"){
   
 }
 
+
+plot_edge_of_rectangle <- function(plot, title = "Picture of Standard Deviation"){
+  
+  plot +      
+  # Average areas 
+  geom_segment(aes(
+           x = mean(x),
+           y = mean(y),
+           yend = mean(y),
+           xend = mean(some_x) + mean(x)
+           ),
+            color = "firebrick",
+            lwd = 2) +  #BREAK
+  labs(title = title)
+  
+}
+
+
 plot_normalize_x <- function(plot, data){
   
   plot + 
@@ -255,16 +271,9 @@ plot_correct_aspect_ratio <- function(plot){
 `r chunk_reveal("cov_steps", display_type = "output")`
 
 
----
-class: inverse, middle, center
-
-#  Covariance
-
----
 
 ```{r cov_steps, eval = F, echo=F}
-set.seed(199402)
-create_x_y(relationship = 0) %>% data_create_scatterplot() %>% 
+set.seed(199402); create_x_y(relationship = 0) %>% data_create_scatterplot() %>% 
   plot_draw_mean_x() %>% 
   plot_draw_mean_y() %>% 
   plot_draw_differences_x() %>% 
@@ -298,20 +307,21 @@ $$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
 ---
 
 
-`r flipbookr::chunk_reveal("variance_steps", display_type = "output")`
+`r flipbookr::chunk_reveal("variance_steps", break_type = "user", display_type = "output")`
 
 ```{r variance_steps, eval = F, echo=F}
 set.seed(199402)
 create_x_y(relationship = 1,
-           noise = 0) %>% data_create_scatterplot() %>% 
-  plot_change_ylab_to_x() %>% 
-  plot_correct_aspect_ratio() %>% 
-  plot_draw_mean_x() %>% 
-  plot_draw_mean_y() %>% 
-  plot_draw_differences_x() %>% 
-  plot_draw_differences_y() %>% 
-  plot_multiply_differences() %>% 
-  plot_take_average_rectangle() 
+           noise = 0) %>% 
+  data_create_scatterplot() %>% 
+  plot_change_ylab_to_x() %>% #BREAK
+  plot_correct_aspect_ratio() %>% #BREAK
+  plot_draw_mean_x() %>% #BREAK
+  plot_draw_mean_y() %>% #BREAK
+  plot_draw_differences_x() %>% #BREAK
+  plot_draw_differences_y() %>% #BREAK
+  plot_multiply_differences() %>% #BREAK
+  plot_take_average_rectangle(title = "Picture of Variance") #BREAK
 ```
 
 ---
@@ -333,6 +343,26 @@ class: inverse, center, middle
 
 $$ \sigma = \sqrt\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
 ]
+
+
+---
+
+
+`r flipbookr::chunk_reveal("sd_steps", break_type = "user", display_type = "output")`
+
+```{r sd_steps, eval = F, echo=F}
+set.seed(199402); create_x_y(relationship = 1,
+           noise = 0) %>% data_create_scatterplot() %>% 
+  plot_change_ylab_to_x() %>% 
+  plot_correct_aspect_ratio() %>% 
+  plot_draw_mean_x() %>% 
+  plot_draw_mean_y() %>% 
+  plot_draw_differences_x() %>% 
+  plot_draw_differences_y() %>% 
+  plot_multiply_differences() %>% 
+  plot_take_average_rectangle(title = "Picture of Variance") %>% #BREAK
+  plot_edge_of_rectangle() #BREAK
+```
 
 ---
 
@@ -360,8 +390,7 @@ $$ cor(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n *\sigma
 
 
 ```{r cor_steps, eval = F, echo=F}
-set.seed(1934)
-create_x_y(relationship = .1) -> data; data %>%  data_create_scatterplot() %>% 
+set.seed(1934); create_x_y(relationship = .1) -> data; data %>%  data_create_scatterplot() %>% 
   plot_draw_mean_x() %>% 
   plot_draw_mean_y() %>% 
   plot_draw_differences_x() %>% 
@@ -379,8 +408,7 @@ create_x_y(relationship = .1) -> data; data %>%  data_create_scatterplot() %>%
 
 
 ```{r cor_steps_neg, eval = F, echo=F}
-set.seed(1934)
-create_x_y(relationship = -.05) -> data; data %>%  data_create_scatterplot() %>% 
+set.seed(1934); create_x_y(relationship = -.05) -> data; data %>%  data_create_scatterplot() %>% 
   plot_draw_mean_x() %>% 
   plot_draw_mean_y() %>% 
   plot_draw_differences_x() %>% 
@@ -425,8 +453,6 @@ $$ s^2 = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n - 1} $$
 
 ---
 
-
----
 
 
 
