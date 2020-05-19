@@ -656,24 +656,14 @@ gm_2007_sample_50 %>%
   summary()
 ```
 
-
 ---
 
-# OLS model presentation
-
----
-
-`r chunk_reveal("lm_present")`
-
-
-```{r lm_present, include = F}
-library(gtsummary)
+```{r lm_formula}
 gm_2007_sample_50 %>% 
   lm(formula = lifeExp ~ gdppercap_log10, 
      data = .)
 ```
-
-
+$$ LifeExp = 16.93*log10GDP + 4.999 + \epsilon $$
 
 
 

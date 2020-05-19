@@ -1,0 +1,191 @@
+---
+title: "Simple OLS 'cars' lab and gapminder"
+author: "Lab author: "
+date: "05/19/2020"
+output: html_document
+---
+
+```{r setup, message=F}
+library(tidyverse) # makes ggplot available and dplyr (data manipulation)
+```
+
+
+
+To get a feel for Ordinary Least Squares, let's use a simple data set: `cars`.  This is available in base R (you don't need to install any special package). The data are from, *Ezekiel, M. (1930) Methods of Correlation Analysis.* 
+
+Search `cars` in the help tab.  What do the two variables capture? (See "Description") 
+
+> your answer
+
+What are the units for these two variables? meters, inches, feet? (Look at "Format" section)
+
+> your answer
+
+Execute the code. How many observations are in the data set?
+
+> your answer
+
+```{r inspect_the_data}
+cars
+```
+
+Which variable do you think we should consider the "independent variable" and which the "dependent variable/response variable"? Why?
+
+> 
+
+Given your response above, should the x axis and y axis be assigned as they are below to keep with convention?  Or flipped? Flip them if you think this is needed; otherwise leave them as is.  Then replace the labels for the x and y axis  `labs(x = "a better label")` so they give more detail, and information on the units.  
+
+```{r plotting}
+cars %>% 
+  ggplot() +
+  aes(x = dist) +
+  aes(y = speed) +
+  geom_point()
+```
+
+
+
+
+What is the Pearson correlation coefficient for the relationship between these two variables? (run code below, and based on eyeballing figure)
+
+>
+
+Would you say it is strong or weak?
+
+> 
+
+```{r calculate_correlation_coefficient}
+cor(cars$speed, cars$dist, method = "pearson")
+```
+
+Execute the code below.  The `geom_smooth` statement plots the *ordinary least squares* linear model fit for the data. 
+
+> 
+
+```{r plot_w_ols}
+cars %>% 
+  ggplot() +
+  aes(x = speed) +
+  aes(y = dist) +
+  geom_point() +
+  geom_smooth(method = lm, se = F)
+```
+
+---
+
+Based on the output for the model (in the code chunk), below, write out the formula for this line (inside the double dolars sign -- for going into "math mode"); replace "Coefficient" and "Intercept" with the values you get back from model estimation `lm()`.  The greek letter "Epsilon" is standing in for model error (the predictions are not perfect --- we have residual error) . 
+
+
+```{r model_estimation}
+lm(dist ~ speed, data = cars)
+```
+
+
+
+$$ stopping\_distance = coefficient*speed + Intercept + \epsilon  $$
+
+---
+
+Given a car driving 20 miles per hour, what is your expectation (conditional mean) for stopping distance based on the linear model.  (Recall these are cars in the 1920s).  In other words, use the formula above to derive an expected value for stopping distance. You can use R as a calculator below:
+
+
+```{r calculate_prediction}
+# 20 * what? + what?
+```
+
+Also, what's the expected stopping distance for a car going 10 miles per hour as its start speed, given the result of linear modeling?
+
+```{r}
+# 10 * what? + what?
+```
+
+
+How how would you say that the default method for `geom_smooth` differ from when we set method to `lm` (just look at the result of executing the code below). 
+
+>
+
+
+```{r geomsmooth_default}
+cars %>% 
+  ggplot() +
+  aes(x = speed) +
+  aes(y = dist) +
+  geom_point() +
+  geom_smooth(se = F)
+```
+
+# Comparing statistical procedures
+
+Executing the correlation *test* below, would you say that the relationship is statistically significant at the 95% confidence level (so comparing the p-value to an alpha threashold of .05).
+
+> 
+
+What is the numeric value of the p-value?
+
+>
+
+Interpreting this a little more, would you say that the relationship is *consistent with statistical independence*, or **not** *consistent with statistical independence*?  (Remember statistical independence means that knowing the value of one of your variables doesn't give you information about what the value of the other variable is likely to be.)
+
+>  
+
+```{r correlation_statistical_test}
+cor.test(cars$speed, cars$dist)
+```
+
+Now look at the summary of statistics that we get from calculating the Ordinary Least Squares regression model, and asking for these statistics with "summary()".  Compare the statistics.  Does your p-value for the cor.test() appear here?
+
+> 
+
+
+```{r linear_model_summary}
+lm(dist ~ speed, data = cars) %>% 
+  summary()
+```
+
+In lecture, I said that the R-squared ("Multiple R squared" is a measure of goodness of fit of a model) is the pearson correlation coefficient squared.  Is this true?  
+
+>
+
+Test it out here:
+
+```{r}
+# replace "5" with the pearson correlation coefficient.
+5^2
+```
+
+
+
+
+
+
+---
+# Part II (a little less guided practice - but you can use the above code for reference. )
+
+Okay. With the gapminder 2002 data (`gm_2002_europe` that is created below), create a scatter plot (geom_point) where life expectancy is the dependent variable, and gdp per capita is the independent variable.  Overlay a linear model on this plot.  Then, write out the formula for that line, after estimating the model using the lm() function (lm for linear model).  Using this formula, what's the expectation for life expectancy, (for a European country in 2002), that has an income of ten thousand dollars
+
+```{r}
+library(gapminder)  # load the data package.
+gapminder %>% 
+  filter(continent == "Europe") %>% 
+  filter(year == 2002) ->
+gm_2002_europe
+```
+
+
+```{r}
+# scatterplot with OLS linear model overlayed
+```
+
+```{r}
+# using lm() to get the values for the formula
+```
+
+Change out the formula below to one that reflects the linear model:
+
+$$ x + y $$
+
+
+
+
+
+
