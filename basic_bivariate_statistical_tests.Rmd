@@ -385,10 +385,10 @@ Creating a contingency table with base R is pretty straightforward. We are using
 
 ```{r contingency, include = F}
 library(magrittr)
-gm_2007_sample %$% 
+gm_2007_sample_50 %$% 
 table(x = asia, 
-      y = high_income)  %>% 
-  vcd::mosaic()
+      y = high_income) %>% 
+  plot()
 ```
 
 ---
@@ -509,6 +509,16 @@ chi_sq_income_asia$expected %>%
   `/`(chi_sq_income_asia$expected) %>% 
   sum()
 ```
+
+
+---
+
+```{r, echo = F}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/3/35/Chi-square_pdf.svg")
+```
+
+
+
 
 
 ---
@@ -645,6 +655,27 @@ gm_2007_sample_50 %>%
      data = .) %>% 
   summary()
 ```
+
+
+---
+
+# OLS model presentation
+
+---
+
+`r chunk_reveal("lm_present")`
+
+
+```{r lm_present, include = F}
+library(gtsummary)
+gm_2007_sample_50 %>% 
+  lm(formula = lifeExp ~ gdppercap_log10, 
+     data = .)
+```
+
+
+
+
 
 ```{css, eval = TRUE, echo = FALSE}
 .remark-code{line-height: 1.5; font-size: 75%}

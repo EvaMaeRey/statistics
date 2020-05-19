@@ -1600,7 +1600,7 @@ count: false
 
 ```r
 library(magrittr)  
-*gm_2007_sample
+*gm_2007_sample_50
 ```
 ]]
 .column[.content[
@@ -1632,7 +1632,7 @@ count: false
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
 *table(x = asia,
 *     y = high_income)
 ```
@@ -1656,10 +1656,10 @@ count: false
 
 ```r
 library(magrittr)  
-gm_2007_sample %$%  
+gm_2007_sample_50 %$%  
 table(x = asia,  
-      y = high_income)  %&gt;%  
-* vcd::mosaic()
+      y = high_income) %&gt;%  
+* plot()
 ```
 ]]
 .column[.content[
@@ -2505,6 +2505,14 @@ X-squared = 2.183, df = 1, p-value = 0.1395
 
 
 ---
+
+![](https://upload.wikimedia.org/wikipedia/commons/3/35/Chi-square_pdf.svg)&lt;!-- --&gt;
+
+
+
+
+
+---
 class: inverse, center, middle
 ## Relationships between categorical data: more than two categories
 
@@ -2970,6 +2978,94 @@ F-statistic: 208.4 on 1 and 48 DF,  p-value: &lt; 2.2e-16
 
 
 
+
+---
+
+# OLS model presentation
+
+---
+
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+*library(gtsummary)
+```
+]]
+.column[.content[
+
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(gtsummary)  
+*gm_2007_sample_50
+```
+]]
+.column[.content[
+
+```
+# A tibble: 50 x 9
+   country continent  year lifeExp    pop gdpPercap high_income asia 
+   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;
+ 1 Colomb… Americas   2007    72.9 4.42e7     7007. not high i… not …
+ 2 Tanzan… Africa     2007    52.5 3.81e7     1107. not high i… not …
+ 3 Korea,… Asia       2007    67.3 2.33e7     1593. not high i… Asia 
+ 4 Burundi Africa     2007    49.6 8.39e6      430. not high i… not …
+ 5 Sudan   Africa     2007    58.6 4.23e7     2602. not high i… not …
+ 6 Iraq    Asia       2007    59.5 2.75e7     4471. not high i… Asia 
+ 7 Camero… Africa     2007    50.4 1.77e7     2042. not high i… not …
+ 8 Comoros Africa     2007    65.2 7.11e5      986. not high i… not …
+ 9 Slovak… Europe     2007    74.7 5.45e6    18678. high income not …
+10 Lebanon Asia       2007    72.0 3.92e6    10461. not high i… Asia 
+# … with 40 more rows, and 1 more variable: gdppercap_log10 &lt;dbl&gt;
+```
+]]
+---
+class: split-40
+count: false
+ 
+
+ 
+.column[.content[
+
+```r
+library(gtsummary)  
+gm_2007_sample_50 %&gt;%  
+* lm(formula = lifeExp ~ gdppercap_log10,
+*    data = .)
+```
+]]
+.column[.content[
+
+```
+
+Call:
+lm(formula = lifeExp ~ gdppercap_log10, data = .)
+
+Coefficients:
+    (Intercept)  gdppercap_log10  
+          4.999           16.930  
+```
+]]
+
+
+
+
+
+
+
+
 &lt;style type="text/css"&gt;
 .remark-code{line-height: 1.5; font-size: 75%}
 &lt;/style&gt;
@@ -3023,30 +3119,20 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
 })();
 (function() {
   "use strict"
-  /* Replace <script> tags in slides area to make them executable
-   *
-   * Runs after post-processing of markdown source into slides and replaces only
-   * <script>s on the last slide of continued slides using the .has-continuation
-   * class added by xaringan. Finally, any <script>s in the slides area that
-   * aren't executed are commented out.
-   */
+  // Replace <script> tags in slides area to make them executable
   var scripts = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container:not(.has-continuation) script'
+    '.remark-slides-area .remark-slide-container script'
   );
   if (!scripts.length) return;
   for (var i = 0; i < scripts.length; i++) {
     var s = document.createElement('script');
     var code = document.createTextNode(scripts[i].textContent);
     s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
     scripts[i].parentElement.replaceChild(s, scripts[i]);
-  }
-  var scriptsNotExecuted = document.querySelectorAll(
-    '.remark-slides-area .remark-slide-container.has-continuation script'
-  );
-  if (!scriptsNotExecuted.length) return;
-  for (var i = 0; i < scriptsNotExecuted.length; i++) {
-    var comment = document.createComment(scriptsNotExecuted[i].outerHTML)
-    scriptsNotExecuted[i].parentElement.replaceChild(comment, scriptsNotExecuted[i])
   }
 })();
 (function() {

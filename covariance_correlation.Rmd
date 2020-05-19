@@ -1,5 +1,5 @@
 ---
-title: "stats 101 flipbook"
+title: "stats 101"
 subtitle: "Visualizaing covariance, variance, standard deviation, correlation"
 author: "<br><br>Gina Reynolds, Feb 2020"
 date: "<br>"
@@ -14,37 +14,49 @@ output:
 ---
 
 
-## Covariance 
 
-Covariance is a measure of the joint variability of two random variables. 
 
-Let's have a look at the *population* covariance equation over all:
+This book looks some basic statistics:
 
---
+- covariance
+- variance
+- standard deviation
+- correlation coefficient
+
+
+---
+
+We'll look at the *population* statistics first equation over all:
+
+---
+class: inverse, center, middle
+
+# Covariance
+
+---
+class: center, middle
+
+### Covariance is a measure of the joint variability of two random variables. 
+
+---
+class: inverse, center, middle
+
+.huge[
 
 $$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n} $$
-
+]
 
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.width = 6, message = F, 
                       warning = F,  comment = "", 
-                      cache = F, fig.height = 7, 
+                      cache = T, fig.height = 7, 
                       fig.width = 8)
 
 library(flipbookr)
 library(tidyverse)
 ```
-
-
----
-
-
-
-
-
-
 
 
 ---
@@ -199,7 +211,7 @@ plot_normalize_x <- function(plot, data){
   
 }
 
-plot_normalize_y <- function(plot, data, title = "Picture of covariance and Pearson correlation coefficient"){
+plot_normalize_y <- function(plot, data, title = "Picture of covariance\nand Pearson correlation coefficient"){
   
   plot + 
   scale_y_continuous(sec.axis = sec_axis(~ (. -mean(data$y))/ sd(data$y)), name = "sd y") +
@@ -223,34 +235,6 @@ plot_max_correlation <- function(plot, data){
 }
 
 
-```
-
-`r chunk_reveal("cov_steps", display_type = "output")`
-
-
----
-
-
-
-```{r cov_steps, eval = F, echo=F}
-set.seed(199402)
-create_x_y(relationship = 0) ->
-  data
-data %>% 
-  data_create_scatterplot() %>% 
-  plot_draw_mean_x() %>% 
-  plot_draw_mean_y() %>% 
-  plot_draw_differences_x() %>% 
-  plot_draw_differences_y() %>% 
-  plot_multiply_differences() %>% 
-  plot_take_average_rectangle() 
-```
-
----
-# 
-
-
-```{r}
 plot_change_ylab_to_x <- function(plot){
   
   plot +
@@ -266,30 +250,60 @@ plot_correct_aspect_ratio <- function(plot){
 }
 
 
-# plot_add_standard_deviation <- function(plot, title){
-#   
-#   plot + 
-#     
-#   
-#   
-# }
-
 ```
 
+`r chunk_reveal("cov_steps", display_type = "output")`
 
+
+---
+class: inverse, middle, center
+
+#  Covariance
+
+---
+
+```{r cov_steps, eval = F, echo=F}
+set.seed(199402)
+create_x_y(relationship = 0) %>% data_create_scatterplot() %>% 
+  plot_draw_mean_x() %>% 
+  plot_draw_mean_y() %>% 
+  plot_draw_differences_x() %>% 
+  plot_draw_differences_y() %>% 
+  plot_multiply_differences() %>% 
+  plot_take_average_rectangle() 
+```
+
+---
+class: inverse, middle, center
+
+# Variance and Standard Deviation
+
+
+---
+class: inverse, center, middle
+
+.huge[
+
+$$ var(x) = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+]
+
+---
+class: inverse, center, middle
+
+.huge[
+
+$$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+]
 
 ---
 
 
-`r flipbookr::chunk_reveal("variance_steps")`
+`r flipbookr::chunk_reveal("variance_steps", display_type = "output")`
 
 ```{r variance_steps, eval = F, echo=F}
 set.seed(199402)
 create_x_y(relationship = 1,
-           noise = 0) ->
-  data
-data %>% 
-  data_create_scatterplot() %>% 
+           noise = 0) %>% data_create_scatterplot() %>% 
   plot_change_ylab_to_x() %>% 
   plot_correct_aspect_ratio() %>% 
   plot_draw_mean_x() %>% 
@@ -300,22 +314,73 @@ data %>%
   plot_take_average_rectangle() 
 ```
 
+---
+class: inverse, center, middle
+
+.huge[
+
+
+$$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+]
+
+
+
+---
+class: inverse, center, middle
+
+.huge[
+
+
+$$ \sigma = \sqrt\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+]
 
 ---
 
-`r chunk_reveal("cor_steps", break_type = 3, display_type = "output")`
+
+![Creative commons, Wikipedia, M. W. Toews - Own work, based (in concept) on figure by Jeremy Kemp, on 2005-02-09](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Standard_deviation_diagram.svg/1920px-Standard_deviation_diagram.svg.png)
+
+
+---
+class: inverse, middle, center
+
+
+# correlation coefficient
+
+---
+class: inverse, center, middle
+
+.huge[
+
+$$ cor(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n *\sigma_x \sigma_y} $$
+] 
 
 ---
 
-
-`r chunk_reveal("cor_steps", break_type = 3, display_type = "output")`
+`r chunk_reveal("cor_steps", display_type = "output")`
 
 
 ```{r cor_steps, eval = F, echo=F}
-create_x_y(relationship = 0) ->
-  data
-data %>% 
-  data_create_scatterplot() %>% 
+set.seed(1934)
+create_x_y(relationship = .1) -> data; data %>%  data_create_scatterplot() %>% 
+  plot_draw_mean_x() %>% 
+  plot_draw_mean_y() %>% 
+  plot_draw_differences_x() %>% 
+  plot_draw_differences_y() %>% 
+  plot_multiply_differences() %>% 
+  plot_take_average_rectangle() %>% 
+  plot_normalize_x(data = data) %>% 
+  plot_normalize_y(data = data) %>% 
+  plot_max_correlation(data = data)
+```
+
+---
+
+`r chunk_reveal("cor_steps_neg", display_type = "output")`
+
+
+```{r cor_steps_neg, eval = F, echo=F}
+set.seed(1934)
+create_x_y(relationship = -.05) -> data; data %>%  data_create_scatterplot() %>% 
   plot_draw_mean_x() %>% 
   plot_draw_mean_y() %>% 
   plot_draw_differences_x() %>% 
@@ -328,9 +393,57 @@ data %>%
 ```
 
 
+---
+
+# Bessel correction: n - 1
+
+*Sample* statistics (Not *population* statistics)
+
+
+---
+class: inverse, center, middle
+
+.huge[
+
+$$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n - 1} $$
+]
+
+
+
+
+---
+
+
+
+class: inverse, center, middle
+
+.huge[
+
+$$ s^2 = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n - 1} $$
+]
+
+
+---
+
+
+---
+
+
+
+class: inverse, center, middle
+
+.huge[
+
+$$ s = \sqrt\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n - 1} $$
+]
+
 
 
 
 ```{css, eval = TRUE, echo = F}
 .remark-code{line-height: 1.5; font-size: 70%}
+
+.huge {
+  font-size: 250%;
+}
 ```
