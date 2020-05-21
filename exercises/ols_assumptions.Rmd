@@ -1,0 +1,350 @@
+---
+title: "OLS assumptions and linear transformations"
+author: "Lab completed by ..."
+output: html_document
+---
+
+
+# Part I
+
+## Modeling Europe data
+
+```{r setup, message=F}
+library(tidyverse)
+library(gapminder)
+```
+
+```{r}
+set.seed(23443)  # so we have exactly the same "random" samples
+
+gm07_e <- gapminder %>% filter(year == 2007) %>% 
+  filter(continent == "Europe") %>% 
+  mutate(pcgdp_thousands = gdpPercap/1000) 
+
+ggplot(data = gm07_e) +
+  aes(x = pcgdp_thousands) +
+  aes(y = lifeExp) +
+  geom_point() +
+  geom_text(aes(label = country),
+            size = 4,
+            nudge_y = .1) -> # saving as plot object
+  g
+  
+g
+```
+
+
+## you can use ggplot to visualize the OLS fit
+
+This line is a model of the *conditional mean*:  Conditional on the value of x (per cap gdp) what is the expected y (the expected mean of lifeExpectancy)
+
+```{r}
+g +
+  geom_smooth(method = lm, se = F)
+```
+
+What does OLS do?
+
+> 
+
+
+---
+## The function lm() is used to fit the model
+
+
+lm() returns the formula and coefficents for the model.
+
+```{r}
+model <- lm(lifeExp ~ pcgdp_thousands, data = gm07_e)
+model
+```
+
+
+$$ LifeExp = coefficient * GDPperCapThousands + intercept + \epsilon $$
+
+
+
+## Can you make predictions with this model?  I.e. calculated expected value conditional on x (specific values of gdp per cap)?  
+
+Take a specific example: the equation so that the model makes a prediction for the country with gdp per capita of 10,000
+
+> *respond here*
+
+
+
+
+## Can you make predictions with this model?  I.e. calculated expected value conditional on x (specific values of gdp per cap)?  
+
+Take another example, gdp per capita of 100,000.  What is the prediction for life expectancy?  
+
+> *respond here*
+
+
+Take another example, gdp per capita of 1,000.  What is the prediction for life expectancy? 
+
+> *respond here*
+
+## How do you feel about making predictions about 100000, 10000, and 1000 per capita gdp? 
+
+> *respond here*
+
+
+
+## Predicted Value and Residuals
+
+For each data point, you can return a predicted value and the residual. 
+The residuals are calculated based on the difference between the observed value and the model fit. OLS adjudicates between all the possible lines that you could draw throught the data choosing the one that ... 
+
+```{r}
+# we need this for plotting - we'll come back to talk about this in a bit.
+model <- lm(formula = lifeExp ~ pcgdp_thousands, 
+            data = gm07_e)
+
+gm07_e$predicted <- model$fitted.values # Save the predicted values
+gm07_e$residuals <- model$residuals # Save observation residuals
+```
+
+
+
+
+# Part 2:
+
+
+## What if we do less subsetting? 
+
+```{r}
+gm_07 <- gapminder %>% 
+  filter(year == 2007) %>% 
+  filter(continent != "Africa") %>% 
+  mutate(pcgdp_thousands = gdpPercap/1000) 
+
+g2 <- ggplot(data = gm_07) +
+  aes(x = pcgdp_thousands) +
+  aes(y = lifeExp) +
+  geom_point() +
+  aes(label = country) +
+  geom_text(size = 4, 
+            check_overlap = T, 
+            nudge_y = 1.2) 
+
+g2
+
+```
+
+
+
+
+## you can use ggplot to visualize the OLS fit
+
+This line is a model of the *conditional mean*:  Conditional on the value of x (per cap gdp) what is the expected y (the expected mean of lifeExpectancy)
+
+```{r}
+last_plot() +
+  geom_smooth(method = lm, se = F)
+```
+
+
+
+---
+## The function lm() is used to fit the model
+
+
+lm() returns the formula and coefficents for the model.
+
+```{r}
+model <- lm(lifeExp ~ pcgdp_thousands, data = gm_07)
+model
+```
+
+
+$$ LifeExp = 0.3715 * GDPperCapThousands + 68.3831 + \epsilon $$
+
+
+
+
+---
+## What does lm() do?
+
+> *you fill in* squared residuals
+
+## How do you feel about making predictions with this model?  
+
+Good?  Not so good? What might be problematic about this fit.   Do you think we can do better?  How?
+
+Take a specific example: the equation so that the model makes a prediction for the country with gdp per capita of 1500
+
+```{r}
+# Using R like a calculator 
+
+last_plot() +
+  geom_vline(xintercept = 1.5, linetype = "dashed") +
+  geom_vline(xintercept = 50, linetype = "dashed") +
+  geom_vline(xintercept = 15, linetype = "dashed")
+
+```
+
+
+
+
+
+
+---
+## Predicted Value and Residuals
+
+The residuals are calculated based on the difference between the observed value and the model fit. OLS adjudicates between all the possible lines that you could draw throught the data. 
+
+```{r}
+# we need this for plotting - we'll come back to talk about this in a bit.
+model <- lm(formula = lifeExp ~ pcgdp_thousands, 
+            data = gm_07)
+
+gm_07$predicted <- model$fitted.values # Save the predicted values
+gm_07$residuals <- model$residuals # Save observation residuals
+```
+
+
+---
+## Visualized
+
+```{r}
+g3 <- ggplot(gm_07) + 
+  aes(x = gdpPercap , y  = lifeExp) + 
+  geom_point() + 
+  geom_smooth(method = lm, se = F) +
+  geom_rug(aes(y = NULL)) +
+  theme_bw()
+
+g3
+```
+
+---
+## Predicted Values for observations and the residuals (error)
+
+```{r}
+g3 + 
+  geom_rug(aes(y = NULL)) +
+  geom_point(aes(y = predicted), 
+             col = "blue", size = 3) +
+  geom_segment(aes(xend = gdpPercap, yend = predicted), col = "red") +
+  geom_point(aes(y = predicted), col = "blue", size = 3) +
+  geom_rug(aes(y = NULL)) 
+```
+
+
+
+What do you notice about the residuals? 
+
+> *respond here*
+
+
+## OLS modeling assumptions:
+
+- residuals (error term) are IID - Independently and Identically distributed
+
+    - The error term has a constant variance (no heteroscedasticity)
+    - Observations of the error term are uncorrelated with each other
+    - All independent variables are uncorrelated with the error term
+
+Are the modeling assumptions met in the last model?
+
+> *respond here*
+
+
+## Residuals (error) v X
+
+```{r}
+ggplot(data = gm_07) +
+  aes(x = gdpPercap) +
+  aes(y = residuals) +
+  geom_point() +
+  geom_hline(yintercept = 0, lty = "dashed")
+```
+
+
+
+## Can we still use the ordinary least squares method to model this data?
+
+Yes, maybe.  
+
+How? Curvilinear data modeling violations can sometimes be addressed via variable transformation.
+
+## Transformation
+
+Taking the log gdpPercap
+
+```{r}
+ggplot(data = gm_07) + 
+  aes(x = log10(gdpPercap)) +  # Add log 10 here 
+  aes(y = lifeExp) +
+  geom_point() +
+  aes(label = country) +
+  geom_text(size = 4) +
+  geom_smooth(method = lm)
+
+model_logging <- lm(lifeExp ~ log10(gdpPercap), data = gm_07)
+
+plot(log10(gm_07$gdpPercap), model_logging$residuals) +
+  abline(a = 0, b = 0, lty = 2)
+
+```
+
+Downsides of transformation:
+
+  - we need to take more care with interpretation
+  - increases along explanatory variable are order of magnitude increases
+
+
+Other strategies: 
+
+  - adding model terms (x + x^2 ; x + x^2 + x^3); maybe the shape of the relationship is parabolic or cubic.  
+  - loess smoothing (geom_smooth default - locally estimated scatterplot smoothing - but multiple explanatory variable challenge)
+
+```{r}
+ggplot(data = gm_07) +
+  aes(x = gdpPercap) +
+  aes(y = lifeExp) +
+  geom_point() +
+  geom_smooth()  # Loess smoothing
+```
+
+LOESS Smoothing
+
+Local Estimate Scatterplot smoothing
+http://varianceexplained.org/files/loess.html
+
+
+
+# plotting OLS Confidence intervals
+
+
+```{r}
+g +
+  geom_smooth(method = lm, se = T)
+```
+
+
+
+
+# Model reporting, collecting models in a table.
+
+
+```{r, eval = F, comment = "", results="asis"}
+
+model1 <- lm(lifeExp ~ pcgdp_thousands, data = gm07_e)
+
+stargazer::stargazer(model1 , type = "text")
+
+
+model2 <- lm(lifeExp ~ pcgdp_thousands + pop, data = gm07_e)
+
+
+stargazer::stargazer(model1, model2 , type = "text")
+
+```
+
+```{r}
+gm07_e %>% 
+lm(lifeExp ~ pcgdp_thousands, data = .) %>% 
+summary()
+```
+
