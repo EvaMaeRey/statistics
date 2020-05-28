@@ -1,7 +1,6 @@
 ---
 title: Federalist Papers
-author: Gina Reynolds
-date: '2018-06-16'
+author: Your name
 output: html_document
 ---
 
@@ -21,7 +20,7 @@ The *federalist* dataset in the *corpus* package provides authors if known; but 
 
 First a little cleaning.
 
-```{r, results='hide'}
+```{r, }
 federalist %>% 
   mutate(name = fct_inorder(name)) -> # we want these papers ordered, and not just alphabetically...
 federalist
@@ -59,6 +58,12 @@ corpus::federalist %>%
   tally() 
 ```
 
+# Using tidytext package
+
+What is the "corpus" used as an example in section 1.3 in the TidyText package website: www.tidytextmining.com (Links to an external site.) Links to an external site.
+
+> Answer
+
 # Unnesting from tidytext
 
 *Below*, describe what `unnest_tokens` does.
@@ -73,7 +78,7 @@ Change the `token` type to *"sentences"* below from the default *"words"*.  Now 
 
 > Answer
 
-```{r, results='hide'}
+```{r}
 library(tidytext)
 corpus::federalist %>% 
   select(name, author, text) %>% 
@@ -306,11 +311,10 @@ document_correlation %>%
 ```
 
 
-
 ---
 
-STOP!  :-)
-
+Done with Part I!
+ 
 ---
 
 
