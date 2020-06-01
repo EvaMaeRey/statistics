@@ -1,7 +1,6 @@
 ---
-title: "stats 101"
-subtitle: "Visualizaing covariance, variance, standard deviation, correlation"
-author: "<br><br>Gina Reynolds, Feb 2020"
+title: "Visualizing covariance, variance, standard deviation, correlation"
+author: "<br><br>Gina Reynolds"
 date: "<br>"
 output:
   xaringan::moon_reader:
@@ -43,7 +42,7 @@ class: inverse, center, middle
 
 .huge[
 
-$$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n} $$
+$$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)}{n} $$
 ]
 
 ---
@@ -51,7 +50,7 @@ $$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n} $$
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.width = 6, message = F, 
                       warning = F,  comment = "", 
-                      cache = T, fig.height = 7, 
+                      cache = F, fig.height = 7, 
                       fig.width = 8)
 
 library(flipbookr)
@@ -92,7 +91,7 @@ data_create_scatterplot <- function(data, background_color = "palegreen4"){
 
 data %>% 
   ggplot() + 
-  theme(legend.position = c(.1, .9)) +
+  theme(legend.position = c(.15, .9)) +
   aes(x = x) + 
   aes(y = y) +
   theme(rect = element_rect(fill = background_color)) + 
@@ -102,7 +101,7 @@ data %>%
   theme(legend.title = element_blank()) +
   theme(axis.text = element_text(color = "white")) +
   theme(axis.ticks = element_line(color = "white")) +
-  labs(title = "Covariance") +
+  labs(title = NULL) +
   theme(panel.grid = element_blank()) +
   geom_point(size = 3, pch = 21, col = "white", fill = "white", lwd = 3, alpha = .6) + 
   labs(caption = "Statistical Visualization: Gina Reynolds @EvaMaeRey ") 
@@ -180,7 +179,7 @@ plot_multiply_differences <- function(plot){
   
 }
     
-plot_take_average_rectangle <- function(plot, title = "Picture of covariance"){
+plot_take_average_rectangle <- function(plot, title = "Picture of Covariance"){
   
   plot +      
   # Average areas 
@@ -221,16 +220,16 @@ plot_normalize_x <- function(plot, data){
   
   plot + 
   # Pearsons's Correlation 
-  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd(data$x)), name = "sd y") +
+  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd(data$x), name = "sd x")) +
   geom_vline(xintercept = mean(data$x) + sd(data$x), lty = "dashed", color = "pink") +
   geom_vline(xintercept = mean(data$x) - sd(data$x), lty = "dashed", color = "pink") 
   
 }
 
-plot_normalize_y <- function(plot, data, title = "Picture of covariance\nand Pearson correlation coefficient"){
+plot_normalize_y <- function(plot, data, title = "Picture of covariance\n*and* Pearson correlation coefficient"){
   
   plot + 
-  scale_y_continuous(sec.axis = sec_axis(~ (. -mean(data$y))/ sd(data$y)), name = "sd y") +
+  scale_y_continuous(sec.axis = sec_axis(~ (. -mean(data$y))/ sd(data$y), name = "sd y")) +
   geom_hline(yintercept = mean(data$y) + sd(data$y), lty = "dashed", color = "pink") +
   geom_hline(yintercept = mean(data$y) - sd(data$y), lty = "dashed", color = "pink") + 
   labs(title = title) +
@@ -243,7 +242,7 @@ plot_max_correlation <- function(plot, data){
   
   plot + 
     annotate(geom = "rect",
-             alpha = .4, 
+             alpha = .3, 
              xmin = data$mean_x[1], xmax = data$mean_x[1] + data$sd_x[1],
              ymin = data$mean_y[1], ymax = data$mean_y[1] + data$sd_y[1],
              fill = "orange")
@@ -293,7 +292,7 @@ class: inverse, center, middle
 
 .huge[
 
-$$ var(x) = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+$$ var(x) = \frac{\sum_{i=1}^n (x_i-\mu_x)^2}{n} $$
 ]
 
 ---
@@ -301,7 +300,7 @@ class: inverse, center, middle
 
 .huge[
 
-$$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+$$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\mu_x)^2}{n} $$
 ]
 
 ---
@@ -330,7 +329,7 @@ class: inverse, center, middle
 .huge[
 
 
-$$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+$$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\mu_x)^2}{n} $$
 ]
 
 
@@ -341,7 +340,7 @@ class: inverse, center, middle
 .huge[
 
 
-$$ \sigma = \sqrt\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+$$ \sigma = \sqrt\frac{\sum_{i=1}^n (x_i-\mu_x)^2}{n} $$
 ]
 
 
@@ -369,6 +368,7 @@ set.seed(199402); create_x_y(relationship = 1,
 
 ![Creative commons, Wikipedia, M. W. Toews - Own work, based (in concept) on figure by Jeremy Kemp, on 2005-02-09](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Standard_deviation_diagram.svg/1920px-Standard_deviation_diagram.svg.png)
 
+Creative commons, Wikipedia, M. W. Toews - Own work, based (in concept) on figure by Jeremy Kemp, on 2005-02-09
 
 ---
 class: inverse, middle, center
@@ -381,7 +381,7 @@ class: inverse, center, middle
 
 .huge[
 
-$$ cor(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n *\sigma_x \sigma_y} $$
+$$ cor(x,y) = \frac{\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)}{n *\sigma_x \sigma_y} $$
 ] 
 
 ---
@@ -462,6 +462,72 @@ class: inverse, center, middle
 
 $$ s = \sqrt\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n - 1} $$
 ]
+
+
+
+---
+
+
+# DRY
+
+--
+
+## "Don't repeat yourself"
+
+--
+
+## Writing and using functions
+
+---
+
+
+`r chunk_reveal("cov_steps2")`
+
+
+
+
+
+```{r cov_steps2, eval = F, echo=F}
+set.seed(199402)
+create_x_y(relationship = 0) %>% 
+  data_create_scatterplot() %>% 
+  plot_draw_mean_x() %>% 
+  plot_draw_mean_y() %>% 
+  plot_draw_differences_x() %>% 
+  plot_draw_differences_y() %>% 
+  plot_multiply_differences() %>% 
+  plot_take_average_rectangle() 
+```
+
+
+---
+
+
+```{r}
+plot_draw_mean_x
+```
+
+---
+
+
+```{r}
+data_create_scatterplot
+```
+
+
+---
+
+
+```{r}
+plot_normalize_x
+```
+
+
+---
+
+# DRY Next level: writing and using packages
+
+- [A companion guide to Jim Hester’s, 'You can make an R package in 20 minutes'](https://evamaerey.github.io/package_in_20_minutes/package_in_20_minutes)
 
 
 

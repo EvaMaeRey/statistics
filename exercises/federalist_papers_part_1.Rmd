@@ -138,7 +138,7 @@ Which are the 5 word that occurs the most frequently in all the Federalist Paper
 
 > Answer
 
-Now. Pipe the data into ggplot(). Then create a histogram (`geom_histogram()`), where `rank` is mapped to the x position, and `times_in_federalist` is mapped to the y position. Adjust the scale of x to log10.
+Now. Pipe the data into ggplot(). Then create plot, where `rank` is mapped to the x position, and `times_in_federalist` is mapped to the y position. 
 
 Describe the distribution of the occurance of words:
 

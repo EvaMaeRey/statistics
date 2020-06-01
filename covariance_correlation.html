@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>stats 101</title>
+    <title>Visualizing covariance, variance, standard deviation, correlation</title>
     <meta charset="utf-8" />
-    <meta name="author" content="  Gina Reynolds, Feb 2020" />
+    <meta name="author" content="  Gina Reynolds" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/hygge.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
@@ -12,9 +12,8 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# stats 101
-## Visualizaing covariance, variance, standard deviation, correlation
-### <br><br>Gina Reynolds, Feb 2020
+# Visualizing covariance, variance, standard deviation, correlation
+### <br><br>Gina Reynolds
 ### <br>
 
 ---
@@ -50,7 +49,7 @@ class: inverse, center, middle
 
 .huge[
 
-$$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n} $$
+$$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)}{n} $$
 ]
 
 ---
@@ -61,25 +60,55 @@ $$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n} $$
 
 
 count: false
+
 ![](covariance_correlation_files/figure-html/cov_steps_auto_1_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cov_steps_auto_2_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cov_steps_auto_3_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cov_steps_auto_4_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cov_steps_auto_5_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cov_steps_auto_6_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cov_steps_auto_7_output-1.png)&lt;!-- --&gt;
+
+&lt;style&gt;
+.left-code-cov_steps-auto {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-cov_steps-auto {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
 
 
 
@@ -96,7 +125,7 @@ class: inverse, center, middle
 
 .huge[
 
-$$ var(x) = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+$$ var(x) = \frac{\sum_{i=1}^n (x_i-\mu_x)^2}{n} $$
 ]
 
 ---
@@ -104,36 +133,68 @@ class: inverse, center, middle
 
 .huge[
 
-$$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+$$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\mu_x)^2}{n} $$
 ]
 
 ---
 
 
 count: false
+
 ![](covariance_correlation_files/figure-html/variance_steps_user_1_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/variance_steps_user_2_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/variance_steps_user_3_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/variance_steps_user_4_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/variance_steps_user_5_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/variance_steps_user_6_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/variance_steps_user_7_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/variance_steps_user_8_output-1.png)&lt;!-- --&gt;
 
+&lt;style&gt;
+.left-code-variance_steps-user {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-variance_steps-user {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
 
 
 ---
@@ -142,7 +203,7 @@ class: inverse, center, middle
 .huge[
 
 
-$$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+$$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\mu_x)^2}{n} $$
 ]
 
 
@@ -153,7 +214,7 @@ class: inverse, center, middle
 .huge[
 
 
-$$ \sigma = \sqrt\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
+$$ \sigma = \sqrt\frac{\sum_{i=1}^n (x_i-\mu_x)^2}{n} $$
 ]
 
 
@@ -161,10 +222,30 @@ $$ \sigma = \sqrt\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n} $$
 
 
 count: false
+
 ![](covariance_correlation_files/figure-html/sd_steps_user_1_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/sd_steps_user_2_output-1.png)&lt;!-- --&gt;
+
+&lt;style&gt;
+.left-code-sd_steps-user {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-sd_steps-user {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
 
 
 
@@ -173,6 +254,7 @@ count: false
 
 ![Creative commons, Wikipedia, M. W. Toews - Own work, based (in concept) on figure by Jeremy Kemp, on 2005-02-09](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Standard_deviation_diagram.svg/1920px-Standard_deviation_diagram.svg.png)
 
+Creative commons, Wikipedia, M. W. Toews - Own work, based (in concept) on figure by Jeremy Kemp, on 2005-02-09
 
 ---
 class: inverse, middle, center
@@ -185,75 +267,147 @@ class: inverse, center, middle
 
 .huge[
 
-$$ cor(x,y) = \frac{\sum_{i=1}^n (x_i-\overline{x})(y_i-\overline{y})}{n *\sigma_x \sigma_y} $$
+$$ cor(x,y) = \frac{\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)}{n *\sigma_x \sigma_y} $$
 ] 
 
 ---
 
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_auto_1_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_auto_2_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_auto_3_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_auto_4_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_auto_5_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_auto_6_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_auto_7_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_auto_8_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_auto_9_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_auto_10_output-1.png)&lt;!-- --&gt;
 
+&lt;style&gt;
+.left-code-cor_steps-auto {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-cor_steps-auto {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
 
 
 
 ---
 
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_neg_auto_1_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_neg_auto_2_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_neg_auto_3_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_neg_auto_4_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_neg_auto_5_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_neg_auto_6_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_neg_auto_7_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_neg_auto_8_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_neg_auto_9_output-1.png)&lt;!-- --&gt;
+
 ---
 count: false
+
 ![](covariance_correlation_files/figure-html/cor_steps_neg_auto_10_output-1.png)&lt;!-- --&gt;
+
+&lt;style&gt;
+.left-code-cor_steps_neg-auto {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-cor_steps_neg-auto {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
 
 
 
@@ -300,6 +454,336 @@ class: inverse, center, middle
 
 $$ s = \sqrt\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n - 1} $$
 ]
+
+
+
+---
+
+
+# DRY
+
+--
+
+## "Don't repeat yourself"
+
+--
+
+## Writing and using functions
+
+---
+
+
+class: split-40
+count: false
+ 
+
+.left-code-cov_steps2-auto[
+
+```r
+*set.seed(199402)
+```
+]
+ 
+.right-output-cov_steps2-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-cov_steps2-auto[
+
+```r
+set.seed(199402)  
+*create_x_y(relationship = 0)
+```
+]
+ 
+.right-output-cov_steps2-auto[
+
+```
+# A tibble: 20 x 10
+       x      y mean_x  mean_y    area mean_area  sd_x  sd_y some_x some_y
+   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+ 1  68.2 -1.98    53.8 -0.0155  -28.3       8.21  23.4  3.42   23.4  0.350
+ 2  45.2  0.625   53.8 -0.0155   -5.46      8.21  23.4  3.42   23.4  0.350
+ 3  26.4  3.50    53.8 -0.0155  -96.2       8.21  23.4  3.42   23.4  0.350
+ 4  90.7 -4.08    53.8 -0.0155 -150.        8.21  23.4  3.42   23.4  0.350
+ 5  58.0 -2.02    53.8 -0.0155   -8.43      8.21  23.4  3.42   23.4  0.350
+ 6  41.6 -0.321   53.8 -0.0155    3.72      8.21  23.4  3.42   23.4  0.350
+ 7  67.7  7.33    53.8 -0.0155  102.        8.21  23.4  3.42   23.4  0.350
+ 8 -10.4 -3.46    53.8 -0.0155  221.        8.21  23.4  3.42   23.4  0.350
+ 9  65.4 -2.19    53.8 -0.0155  -25.3       8.21  23.4  3.42   23.4  0.350
+10  53.3 -2.10    53.8 -0.0155    1.07      8.21  23.4  3.42   23.4  0.350
+11  58.5  1.87    53.8 -0.0155    8.84      8.21  23.4  3.42   23.4  0.350
+12  45.9 -1.19    53.8 -0.0155    9.19      8.21  23.4  3.42   23.4  0.350
+13  73.9  1.54    53.8 -0.0155   31.3       8.21  23.4  3.42   23.4  0.350
+14  60.1 -6.83    53.8 -0.0155  -43.5       8.21  23.4  3.42   23.4  0.350
+15  99.0  1.57    53.8 -0.0155   71.8       8.21  23.4  3.42   23.4  0.350
+16  44.2  3.47    53.8 -0.0155  -33.3       8.21  23.4  3.42   23.4  0.350
+17  45.0  1.48    53.8 -0.0155  -13.2       8.21  23.4  3.42   23.4  0.350
+18  35.9 -3.43    53.8 -0.0155   60.9       8.21  23.4  3.42   23.4  0.350
+19  39.8  0.716   53.8 -0.0155  -10.2       8.21  23.4  3.42   23.4  0.350
+20  66.9  5.18    53.8 -0.0155   68.2       8.21  23.4  3.42   23.4  0.350
+```
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-cov_steps2-auto[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 0) %&gt;%  
+* data_create_scatterplot()
+```
+]
+ 
+.right-output-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_3_output-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-cov_steps2-auto[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 0) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+* plot_draw_mean_x()
+```
+]
+ 
+.right-output-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_4_output-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-cov_steps2-auto[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 0) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+* plot_draw_mean_y()
+```
+]
+ 
+.right-output-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_5_output-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-cov_steps2-auto[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 0) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+* plot_draw_differences_x()
+```
+]
+ 
+.right-output-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_6_output-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-cov_steps2-auto[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 0) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+  plot_draw_differences_x() %&gt;%  
+* plot_draw_differences_y()
+```
+]
+ 
+.right-output-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_7_output-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-cov_steps2-auto[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 0) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+  plot_draw_differences_x() %&gt;%  
+  plot_draw_differences_y() %&gt;%  
+* plot_multiply_differences()
+```
+]
+ 
+.right-output-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_8_output-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-code-cov_steps2-auto[
+
+```r
+set.seed(199402)  
+create_x_y(relationship = 0) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+  plot_draw_differences_x() %&gt;%  
+  plot_draw_differences_y() %&gt;%  
+  plot_multiply_differences() %&gt;%  
+* plot_take_average_rectangle()
+```
+]
+ 
+.right-output-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_9_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.left-code-cov_steps2-auto {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-cov_steps2-auto {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+
+
+
+---
+
+
+
+```r
+plot_draw_mean_x
+```
+
+```
+function(plot){
+  
+  plot + 
+  # 1. mean of x
+  geom_rug(aes(y = NULL), col = "white") +
+  geom_vline(aes(xintercept = mean(x)), 
+             lty = "dashed", col = "white")  
+  
+  
+}
+&lt;bytecode: 0x7ffd5d175388&gt;
+```
+
+---
+
+
+
+```r
+data_create_scatterplot
+```
+
+```
+function(data, background_color = "palegreen4"){
+
+data %&gt;% 
+  ggplot() + 
+  theme(legend.position = c(.15, .9)) +
+  aes(x = x) + 
+  aes(y = y) +
+  theme(rect = element_rect(fill = background_color)) + 
+  theme(text = element_text(color = "white", face = "italic", size = 15)) +
+  theme(panel.background = element_rect(fill = background_color)) +
+  theme(legend.key = element_blank()) + #element_rect(fill = background_color)) +
+  theme(legend.title = element_blank()) +
+  theme(axis.text = element_text(color = "white")) +
+  theme(axis.ticks = element_line(color = "white")) +
+  labs(title = NULL) +
+  theme(panel.grid = element_blank()) +
+  geom_point(size = 3, pch = 21, col = "white", fill = "white", lwd = 3, alpha = .6) + 
+  labs(caption = "Statistical Visualization: Gina Reynolds @EvaMaeRey ") 
+
+  
+}
+&lt;bytecode: 0x7ffd5a76ee58&gt;
+```
+
+
+---
+
+
+
+```r
+plot_normalize_x
+```
+
+```
+function(plot, data){
+  
+  plot + 
+  # Pearsons's Correlation 
+  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd(data$x), name = "sd x")) +
+  geom_vline(xintercept = mean(data$x) + sd(data$x), lty = "dashed", color = "pink") +
+  geom_vline(xintercept = mean(data$x) - sd(data$x), lty = "dashed", color = "pink") 
+  
+}
+&lt;bytecode: 0x7ffd5d7632b0&gt;
+```
+
+
+---
+
+# DRY Next level: writing and using packages
+
+- [A companion guide to Jim Hester’s, 'You can make an R package in 20 minutes'](https://evamaerey.github.io/package_in_20_minutes/package_in_20_minutes)
 
 
 
