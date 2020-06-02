@@ -1,0 +1,489 @@
+---
+title: Federalist Papers
+author: Gina Reynolds
+date: '2018-06-16'
+output: html_document
+---
+
+
+The Federalist Papers are ready-to-use in corpus in [the R package "corpus", by Patrick O. Perry](https://CRAN.R-project.org/package=corpus).  
+
+```{r setup, warning = F, message=FALSE}
+library(tidyverse)
+library(corpus)
+```
+
+
+# federalist data from Corpus package
+
+The *federalist* dataset in the *corpus* package provides authors if known; but disputed authorship is designated NA. 
+
+First a little cleaning.
+
+```{r, results='hide'}
+federalist %>% 
+  mutate(name = fct_inorder(name)) -> # we want these papers ordered, and not just alphabetically...
+federalist
+```
+
+
+
+Below, we pipe federalist into head (which just returns 6 rows). What are the column names for the corpus package?  (Note, I set results='hide' in code chunck options because what is returned is a little overwhelming -- the entire texts of the federalist papers!)
+
+> Answer here
+
+```{r, results='hide'}
+federalist %>%
+  head()
+```
+
+Just a note. You might also like to use glimpse() as another way to look at the data (part of the `tibble` package in the tidyverse).
+
+```{r, results='hide'}
+federalist %>% 
+  glimpse()
+```
+
+Based on the code *below*, how many **disputed** texts are there?  
+
+> Answer
+
+And how may did Jay write?
+
+> Answer
+
+```{r}
+federalist %>% 
+  group_by(author) %>% 
+  tally() 
+```
+
+# Unnesting from tidytext
+
+*Below*, describe what `unnest_tokens` does.
+
+> Answer
+
+And how many rows result from the transformation?
+
+> Answer
+
+Change the `token` type to *"sentences"* below from the default *"words"*.  Now how many rows result?
+
+> Answer
+
+```{r, results='hide'}
+library(tidytext)
+federalist %>% 
+  select(name, author, text) %>% 
+  unnest_tokens(output = word, 
+                input = text, 
+                token = "words")
+```
+
+Look at one more variant.  What is an ngram?
+
+> Your answer...
+
+Also, take a minute to check out google's ngram viewer. https://books.google.com/ngrams What does it do?
+
+> Your answer.  
+
+Search for a phrase related to international relations online at https://books.google.com/ngrams, report it below and describe the trend:
+
+> Your answer. 
+
+```{r, results='hide'}
+library(tidytext)
+federalist %>% 
+  select(name, author, text) %>% 
+  unnest_tokens(output = word, 
+                input = text, 
+                token = "ngrams", 
+                n = 3)
+```
+
+---
+
+# Texts mentioning "Foreign"
+
+Now we focus on a subset of texts.  Of the 85 Federalist papers, *how many contain the text foreign or Foreign*?  (We are using the regular expressions function str_detect, which returns TRUE if foreign or Foreign are found)
+
+> Your answer...
+
+Now modify the code below to return only the cases where foreign or Foreign are found in the title.  How many Federalist papers have Foreign in the title? (change the column that is the input for `str_detect`, right now it is the column `text`, the 6th column in the data frame)
+
+> Your answer...
+
+Besides "foreign" what other words might be in a "dictionary" of words related to international relations.  List a few below.
+
+> Your answer
+
+```{r, results='hide'}
+federalist %>% 
+  filter(str_detect(text, "foreign|Foreign"))
+```
+
+
+# Counting words
+
+*Below, add comments to the code describing what each line of the pipeline does.* You may highlight the code partially and execute to clarify what's going on if you need to.  Check in with your group members to make sure they also understand the pipeline.
+
+Which are the 5 word that occurs the most frequently in all the Federalist Papers texts?
+
+> Answer
+
+Now. Pipe the data into ggplot(). Then create a histogram (`geom_histogram()`), where `rank` is mapped to the x position, and `times_in_federalist` is mapped to the y position. Adjust the scale of x to log10.
+
+Describe the distribution of the occurance of words:
+
+> Your answer
+
+Search for Zipf's law on the internet.  Copy a definition here:
+
+> 
+
+Is the pattern you  you observe consistent with Zipfs law?
+
+> Your answer
+
+```{r, results='hide'}
+federalist %>% 
+  select(text, author, name) %>% 
+  unnest_tokens(output = word, input = text) %>% 
+  group_by(word) %>% 
+  tally() %>% 
+  arrange(-n) %>% 
+  rename(times_in_federalist = n) %>% 
+  mutate(rank = 1:n())
+```
+
+We can also make a column plot with the top several.  We use slice() to grab rows 1 to 10.  Then pipe into ggplot().  The code below is already written for this purpose.  *Add some notes with the comment character to explain the steps of the code below.  Quiz your group members.  Use partial highlighting to help clarify the steps.*
+
+If you were using text analysis vocabulary, how would you describe the words that make the top ten most frequent in the plot?  "They are ... words."
+
+> 
+
+```{r}
+federalist %>% 
+  select(text, author, name) %>% 
+  unnest_tokens(output = word, input = text) %>% 
+  group_by(word) %>% 
+  tally() %>% 
+  arrange(-n) %>% 
+  rename(times_in_federalist = n) %>% 
+  slice(1:10) %>% 
+  ggplot() +
+  aes(x = reorder(word, times_in_federalist)) +
+  aes(y = times_in_federalist) +
+  geom_col() +
+  coord_flip() 
+```
+
+
+
+
+## Stop words
+
+How many rows (words) are in the stop_words data frame (execute the code below)?
+
+> answer
+
+In fact, as explained by the tidytext package website, "dataset in the tidytext package contains stop words from three lexicons."  (i.e. dictionaries of words that are considered "stop words" by three different groups.)  "SMART" is the first one.  What is another?  Click down (way down!) through the rows of data to answer the question. 
+
+> answer.
+
+
+```{r, results='hide'}
+tidytext::stop_words 
+```
+
+The anti_join funtion is one of the join functions from dplyr (like full join or inner join). It keeps "left hand" data where case is not found in "right hand" data.
+
+What are the first two rows () that are removed via the anti_join with stopwords. You might partially execute the code w/o the anti_join statement to figure this out. 
+
+> answer
+
+```{r, results='hide'}
+federalist %>% 
+  select(text, author, name) %>% 
+  unnest_tokens(output = word, input = text) %>% 
+  anti_join(stop_words)  # natural join is on columns "word" 
+                         # from transformation of federalist data
+                         # and from stop_words
+```
+
+After *removing* stopwords, what do you *think* might be the two most frequently observed words in the corpus?  
+
+> answer
+
+*Now add to this pipeline below to answer this question*.   What are indeed the two most frequently observed word in the corpus?  (You may refer to code above to get this done!  We did something similar w/o removing stop words before.  The result will be a column of words, and a column with count, "n")
+
+In words: 1) You need to *group by* `word`.  2) then you can *tally* up the number of times the word is observed 3) then you can *arrange* the data so that you see the words occuring the most at the of your list.  
+
+>
+
+```{r, results='hide'}
+federalist %>% 
+  select(text, author, name) %>% 
+  unnest_tokens(output = word, input = text) %>% 
+  anti_join(stop_words)  # Add to the pipeline here...
+```
+
+Below, produce a ggplot with the frequencies of the 10 most frequent words in the federalist papers that are *NOT* stop words.  (Refer to code above if needed.)
+
+```{r}
+# geom_col() plot - columns representing frequency.
+
+```
+
+
+# Part II and **Return point**
+
+# Relationships between texts **(Return point - you will return to this point later)**
+
+
+```{r, results='hide'}
+federalist %>% 
+  select(name, text, title) %>% 
+  unnest_tokens(output = word, input = text) %>% 
+  anti_join(stop_words) %>%
+  group_by(name, word) %>% 
+  count() %>% 
+  arrange(-n) %>% 
+  ungroup() ->
+federalist_doc_term_frequency
+
+federalist_doc_term_frequency
+```
+
+The following code takes the correlation for the count of tokens between sets of two texts.  It is a single statistic that measures the similarity between any pair of texts.  How many pairs of texts are there? 
+
+> your answer
+
+```{r, results='hide'}
+federalist_doc_term_frequency %>% 
+  widyr::pairwise_cor(item = name,
+                      feature = word, 
+                      value = n, 
+                      sort = TRUE) ->
+document_correlation
+
+document_correlation
+```
+
+We can look at the strength of the correlation as a heat map, as seen below.  What color represents more similar texts?  
+
+> 
+
+Chat in your group about how to interpret this plot. Why are their white tiles on the diagonal?  
+
+```{r, fig.height=20}
+document_correlation %>% 
+  ggplot() +
+  aes(x = item1) +
+  aes(y = item2) +
+  aes(fill = correlation) +
+  geom_tile() + # one tile for each pair of texts
+  scale_fill_viridis_c(direction = -1) +
+  theme(axis.text.x = element_text(angle = 90)) +
+  theme_bw(base_size = 20) +
+  theme(axis.text.x = element_text(angle = 90)) +
+  theme(aspect.ratio = 1)
+```
+
+
+
+---
+
+
+
+# Declare to be network data
+
+Now, we will keep only a subset of text pairs.  Where the correlation is the strongest.  
+
+Then we declare that the data should be understood as a network, and we add back information about "node" characteristics, where nodes are our documents.  
+
+Below, what is printed first, when calling `federalist_network_with_node_features`.  The "node" dataframe, or the "edges" data frame?  
+
+> your answer
+
+```{r, results='hide'}
+document_correlation %>% 
+  group_by(item1) %>% 
+  mutate(rank1 = 1:n()) %>% 
+  ungroup() %>% 
+  group_by(item2) %>% 
+  mutate(rank2 = 1:n()) %>% 
+  filter(rank1 %in% 1:3 |
+         rank2 %in% 1:3) %>% # Up through here we are pruning away the less strong correlations
+  igraph::graph_from_data_frame() %>% 
+  tidygraph::as_tbl_graph(graph) ->
+nodes_and_edges
+
+nodes_and_edges %>% 
+  tidygraph::activate(nodes) %>% 
+  full_join(federalist) ->
+federalist_network_with_node_features
+
+federalist_network_with_node_features
+```
+
+Inspect `nodes_and_edges`.  (Highlight just that code and execute with command return -mac - or control return -pc). There are two data frames contained in this object.  Describe them.
+
+> respond here
+
+Now, look at the result of the full_join.  Where has the data `federalist` been added once we create the object `federalist_network_with_node_features`.
+
+> respond here
+
+What do you think the role of `tidygraph::activate()` is?
+
+> respond here
+
+
+
+
+# Plot network graph
+
+Execute the code below.  Then, with your group, decide on a different set of key words to focus on. (ie Replace "Protect|protect")
+
+
+```{r}
+library(ggraph)
+federalist_network_with_node_features %>% 
+  mutate(contains_key_word = str_detect(text, "protect|Protect")) %>% 
+  ggraph(layout = "kk") + 
+  geom_edge_link(mapping = aes(alpha = correlation, size = correlation)) +
+  geom_node_point(mapping = aes(color = contains_key_word), size = 6) +
+  geom_node_text(mapping = aes(label = name), repel = TRUE, size = 1) +
+  theme_void()
+```
+
+Now, execute the variant below.  Identify the differences between this code chunk and the one above.  Write a few notes.   
+
+> respond here
+
+Also, change the layout from "kk" (kamada-kawai force directed), to "circle", to "sphere", and execute code.  Then change back to 'kk'.
+
+```{r}
+federalist_network_with_node_features %>% 
+  ggraph(layout = "kk") +
+  geom_edge_link(mapping = aes(alpha = correlation)) +
+  geom_node_point(mapping = aes(color = author), 
+                          size = 6) +
+  geom_node_text(aes(label = name), repel = TRUE, size = 1) +
+  theme_void()
+```
+
+What would you guess about the authorship of the disputed federalist papers based on this network graph?
+
+> your answer
+
+# Go to the **Return Point**
+
+Comment out a line of code such that stop words are **not** removed.  Then execute the code that follows.  What do you find in the new final network graph?
+
+> Your answer
+
+
+# Bonus
+
+## Interactive 3d network visualization
+
+This section is recommended, but not required (you can keep eval = FALSE, if you just want to skip it.  You can look at the walk through online if you prefer https://evamaerey.github.io/flipbooks/federalist/federalist.html.
+
+You will need to install the packages `threejs` and `htmlwidgets`. 
+
+
+```{r, eval = F}
+library(threejs)
+library(htmlwidgets)
+ 
+# The main network plotting function - graphjs() will take an igraph object.
+# We could use our initial 'net' object with a slight modification - we will
+# delete its graph layout and let 'threejs' generate its own layout.
+# (We cheated a bit by assigning a function to the layout attribute above 
+# rather than giving it a table of node coordinates. This is fine by 'igraph',
+# but 'threejs' will not let us do it.
+
+fed <- tidygraph::as.igraph(federalist_network_with_node_features)
+
+fed_edges <- as_tibble(federalist_network_with_node_features %>%
+                              tidygraph::activate(edges)) %>% 
+               mutate(value = 1) %>% 
+               mutate(to = to) %>% # you've got to start from zero but tidygraph starts at 1
+               mutate(from = from) 
+
+fed_nodes <- as_tibble(federalist_network_with_node_features) %>% 
+  mutate(group = 1) %>% 
+  mutate(name = fct_inorder(name)) %>% 
+  mutate(id = as.numeric(forcats::fct_inorder(name))) 
+```
+
+
+```{r, eval = F}
+graph_attr(fed, "layout") <- NULL
+
+graphjs(
+  fed, 
+  main = "Federalist Papers!", 
+  bg = "gray10", #background color
+  showLabels = F, 
+  stroke = F, 
+  curvature = 0.1, 
+  attraction = 0.9, 
+  repulsion = 0.8, 
+  opacity = 0.9
+  )
+```
+
+# Java Script - Decorated
+
+```{r, eval = F}
+authors <- 
+  ifelse(is.na(fed_nodes$author), "Disputed",
+         stringr::str_wrap(as.character(fed_nodes$author), 15))
+
+V(fed)$color <- c("goldenrod4", "steelblue2", "coral3", "navy")[factor(authors)]
+V(fed)$shape <- authors
+V(fed)$size <- 1
+V(fed)$label <- as.character(fed_nodes$title)
+
+E(fed)$color <- "darkgrey"
+
+graphjs(g = fed, bg = "gray10", showLabels = T, stroke = F, 
+                  layout = list(layout_with_fr(fed,  dim = 3)),
+                  main = "") ->
+  g;g
+
+# if you want so save out the interactive visualization..
+htmlwidgets::saveWidget(g, file = "federalist_widget.html")
+```
+
+What do you think V stands for vs. E when defining color, shape etc.    
+
+
+
+# Now, go to the **Return Point**
+
+Comment out a line of code such that *stop words* are **not** removed.  Then execute the code that follows.  What do you find in the new final network graph (where node color represents authorship)?
+
+> Your answer
+
+Based on the connections (in the static or html widgit plots), who would you say is the author of the disputed texts
+
+> Your answer
+
+
+
+---
+
+Done with the Federalist Papers assignment?  Perform another (you looked at lexical diversity type-token ratio last week) *mini* text analysis with the data `inaugural` which accessed from the "quanteda" package, as shown below. For example, prep data and create a plot of the top 10 words that occur --- that are *not* stop words --- in the inaugural corpus.  
+
+```{r}
+inaugural <- quanteda::data_corpus_inaugural$documents
+```
+
+
+

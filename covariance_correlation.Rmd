@@ -50,7 +50,7 @@ $$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)}{n} $$
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.width = 6, message = F, 
                       warning = F,  comment = "", 
-                      cache = F, fig.height = 7, 
+                      cache = T, fig.height = 7, 
                       fig.width = 8)
 
 library(flipbookr)
@@ -523,12 +523,33 @@ plot_normalize_x
 ```
 
 
+
+
+
+
 ---
 
 # DRY Next level: writing and using packages
 
 - [A companion guide to Jim Hester’s, 'You can make an R package in 20 minutes'](https://evamaerey.github.io/package_in_20_minutes/package_in_20_minutes)
 
+
+---
+
+`r chunk_reveal("lm_steps", display_type = "output")`
+
+
+```{r lm_steps, eval = F, echo=F}
+set.seed(1934); create_x_y(relationship = .1) -> data; data %>% data_create_scatterplot() %>% 
+  plot_draw_mean_x() %>% 
+  plot_draw_mean_y() %>% 
+  plot_draw_differences_x() %>% 
+  plot_draw_differences_y() %>% 
+  plot_multiply_differences() %>% 
+  plot_take_average_rectangle() %>% 
+  plot_normalize_x(data = data) +
+  geom_smooth(method = lm, se = F, aes(fill = F, color = F))
+```
 
 
 

@@ -720,7 +720,6 @@ function(plot){
   
   
 }
-&lt;bytecode: 0x7ffd5d175388&gt;
 ```
 
 ---
@@ -736,7 +735,7 @@ function(data, background_color = "palegreen4"){
 
 data %&gt;% 
   ggplot() + 
-  theme(legend.position = c(.15, .9)) +
+  theme(legend.position = c(.1, .9)) +
   aes(x = x) + 
   aes(y = y) +
   theme(rect = element_rect(fill = background_color)) + 
@@ -746,14 +745,13 @@ data %&gt;%
   theme(legend.title = element_blank()) +
   theme(axis.text = element_text(color = "white")) +
   theme(axis.ticks = element_line(color = "white")) +
-  labs(title = NULL) +
+  labs(title = "Covariance") +
   theme(panel.grid = element_blank()) +
   geom_point(size = 3, pch = 21, col = "white", fill = "white", lwd = 3, alpha = .6) + 
   labs(caption = "Statistical Visualization: Gina Reynolds @EvaMaeRey ") 
 
   
 }
-&lt;bytecode: 0x7ffd5a76ee58&gt;
 ```
 
 
@@ -775,8 +773,11 @@ function(plot, data){
   geom_vline(xintercept = mean(data$x) - sd(data$x), lty = "dashed", color = "pink") 
   
 }
-&lt;bytecode: 0x7ffd5d7632b0&gt;
 ```
+
+
+
+
 
 
 ---
@@ -784,6 +785,72 @@ function(plot, data){
 # DRY Next level: writing and using packages
 
 - [A companion guide to Jim Hester’s, 'You can make an R package in 20 minutes'](https://evamaerey.github.io/package_in_20_minutes/package_in_20_minutes)
+
+
+---
+
+count: false
+
+![](covariance_correlation_files/figure-html/lm_steps_auto_1_output-1.png)&lt;!-- --&gt;
+
+---
+count: false
+
+![](covariance_correlation_files/figure-html/lm_steps_auto_2_output-1.png)&lt;!-- --&gt;
+
+---
+count: false
+
+![](covariance_correlation_files/figure-html/lm_steps_auto_3_output-1.png)&lt;!-- --&gt;
+
+---
+count: false
+
+![](covariance_correlation_files/figure-html/lm_steps_auto_4_output-1.png)&lt;!-- --&gt;
+
+---
+count: false
+
+![](covariance_correlation_files/figure-html/lm_steps_auto_5_output-1.png)&lt;!-- --&gt;
+
+---
+count: false
+
+![](covariance_correlation_files/figure-html/lm_steps_auto_6_output-1.png)&lt;!-- --&gt;
+
+---
+count: false
+
+![](covariance_correlation_files/figure-html/lm_steps_auto_7_output-1.png)&lt;!-- --&gt;
+
+---
+count: false
+
+![](covariance_correlation_files/figure-html/lm_steps_auto_8_output-1.png)&lt;!-- --&gt;
+
+---
+count: false
+
+![](covariance_correlation_files/figure-html/lm_steps_auto_9_output-1.png)&lt;!-- --&gt;
+
+&lt;style&gt;
+.left-code-lm_steps-auto {
+  color: #777;
+  width: 38%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-output-lm_steps-auto {
+  width: 60%;
+  float: right;
+  padding-left: 1%;
+}
+&lt;/style&gt;
+
+
+
+
 
 
 
