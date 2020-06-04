@@ -50,7 +50,7 @@ $$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)}{n} $$
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.width = 6, message = F, 
                       warning = F,  comment = "", 
-                      cache = T, fig.height = 7, 
+                      cache = F, fig.height = 7, 
                       fig.width = 8)
 
 library(flipbookr)
@@ -61,6 +61,13 @@ library(tidyverse)
 ```{r, include = F}
 set.seed(2020)
 library(tidyverse)
+
+sd_pop <- function(x){
+  
+sqrt(sum((x - mean(x))^2)/(length(x)))  
+  
+}
+
 create_x_y <- function(num = 20, 
                        spread_x = 20,
                        relationship = .1, 
@@ -73,12 +80,18 @@ create_x_y <- function(num = 20,
   mutate(mean_y = mean(y)) %>% 
   mutate(area = (x - mean_x)*(y - mean_y)) %>% 
   mutate(mean_area = mean(area)) %>% 
-  mutate(sd_x = sd(x)) %>% 
-  mutate(sd_y = sd(y)) %>% 
+  mutate(quasi_mean_area = area/(n() - 1)) %>%
+  mutate(sd_x_sample = sd(x)) %>% 
+  mutate(sd_x = sd_pop(x)) %>% 
+  mutate(sd_y_sample = sd(y)) %>% 
+  mutate(sd_y = sd_pop(y)) %>% 
   mutate(some_x = sd_x) %>% 
-  mutate(some_y = mean_area/some_x) 
+  mutate(some_x_sample = sd_x_sample) %>% 
+  mutate(some_y = mean_area/some_x) %>% 
+  mutate(some_y_sample = sd_y_sample) 
   
 }
+
 
 
 data_calc_cor <- function(data){
@@ -220,20 +233,20 @@ plot_normalize_x <- function(plot, data){
   
   plot + 
   # Pearsons's Correlation 
-  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd(data$x), name = "sd x")) +
-  geom_vline(xintercept = mean(data$x) + sd(data$x), lty = "dashed", color = "pink") +
-  geom_vline(xintercept = mean(data$x) - sd(data$x), lty = "dashed", color = "pink") 
+  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd_pop(data$x), name = "sd x")) +
+  geom_vline(xintercept = mean(data$x) + sd_pop(data$x), lty = "dashed", color = "pink") +
+  geom_vline(xintercept = mean(data$x) - sd_pop(data$x), lty = "dashed", color = "pink") 
   
 }
 
 plot_normalize_y <- function(plot, data, title = "Picture of covariance\n*and* Pearson correlation coefficient"){
   
   plot + 
-  scale_y_continuous(sec.axis = sec_axis(~ (. -mean(data$y))/ sd(data$y), name = "sd y")) +
-  geom_hline(yintercept = mean(data$y) + sd(data$y), lty = "dashed", color = "pink") +
-  geom_hline(yintercept = mean(data$y) - sd(data$y), lty = "dashed", color = "pink") + 
+  scale_y_continuous(sec.axis = sec_axis(~ (. -mean(data$y))/ sd_pop(data$y), name = "sd y")) +
+  geom_hline(yintercept = mean(data$y) + sd_pop(data$y), lty = "dashed", color = "pink") +
+  geom_hline(yintercept = mean(data$y) - sd_pop(data$y), lty = "dashed", color = "pink") + 
   labs(title = title) +
-  coord_fixed(ratio =  sd(data$x)/sd(data$y) )
+  coord_fixed(ratio =  sd_pop(data$x)/sd_pop(data$y) )
 
 }
 
@@ -268,7 +281,6 @@ plot_correct_aspect_ratio <- function(plot){
 ```
 
 `r chunk_reveal("cov_steps", display_type = "output")`
-
 
 
 ```{r cov_steps, eval = F, echo=F}

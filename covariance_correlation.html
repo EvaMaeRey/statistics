@@ -113,7 +113,6 @@ count: false
 
 
 
-
 ---
 class: inverse, middle, center
 
@@ -504,29 +503,31 @@ set.seed(199402)
 .right-output-cov_steps2-auto[
 
 ```
-# A tibble: 20 x 10
-       x      y mean_x  mean_y    area mean_area  sd_x  sd_y some_x some_y
-   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
- 1  68.2 -1.98    53.8 -0.0155  -28.3       8.21  23.4  3.42   23.4  0.350
- 2  45.2  0.625   53.8 -0.0155   -5.46      8.21  23.4  3.42   23.4  0.350
- 3  26.4  3.50    53.8 -0.0155  -96.2       8.21  23.4  3.42   23.4  0.350
- 4  90.7 -4.08    53.8 -0.0155 -150.        8.21  23.4  3.42   23.4  0.350
- 5  58.0 -2.02    53.8 -0.0155   -8.43      8.21  23.4  3.42   23.4  0.350
- 6  41.6 -0.321   53.8 -0.0155    3.72      8.21  23.4  3.42   23.4  0.350
- 7  67.7  7.33    53.8 -0.0155  102.        8.21  23.4  3.42   23.4  0.350
- 8 -10.4 -3.46    53.8 -0.0155  221.        8.21  23.4  3.42   23.4  0.350
- 9  65.4 -2.19    53.8 -0.0155  -25.3       8.21  23.4  3.42   23.4  0.350
-10  53.3 -2.10    53.8 -0.0155    1.07      8.21  23.4  3.42   23.4  0.350
-11  58.5  1.87    53.8 -0.0155    8.84      8.21  23.4  3.42   23.4  0.350
-12  45.9 -1.19    53.8 -0.0155    9.19      8.21  23.4  3.42   23.4  0.350
-13  73.9  1.54    53.8 -0.0155   31.3       8.21  23.4  3.42   23.4  0.350
-14  60.1 -6.83    53.8 -0.0155  -43.5       8.21  23.4  3.42   23.4  0.350
-15  99.0  1.57    53.8 -0.0155   71.8       8.21  23.4  3.42   23.4  0.350
-16  44.2  3.47    53.8 -0.0155  -33.3       8.21  23.4  3.42   23.4  0.350
-17  45.0  1.48    53.8 -0.0155  -13.2       8.21  23.4  3.42   23.4  0.350
-18  35.9 -3.43    53.8 -0.0155   60.9       8.21  23.4  3.42   23.4  0.350
-19  39.8  0.716   53.8 -0.0155  -10.2       8.21  23.4  3.42   23.4  0.350
-20  66.9  5.18    53.8 -0.0155   68.2       8.21  23.4  3.42   23.4  0.350
+# A tibble: 20 x 15
+       x      y mean_x  mean_y    area mean_area quasi_mean_area sd_x_sample
+   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;       &lt;dbl&gt;
+ 1  68.2 -1.98    53.8 -0.0155  -28.3       8.21         -1.49          23.4
+ 2  45.2  0.625   53.8 -0.0155   -5.46      8.21         -0.287         23.4
+ 3  26.4  3.50    53.8 -0.0155  -96.2       8.21         -5.06          23.4
+ 4  90.7 -4.08    53.8 -0.0155 -150.        8.21         -7.90          23.4
+ 5  58.0 -2.02    53.8 -0.0155   -8.43      8.21         -0.444         23.4
+ 6  41.6 -0.321   53.8 -0.0155    3.72      8.21          0.196         23.4
+ 7  67.7  7.33    53.8 -0.0155  102.        8.21          5.39          23.4
+ 8 -10.4 -3.46    53.8 -0.0155  221.        8.21         11.6           23.4
+ 9  65.4 -2.19    53.8 -0.0155  -25.3       8.21         -1.33          23.4
+10  53.3 -2.10    53.8 -0.0155    1.07      8.21          0.0564        23.4
+11  58.5  1.87    53.8 -0.0155    8.84      8.21          0.465         23.4
+12  45.9 -1.19    53.8 -0.0155    9.19      8.21          0.484         23.4
+13  73.9  1.54    53.8 -0.0155   31.3       8.21          1.65          23.4
+14  60.1 -6.83    53.8 -0.0155  -43.5       8.21         -2.29          23.4
+15  99.0  1.57    53.8 -0.0155   71.8       8.21          3.78          23.4
+16  44.2  3.47    53.8 -0.0155  -33.3       8.21         -1.75          23.4
+17  45.0  1.48    53.8 -0.0155  -13.2       8.21         -0.693         23.4
+18  35.9 -3.43    53.8 -0.0155   60.9       8.21          3.21          23.4
+19  39.8  0.716   53.8 -0.0155  -10.2       8.21         -0.539         23.4
+20  66.9  5.18    53.8 -0.0155   68.2       8.21          3.59          23.4
+# … with 7 more variables: sd_x &lt;dbl&gt;, sd_y_sample &lt;dbl&gt;, sd_y &lt;dbl&gt;,
+#   some_x &lt;dbl&gt;, some_x_sample &lt;dbl&gt;, some_y &lt;dbl&gt;, some_y_sample &lt;dbl&gt;
 ```
 ]
 
@@ -720,6 +721,7 @@ function(plot){
   
   
 }
+&lt;bytecode: 0x7fa5a36fab80&gt;
 ```
 
 ---
@@ -735,7 +737,7 @@ function(data, background_color = "palegreen4"){
 
 data %&gt;% 
   ggplot() + 
-  theme(legend.position = c(.1, .9)) +
+  theme(legend.position = c(.15, .9)) +
   aes(x = x) + 
   aes(y = y) +
   theme(rect = element_rect(fill = background_color)) + 
@@ -745,13 +747,14 @@ data %&gt;%
   theme(legend.title = element_blank()) +
   theme(axis.text = element_text(color = "white")) +
   theme(axis.ticks = element_line(color = "white")) +
-  labs(title = "Covariance") +
+  labs(title = NULL) +
   theme(panel.grid = element_blank()) +
   geom_point(size = 3, pch = 21, col = "white", fill = "white", lwd = 3, alpha = .6) + 
   labs(caption = "Statistical Visualization: Gina Reynolds @EvaMaeRey ") 
 
   
 }
+&lt;bytecode: 0x7fa5a0d5b4e0&gt;
 ```
 
 
@@ -768,11 +771,12 @@ function(plot, data){
   
   plot + 
   # Pearsons's Correlation 
-  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd(data$x), name = "sd x")) +
-  geom_vline(xintercept = mean(data$x) + sd(data$x), lty = "dashed", color = "pink") +
-  geom_vline(xintercept = mean(data$x) - sd(data$x), lty = "dashed", color = "pink") 
+  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd_pop(data$x), name = "sd x")) +
+  geom_vline(xintercept = mean(data$x) + sd_pop(data$x), lty = "dashed", color = "pink") +
+  geom_vline(xintercept = mean(data$x) - sd_pop(data$x), lty = "dashed", color = "pink") 
   
 }
+&lt;bytecode: 0x7fa5a418f9a8&gt;
 ```
 
 
