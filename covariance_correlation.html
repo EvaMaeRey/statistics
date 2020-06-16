@@ -52,6 +52,10 @@ class: inverse, center, middle
 $$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)}{n} $$
 ]
 
+
+
+
+
 ---
 
 
@@ -59,54 +63,128 @@ $$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)}{n} $$
 
 
 
-count: false
 
+
+
+
+class: split-40
+count: false
+ 
+
+.left-panel-cov_steps-auto[
+
+]
+ 
+.right-panel-cov_steps-auto[
 ![](covariance_correlation_files/figure-html/cov_steps_auto_1_output-1.png)&lt;!-- --&gt;
+]
 
 ---
+class: split-40
 count: false
+ 
 
+.left-panel-cov_steps-auto[
+## `$$\mu_x$$`
+]
+ 
+.right-panel-cov_steps-auto[
 ![](covariance_correlation_files/figure-html/cov_steps_auto_2_output-1.png)&lt;!-- --&gt;
+]
 
 ---
+class: split-40
 count: false
+ 
 
+.left-panel-cov_steps-auto[
+## `$$\mu_y$$`
+]
+ 
+.right-panel-cov_steps-auto[
 ![](covariance_correlation_files/figure-html/cov_steps_auto_3_output-1.png)&lt;!-- --&gt;
+]
 
 ---
+class: split-40
 count: false
+ 
 
+.left-panel-cov_steps-auto[
+## `$$x_i-\mu_x$$`
+]
+ 
+.right-panel-cov_steps-auto[
 ![](covariance_correlation_files/figure-html/cov_steps_auto_4_output-1.png)&lt;!-- --&gt;
+]
 
 ---
+class: split-40
 count: false
+ 
 
+.left-panel-cov_steps-auto[
+## `$$y_i-\mu_y$$`
+]
+ 
+.right-panel-cov_steps-auto[
 ![](covariance_correlation_files/figure-html/cov_steps_auto_5_output-1.png)&lt;!-- --&gt;
+]
 
 ---
+class: split-40
 count: false
+ 
 
+.left-panel-cov_steps-auto[
+## `$$(x_i-\mu_x)(y_i-\mu_y)$$`
+]
+ 
+.right-panel-cov_steps-auto[
 ![](covariance_correlation_files/figure-html/cov_steps_auto_6_output-1.png)&lt;!-- --&gt;
+]
 
 ---
+class: split-40
 count: false
+ 
 
+.left-panel-cov_steps-auto[
+## `$$\frac{(x_i-\mu_x)(y_i-\mu_y)}{n}$$`
+]
+ 
+.right-panel-cov_steps-auto[
 ![](covariance_correlation_files/figure-html/cov_steps_auto_7_output-1.png)&lt;!-- --&gt;
+]
 
 &lt;style&gt;
-.left-code-cov_steps-auto {
+.left-panel-cov_steps-auto {
   color: #777;
   width: 38%;
   height: 92%;
   float: left;
   font-size: 80%
 }
-.right-output-cov_steps-auto {
+.right-panel-cov_steps-auto {
   width: 60%;
   float: right;
   padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-cov_steps-auto {
+  width: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
 }
 &lt;/style&gt;
+
+
+
+
+
+
+
 
 
 
@@ -178,19 +256,30 @@ count: false
 ![](covariance_correlation_files/figure-html/variance_steps_user_8_output-1.png)&lt;!-- --&gt;
 
 &lt;style&gt;
-.left-code-variance_steps-user {
+.left-panel-variance_steps-user {
   color: #777;
   width: 38%;
   height: 92%;
   float: left;
   font-size: 80%
 }
-.right-output-variance_steps-user {
+.right-panel-variance_steps-user {
   width: 60%;
   float: right;
   padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-variance_steps-user {
+  width: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
 }
 &lt;/style&gt;
+
+
+
+
 
 
 
@@ -230,17 +319,24 @@ count: false
 ![](covariance_correlation_files/figure-html/sd_steps_user_2_output-1.png)&lt;!-- --&gt;
 
 &lt;style&gt;
-.left-code-sd_steps-user {
+.left-panel-sd_steps-user {
   color: #777;
   width: 38%;
   height: 92%;
   float: left;
   font-size: 80%
 }
-.right-output-sd_steps-user {
+.right-panel-sd_steps-user {
   width: 60%;
   float: right;
   padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-sd_steps-user {
+  width: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
 }
 &lt;/style&gt;
 
@@ -321,17 +417,24 @@ count: false
 ![](covariance_correlation_files/figure-html/cor_steps_auto_10_output-1.png)&lt;!-- --&gt;
 
 &lt;style&gt;
-.left-code-cor_steps-auto {
+.left-panel-cor_steps-auto {
   color: #777;
   width: 38%;
   height: 92%;
   float: left;
   font-size: 80%
 }
-.right-output-cor_steps-auto {
+.right-panel-cor_steps-auto {
   width: 60%;
   float: right;
   padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-cor_steps-auto {
+  width: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
 }
 &lt;/style&gt;
 
@@ -392,17 +495,24 @@ count: false
 ![](covariance_correlation_files/figure-html/cor_steps_neg_auto_10_output-1.png)&lt;!-- --&gt;
 
 &lt;style&gt;
-.left-code-cor_steps_neg-auto {
+.left-panel-cor_steps_neg-auto {
   color: #777;
   width: 38%;
   height: 92%;
   float: left;
   font-size: 80%
 }
-.right-output-cor_steps_neg-auto {
+.right-panel-cor_steps_neg-auto {
   width: 60%;
   float: right;
   padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-cor_steps_neg-auto {
+  width: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
 }
 &lt;/style&gt;
 
@@ -472,18 +582,26 @@ $$ s = \sqrt\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n - 1} $$
 ---
 
 
+
+```r
+# this is a temporary fix - a 
+mysetseed &lt;- set.seed
+```
+
+---
+
 class: split-40
 count: false
  
 
-.left-code-cov_steps2-auto[
+.left-panel-cov_steps1-auto[
 
 ```r
-*set.seed(199402)
+*mysetseed(199402)
 ```
 ]
  
-.right-output-cov_steps2-auto[
+.right-panel-cov_steps1-auto[
 
 ]
 
@@ -492,40 +610,40 @@ class: split-40
 count: false
  
 
-.left-code-cov_steps2-auto[
+.left-panel-cov_steps1-auto[
 
 ```r
-set.seed(199402)  
-*create_x_y(relationship = 0)
+mysetseed(199402)  
+*create_x_y(relationship = .5)
 ```
 ]
  
-.right-output-cov_steps2-auto[
+.right-panel-cov_steps1-auto[
 
 ```
 # A tibble: 20 x 15
-       x      y mean_x  mean_y    area mean_area quasi_mean_area sd_x_sample
-   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;       &lt;dbl&gt;
- 1  68.2 -1.98    53.8 -0.0155  -28.3       8.21         -1.49          23.4
- 2  45.2  0.625   53.8 -0.0155   -5.46      8.21         -0.287         23.4
- 3  26.4  3.50    53.8 -0.0155  -96.2       8.21         -5.06          23.4
- 4  90.7 -4.08    53.8 -0.0155 -150.        8.21         -7.90          23.4
- 5  58.0 -2.02    53.8 -0.0155   -8.43      8.21         -0.444         23.4
- 6  41.6 -0.321   53.8 -0.0155    3.72      8.21          0.196         23.4
- 7  67.7  7.33    53.8 -0.0155  102.        8.21          5.39          23.4
- 8 -10.4 -3.46    53.8 -0.0155  221.        8.21         11.6           23.4
- 9  65.4 -2.19    53.8 -0.0155  -25.3       8.21         -1.33          23.4
-10  53.3 -2.10    53.8 -0.0155    1.07      8.21          0.0564        23.4
-11  58.5  1.87    53.8 -0.0155    8.84      8.21          0.465         23.4
-12  45.9 -1.19    53.8 -0.0155    9.19      8.21          0.484         23.4
-13  73.9  1.54    53.8 -0.0155   31.3       8.21          1.65          23.4
-14  60.1 -6.83    53.8 -0.0155  -43.5       8.21         -2.29          23.4
-15  99.0  1.57    53.8 -0.0155   71.8       8.21          3.78          23.4
-16  44.2  3.47    53.8 -0.0155  -33.3       8.21         -1.75          23.4
-17  45.0  1.48    53.8 -0.0155  -13.2       8.21         -0.693         23.4
-18  35.9 -3.43    53.8 -0.0155   60.9       8.21          3.21          23.4
-19  39.8  0.716   53.8 -0.0155  -10.2       8.21         -0.539         23.4
-20  66.9  5.18    53.8 -0.0155   68.2       8.21          3.59          23.4
+       x     y mean_x mean_y     area mean_area quasi_mean_area sd_x_sample
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;       &lt;dbl&gt;
+ 1  68.2 32.1    53.8   26.9   76.1        269.          4.00          23.4
+ 2  45.2 23.2    53.8   26.9   30.8        269.          1.62          23.4
+ 3  26.4 16.7    53.8   26.9  278.         269.         14.6           23.4
+ 4  90.7 41.3    53.8   26.9  533.         269.         28.0           23.4
+ 5  58.0 27.0    53.8   26.9    0.420      269.          0.0221        23.4
+ 6  41.6 20.5    53.8   26.9   78.2        269.          4.11          23.4
+ 7  67.7 41.2    53.8   26.9  200.         269.         10.5           23.4
+ 8 -10.4 -8.66   53.8   26.9 2280.         269.        120.            23.4
+ 9  65.4 30.5    53.8   26.9   42.7        269.          2.25          23.4
+10  53.3 24.5    53.8   26.9    1.20       269.          0.0634        23.4
+11  58.5 31.1    53.8   26.9   19.8        269.          1.04          23.4
+12  45.9 21.8    53.8   26.9   39.9        269.          2.10          23.4
+13  73.9 38.5    53.8   26.9  234.         269.         12.3           23.4
+14  60.1 23.2    53.8   26.9  -23.1        269.         -1.22          23.4
+15  99.0 51.1    53.8   26.9 1094.         269.         57.6           23.4
+16  44.2 25.6    53.8   26.9   12.5        269.          0.656         23.4
+17  45.0 24.0    53.8   26.9   25.5        269.          1.34          23.4
+18  35.9 14.5    53.8   26.9  220.         269.         11.6           23.4
+19  39.8 20.6    53.8   26.9   87.5        269.          4.60          23.4
+20  66.9 38.6    53.8   26.9  154.         269.          8.12          23.4
 # … with 7 more variables: sd_x &lt;dbl&gt;, sd_y_sample &lt;dbl&gt;, sd_y &lt;dbl&gt;,
 #   some_x &lt;dbl&gt;, some_x_sample &lt;dbl&gt;, some_y &lt;dbl&gt;, some_y_sample &lt;dbl&gt;
 ```
@@ -536,17 +654,17 @@ class: split-40
 count: false
  
 
-.left-code-cov_steps2-auto[
+.left-panel-cov_steps1-auto[
 
 ```r
-set.seed(199402)  
-create_x_y(relationship = 0) %&gt;%  
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
 * data_create_scatterplot()
 ```
 ]
  
-.right-output-cov_steps2-auto[
-![](covariance_correlation_files/figure-html/cov_steps2_auto_3_output-1.png)&lt;!-- --&gt;
+.right-panel-cov_steps1-auto[
+![](covariance_correlation_files/figure-html/cov_steps1_auto_3_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -554,18 +672,18 @@ class: split-40
 count: false
  
 
-.left-code-cov_steps2-auto[
+.left-panel-cov_steps1-auto[
 
 ```r
-set.seed(199402)  
-create_x_y(relationship = 0) %&gt;%  
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
   data_create_scatterplot() %&gt;%  
 * plot_draw_mean_x()
 ```
 ]
  
-.right-output-cov_steps2-auto[
-![](covariance_correlation_files/figure-html/cov_steps2_auto_4_output-1.png)&lt;!-- --&gt;
+.right-panel-cov_steps1-auto[
+![](covariance_correlation_files/figure-html/cov_steps1_auto_4_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -573,19 +691,19 @@ class: split-40
 count: false
  
 
-.left-code-cov_steps2-auto[
+.left-panel-cov_steps1-auto[
 
 ```r
-set.seed(199402)  
-create_x_y(relationship = 0) %&gt;%  
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
   data_create_scatterplot() %&gt;%  
   plot_draw_mean_x() %&gt;%  
 * plot_draw_mean_y()
 ```
 ]
  
-.right-output-cov_steps2-auto[
-![](covariance_correlation_files/figure-html/cov_steps2_auto_5_output-1.png)&lt;!-- --&gt;
+.right-panel-cov_steps1-auto[
+![](covariance_correlation_files/figure-html/cov_steps1_auto_5_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -593,11 +711,11 @@ class: split-40
 count: false
  
 
-.left-code-cov_steps2-auto[
+.left-panel-cov_steps1-auto[
 
 ```r
-set.seed(199402)  
-create_x_y(relationship = 0) %&gt;%  
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
   data_create_scatterplot() %&gt;%  
   plot_draw_mean_x() %&gt;%  
   plot_draw_mean_y() %&gt;%  
@@ -605,8 +723,8 @@ create_x_y(relationship = 0) %&gt;%
 ```
 ]
  
-.right-output-cov_steps2-auto[
-![](covariance_correlation_files/figure-html/cov_steps2_auto_6_output-1.png)&lt;!-- --&gt;
+.right-panel-cov_steps1-auto[
+![](covariance_correlation_files/figure-html/cov_steps1_auto_6_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -614,11 +732,11 @@ class: split-40
 count: false
  
 
-.left-code-cov_steps2-auto[
+.left-panel-cov_steps1-auto[
 
 ```r
-set.seed(199402)  
-create_x_y(relationship = 0) %&gt;%  
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
   data_create_scatterplot() %&gt;%  
   plot_draw_mean_x() %&gt;%  
   plot_draw_mean_y() %&gt;%  
@@ -627,8 +745,8 @@ create_x_y(relationship = 0) %&gt;%
 ```
 ]
  
-.right-output-cov_steps2-auto[
-![](covariance_correlation_files/figure-html/cov_steps2_auto_7_output-1.png)&lt;!-- --&gt;
+.right-panel-cov_steps1-auto[
+![](covariance_correlation_files/figure-html/cov_steps1_auto_7_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -636,11 +754,11 @@ class: split-40
 count: false
  
 
-.left-code-cov_steps2-auto[
+.left-panel-cov_steps1-auto[
 
 ```r
-set.seed(199402)  
-create_x_y(relationship = 0) %&gt;%  
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
   data_create_scatterplot() %&gt;%  
   plot_draw_mean_x() %&gt;%  
   plot_draw_mean_y() %&gt;%  
@@ -650,8 +768,8 @@ create_x_y(relationship = 0) %&gt;%
 ```
 ]
  
-.right-output-cov_steps2-auto[
-![](covariance_correlation_files/figure-html/cov_steps2_auto_8_output-1.png)&lt;!-- --&gt;
+.right-panel-cov_steps1-auto[
+![](covariance_correlation_files/figure-html/cov_steps1_auto_8_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -659,11 +777,11 @@ class: split-40
 count: false
  
 
-.left-code-cov_steps2-auto[
+.left-panel-cov_steps1-auto[
 
 ```r
-set.seed(199402)  
-create_x_y(relationship = 0) %&gt;%  
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
   data_create_scatterplot() %&gt;%  
   plot_draw_mean_x() %&gt;%  
   plot_draw_mean_y() %&gt;%  
@@ -674,22 +792,29 @@ create_x_y(relationship = 0) %&gt;%
 ```
 ]
  
-.right-output-cov_steps2-auto[
-![](covariance_correlation_files/figure-html/cov_steps2_auto_9_output-1.png)&lt;!-- --&gt;
+.right-panel-cov_steps1-auto[
+![](covariance_correlation_files/figure-html/cov_steps1_auto_9_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
-.left-code-cov_steps2-auto {
+.left-panel-cov_steps1-auto {
   color: #777;
   width: 38%;
   height: 92%;
   float: left;
   font-size: 80%
 }
-.right-output-cov_steps2-auto {
+.right-panel-cov_steps1-auto {
   width: 60%;
   float: right;
   padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-cov_steps1-auto {
+  width: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
 }
 &lt;/style&gt;
 
@@ -698,39 +823,167 @@ create_x_y(relationship = 0) %&gt;%
 
 
 
-
-
-
-
 ---
 
+class: split-40
+count: false
+ 
 
+.left-panel-cov_steps2-auto[
 
 ```r
-plot_draw_mean_x
+*mysetseed(199402)
 ```
+]
+ 
+.middle-panel-cov_steps2-auto[
 
 ```
-function(plot){
+function (seed, kind = NULL, normal.kind = NULL, sample.kind = NULL) 
+{
+    kinds &lt;- c("Wichmann-Hill", "Marsaglia-Multicarry", "Super-Duper", 
+        "Mersenne-Twister", "Knuth-TAOCP", "user-supplied", "Knuth-TAOCP-2002", 
+        "L'Ecuyer-CMRG", "default")
+    n.kinds &lt;- c("Buggy Kinderman-Ramage", "Ahrens-Dieter", "Box-Muller", 
+        "user-supplied", "Inversion", "Kinderman-Ramage", "default")
+    s.kinds &lt;- c("Rounding", "Rejection", "default")
+    if (length(kind)) {
+        if (!is.character(kind) || length(kind) &gt; 1L) 
+            stop("'kind' must be a character string of length 1 (RNG to be used).")
+        if (is.na(i.knd &lt;- pmatch(kind, kinds) - 1L)) 
+            stop(gettextf("'%s' is not a valid abbreviation of an RNG", 
+                kind), domain = NA)
+        if (i.knd == length(kinds) - 1L) 
+            i.knd &lt;- -1L
+    }
+    else i.knd &lt;- NULL
+    if (!is.null(normal.kind)) {
+        if (!is.character(normal.kind) || length(normal.kind) != 
+            1L) 
+            stop("'normal.kind' must be a character string of length 1")
+        normal.kind &lt;- pmatch(normal.kind, n.kinds) - 1L
+        if (is.na(normal.kind)) 
+            stop(gettextf("'%s' is not a valid choice", normal.kind), 
+                domain = NA)
+        if (normal.kind == 0L) 
+            stop("buggy version of Kinderman-Ramage generator is not allowed", 
+                domain = NA)
+        if (normal.kind == length(n.kinds) - 1L) 
+            normal.kind &lt;- -1L
+    }
+    if (!is.null(sample.kind)) {
+        if (!is.character(sample.kind) || length(sample.kind) != 
+            1L) 
+            stop("'sample.kind' must be a character string of length 1")
+        sample.kind &lt;- pmatch(sample.kind, s.kinds) - 1L
+        if (is.na(sample.kind)) 
+            stop(gettextf("'%s' is not a valid choice", sample.kind), 
+                domain = NA)
+        if (sample.kind == 0L) 
+            warning("non-uniform 'Rounding' sampler used", domain = NA)
+        if (sample.kind == length(s.kinds) - 1L) 
+            sample.kind &lt;- -1L
+    }
+    .Internal(set.seed(seed, i.knd, normal.kind, sample.kind))
+}
+&lt;bytecode: 0x7fda69ccf8b8&gt;
+&lt;environment: namespace:base&gt;
+```
+]
+ 
+.right-panel-cov_steps2-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-cov_steps2-auto[
+
+```r
+mysetseed(199402)  
+*create_x_y(relationship = .5)
+```
+]
+ 
+.middle-panel-cov_steps2-auto[
+
+```
+function(num = 20, 
+                       spread_x = 20,
+                       relationship = .1, 
+                       noise = 3
+                       ){
   
-  plot + 
-  # 1. mean of x
-  geom_rug(aes(y = NULL), col = "white") +
-  geom_vline(aes(xintercept = mean(x)), 
-             lty = "dashed", col = "white")  
-  
+  tibble(x = rnorm(num, sd = spread_x) + 50 ) %&gt;% 
+  mutate(y = relationship * x + rnorm(num, sd = noise)) %&gt;% 
+  mutate(mean_x = mean(x)) %&gt;% 
+  mutate(mean_y = mean(y)) %&gt;% 
+  mutate(area = (x - mean_x)*(y - mean_y)) %&gt;% 
+  mutate(mean_area = mean(area)) %&gt;% 
+  mutate(quasi_mean_area = area/(n() - 1)) %&gt;%
+  mutate(sd_x_sample = sd(x)) %&gt;% 
+  mutate(sd_x = sd_pop(x)) %&gt;% 
+  mutate(sd_y_sample = sd(y)) %&gt;% 
+  mutate(sd_y = sd_pop(y)) %&gt;% 
+  mutate(some_x = sd_x) %&gt;% 
+  mutate(some_x_sample = sd_x_sample) %&gt;% 
+  mutate(some_y = mean_area/some_x) %&gt;% 
+  mutate(some_y_sample = sd_y_sample) 
   
 }
-&lt;bytecode: 0x7fa5a36fab80&gt;
+&lt;bytecode: 0x7fda6c9d67c0&gt;
 ```
+]
+ 
+.right-panel-cov_steps2-auto[
+
+```
+# A tibble: 20 x 15
+       x     y mean_x mean_y     area mean_area quasi_mean_area sd_x_sample
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;       &lt;dbl&gt;
+ 1  68.2 32.1    53.8   26.9   76.1        269.          4.00          23.4
+ 2  45.2 23.2    53.8   26.9   30.8        269.          1.62          23.4
+ 3  26.4 16.7    53.8   26.9  278.         269.         14.6           23.4
+ 4  90.7 41.3    53.8   26.9  533.         269.         28.0           23.4
+ 5  58.0 27.0    53.8   26.9    0.420      269.          0.0221        23.4
+ 6  41.6 20.5    53.8   26.9   78.2        269.          4.11          23.4
+ 7  67.7 41.2    53.8   26.9  200.         269.         10.5           23.4
+ 8 -10.4 -8.66   53.8   26.9 2280.         269.        120.            23.4
+ 9  65.4 30.5    53.8   26.9   42.7        269.          2.25          23.4
+10  53.3 24.5    53.8   26.9    1.20       269.          0.0634        23.4
+11  58.5 31.1    53.8   26.9   19.8        269.          1.04          23.4
+12  45.9 21.8    53.8   26.9   39.9        269.          2.10          23.4
+13  73.9 38.5    53.8   26.9  234.         269.         12.3           23.4
+14  60.1 23.2    53.8   26.9  -23.1        269.         -1.22          23.4
+15  99.0 51.1    53.8   26.9 1094.         269.         57.6           23.4
+16  44.2 25.6    53.8   26.9   12.5        269.          0.656         23.4
+17  45.0 24.0    53.8   26.9   25.5        269.          1.34          23.4
+18  35.9 14.5    53.8   26.9  220.         269.         11.6           23.4
+19  39.8 20.6    53.8   26.9   87.5        269.          4.60          23.4
+20  66.9 38.6    53.8   26.9  154.         269.          8.12          23.4
+# … with 7 more variables: sd_x &lt;dbl&gt;, sd_y_sample &lt;dbl&gt;, sd_y &lt;dbl&gt;,
+#   some_x &lt;dbl&gt;, some_x_sample &lt;dbl&gt;, some_y &lt;dbl&gt;, some_y_sample &lt;dbl&gt;
+```
+]
 
 ---
+class: split-40
+count: false
+ 
 
-
+.left-panel-cov_steps2-auto[
 
 ```r
-data_create_scatterplot
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
+* data_create_scatterplot()
 ```
+]
+ 
+.middle-panel-cov_steps2-auto[
 
 ```
 function(data, background_color = "palegreen4"){
@@ -754,30 +1007,282 @@ data %&gt;%
 
   
 }
-&lt;bytecode: 0x7fa5a0d5b4e0&gt;
+&lt;bytecode: 0x7fda6d7f4c98&gt;
 ```
-
+]
+ 
+.right-panel-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_3_output-1.png)&lt;!-- --&gt;
+]
 
 ---
+class: split-40
+count: false
+ 
 
-
+.left-panel-cov_steps2-auto[
 
 ```r
-plot_normalize_x
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+* plot_draw_mean_x()
 ```
+]
+ 
+.middle-panel-cov_steps2-auto[
 
 ```
-function(plot, data){
+function(plot){
   
   plot + 
-  # Pearsons's Correlation 
-  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd_pop(data$x), name = "sd x")) +
-  geom_vline(xintercept = mean(data$x) + sd_pop(data$x), lty = "dashed", color = "pink") +
-  geom_vline(xintercept = mean(data$x) - sd_pop(data$x), lty = "dashed", color = "pink") 
+  # 1. mean of x
+  geom_rug(aes(y = NULL), col = "white") +
+  geom_vline(aes(xintercept = mean(x)), 
+             lty = "dashed", col = "white")  
+  
   
 }
-&lt;bytecode: 0x7fa5a418f9a8&gt;
+&lt;bytecode: 0x7fda6fb08208&gt;
 ```
+]
+ 
+.right-panel-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_4_output-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-cov_steps2-auto[
+
+```r
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+* plot_draw_mean_y()
+```
+]
+ 
+.middle-panel-cov_steps2-auto[
+
+```
+function(plot){
+  
+  plot + 
+  # 2. mean of y
+  geom_rug(col = "white", aes(x = NULL)) +
+  geom_hline(aes(yintercept = mean(y)), 
+             lty = "dashed", col = "white")
+  
+}
+&lt;bytecode: 0x7fda6c673368&gt;
+```
+]
+ 
+.right-panel-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_5_output-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-cov_steps2-auto[
+
+```r
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+* plot_draw_differences_x()
+```
+]
+ 
+.middle-panel-cov_steps2-auto[
+
+```
+function(plot){
+  
+  plot + 
+  # difference xi mean x
+  scale_color_manual(breaks = c(FALSE, TRUE), 
+                     label = c("Negative", "Positive"), 
+                     values = c("orchid4", "lightgoldenrod3") )  + 
+  geom_segment(aes(col = x &gt; mean(x), 
+                   xend = mean(x), yend = y), 
+                   arrow = arrow(ends = "first", 
+                                 length = unit(0.1, "inches"))) +
+  labs(col = "")
+  
+    
+}
+&lt;bytecode: 0x7fda6bcca1c8&gt;
+```
+]
+ 
+.right-panel-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_6_output-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-cov_steps2-auto[
+
+```r
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+  plot_draw_differences_x() %&gt;%  
+* plot_draw_differences_y()
+```
+]
+ 
+.middle-panel-cov_steps2-auto[
+
+```
+function(plot){
+  
+  plot +
+  # difference yi mean y
+  geom_segment(aes(col = y &gt; mean(y), 
+                   xend = x, yend = mean(y)), 
+                   arrow = arrow(ends = "first", 
+                                 length = unit(0.1, "inches"))) 
+    
+}
+&lt;bytecode: 0x7fda6d6932e0&gt;
+```
+]
+ 
+.right-panel-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_7_output-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-cov_steps2-auto[
+
+```r
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+  plot_draw_differences_x() %&gt;%  
+  plot_draw_differences_y() %&gt;%  
+* plot_multiply_differences()
+```
+]
+ 
+.middle-panel-cov_steps2-auto[
+
+```
+function(plot){
+  
+  plot + 
+  # multiply differences
+  aes(fill = area &gt; 0) +
+  geom_rect(aes(xmin = mean(x), ymin = mean(y),  
+            ymax = y, xmax = x), 
+            alpha = .2  ) +
+  labs(fill = "") +
+  scale_fill_manual(breaks = c(FALSE, TRUE), 
+                    label = c("Negative", "Positive"),  
+                    values = c("orchid4", "lightgoldenrod3")) 
+  
+}
+&lt;bytecode: 0x7fda6e4e5698&gt;
+```
+]
+ 
+.right-panel-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_8_output-1.png)&lt;!-- --&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-cov_steps2-auto[
+
+```r
+mysetseed(199402)  
+create_x_y(relationship = .5) %&gt;%  
+  data_create_scatterplot() %&gt;%  
+  plot_draw_mean_x() %&gt;%  
+  plot_draw_mean_y() %&gt;%  
+  plot_draw_differences_x() %&gt;%  
+  plot_draw_differences_y() %&gt;%  
+  plot_multiply_differences() %&gt;%  
+* plot_take_average_rectangle()
+```
+]
+ 
+.middle-panel-cov_steps2-auto[
+
+```
+function(plot, title = "Picture of Covariance"){
+  
+  plot +      
+  # Average areas 
+  geom_rect(aes(
+           xmin = mean(x),
+           ymin = mean(y),
+           ymax = mean(some_y) + mean(y),
+           xmax = mean(some_x) + mean(x)
+           ),
+            color = "orange",
+          linetype = "dotted",
+           fill = "orange",
+            lwd = 1.5,
+            alpha = .2) +  #BREAK
+  labs(title = title)
+  
+}
+```
+]
+ 
+.right-panel-cov_steps2-auto[
+![](covariance_correlation_files/figure-html/cov_steps2_auto_9_output-1.png)&lt;!-- --&gt;
+]
+
+&lt;style&gt;
+.left-panel-cov_steps2-auto {
+  color: #777;
+  width: 27%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-panel-cov_steps2-auto {
+  width: 32%;
+  float: right;
+  padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-cov_steps2-auto {
+  width: 37%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
 
 
 
@@ -786,7 +1291,14 @@ function(plot, data){
 
 ---
 
-# DRY Next level: writing and using packages
+
+
+
+
+
+---
+
+# DRY next level: writing and using packages
 
 - [A companion guide to Jim Hester’s, 'You can make an R package in 20 minutes'](https://evamaerey.github.io/package_in_20_minutes/package_in_20_minutes)
 
@@ -838,17 +1350,24 @@ count: false
 ![](covariance_correlation_files/figure-html/lm_steps_auto_9_output-1.png)&lt;!-- --&gt;
 
 &lt;style&gt;
-.left-code-lm_steps-auto {
+.left-panel-lm_steps-auto {
   color: #777;
   width: 38%;
   height: 92%;
   float: left;
   font-size: 80%
 }
-.right-output-lm_steps-auto {
+.right-panel-lm_steps-auto {
   width: 60%;
   float: right;
   padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-lm_steps-auto {
+  width: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
 }
 &lt;/style&gt;
 

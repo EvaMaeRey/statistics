@@ -45,12 +45,16 @@ class: inverse, center, middle
 $$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)}{n} $$
 ]
 
+
+
+
+
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(fig.width = 6, message = F, 
                       warning = F,  comment = "", 
-                      cache = F, fig.height = 7, 
+                      cache = T, fig.height = 7, 
                       fig.width = 8)
 
 library(flipbookr)
@@ -92,8 +96,6 @@ create_x_y <- function(num = 20,
   
 }
 
-
-
 data_calc_cor <- function(data){
   
   with(cor(x, y), data = data)
@@ -108,15 +110,21 @@ data %>%
   aes(x = x) + 
   aes(y = y) +
   theme(rect = element_rect(fill = background_color)) + 
-  theme(text = element_text(color = "white", face = "italic", size = 15)) +
-  theme(panel.background = element_rect(fill = background_color)) +
-  theme(legend.key = element_blank()) + #element_rect(fill = background_color)) +
+  theme(text = element_text(color = "white", 
+                            face = "italic", 
+                            size = 15)) +
+  theme(panel.background = 
+          element_rect(fill = background_color)) +
+  theme(legend.key = element_blank()) + 
   theme(legend.title = element_blank()) +
-  theme(axis.text = element_text(color = "white")) +
-  theme(axis.ticks = element_line(color = "white")) +
+  theme(axis.text = 
+          element_text(color = "white")) +
+  theme(axis.ticks = 
+          element_line(color = "white")) +
   labs(title = NULL) +
   theme(panel.grid = element_blank()) +
-  geom_point(size = 3, pch = 21, col = "white", fill = "white", lwd = 3, alpha = .6) + 
+  geom_point(size = 3, pch = 21, col = "white", 
+             fill = "white", lwd = 3, alpha = .6) + 
   labs(caption = "Statistical Visualization: Gina Reynolds @EvaMaeRey ") 
 
   
@@ -280,7 +288,20 @@ plot_correct_aspect_ratio <- function(plot){
 
 ```
 
-`r chunk_reveal("cov_steps", display_type = "output")`
+
+```{r, include=F}
+equation <- c("",
+  "## $$\\mu_x$$", 
+  "## $$\\mu_y$$", 
+  "## $$x_i-\\mu_x$$",
+  "## $$y_i-\\mu_y$$",
+  "## $$(x_i-\\mu_x)(y_i-\\mu_y)$$",
+  "## $$\\frac{(x_i-\\mu_x)(y_i-\\mu_y)}{n}$$"
+  )
+```
+
+
+`r chunk_reveal("cov_steps", display_type = c("md","output"), md = equation)`
 
 
 ```{r cov_steps, eval = F, echo=F}
@@ -292,6 +313,13 @@ set.seed(199402); create_x_y(relationship = 0) %>% data_create_scatterplot() %>%
   plot_multiply_differences() %>% 
   plot_take_average_rectangle() 
 ```
+
+
+
+
+
+
+
 
 ---
 class: inverse, middle, center
@@ -334,6 +362,10 @@ create_x_y(relationship = 1,
   plot_multiply_differences() %>% #BREAK
   plot_take_average_rectangle(title = "Picture of Variance") #BREAK
 ```
+
+
+
+
 
 ---
 class: inverse, center, middle
@@ -493,15 +525,36 @@ $$ s = \sqrt\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n - 1} $$
 ---
 
 
-`r chunk_reveal("cov_steps2")`
+```{r}
+# this is a temporary fix - a 
+mysetseed <- set.seed
+```
+
+---
+
+`r chunk_reveal("cov_steps1")`
 
 
+```{r cov_steps1, eval = F, echo=F}
+mysetseed(199402)
+create_x_y(relationship = .5) %>% 
+  data_create_scatterplot() %>% 
+  plot_draw_mean_x() %>% 
+  plot_draw_mean_y() %>% 
+  plot_draw_differences_x() %>% 
+  plot_draw_differences_y() %>% 
+  plot_multiply_differences() %>% 
+  plot_take_average_rectangle() 
+```
 
+---
+
+`r chunk_reveal("cov_steps2", display_type = c("code", "func", "output"), width_left = "27%", width_middle = "37%", width_right = "32%")`
 
 
 ```{r cov_steps2, eval = F, echo=F}
-set.seed(199402)
-create_x_y(relationship = 0) %>% 
+mysetseed(199402)
+create_x_y(relationship = .5) %>% 
   data_create_scatterplot() %>% 
   plot_draw_mean_x() %>% 
   plot_draw_mean_y() %>% 
@@ -515,33 +568,13 @@ create_x_y(relationship = 0) %>%
 ---
 
 
-```{r}
-plot_draw_mean_x
-```
-
----
-
-
-```{r}
-data_create_scatterplot
-```
-
-
----
-
-
-```{r}
-plot_normalize_x
-```
-
-
 
 
 
 
 ---
 
-# DRY Next level: writing and using packages
+# DRY next level: writing and using packages
 
 - [A companion guide to Jim Hester’s, 'You can make an R package in 20 minutes'](https://evamaerey.github.io/package_in_20_minutes/package_in_20_minutes)
 
