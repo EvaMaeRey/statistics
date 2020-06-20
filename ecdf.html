@@ -83,6 +83,16 @@ count: false
 
 &lt;img src="ecdf_files/figure-html/ecdf_user_9_output-1.png" width="432" /&gt;
 
+---
+count: false
+
+&lt;img src="ecdf_files/figure-html/ecdf_user_10_output-1.png" width="432" /&gt;
+
+---
+count: false
+
+&lt;img src="ecdf_files/figure-html/ecdf_user_11_output-1.png" width="432" /&gt;
+
 &lt;style&gt;
 .left-panel-ecdf-user {
   color: #777;
@@ -508,7 +518,38 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 20) +  
+* stat_ecdf(color = "red")
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_14_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) +  
+  stat_ecdf(color = "red") -&gt;  
 *ecdf
 ```
 ]
@@ -538,43 +579,11 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 20) +  
+  stat_ecdf(color = "red") -&gt;  
 ecdf  
 
 *ggplot(data = df)
-```
-]
- 
-.right-panel-ecdf-auto[
-&lt;img src="ecdf_files/figure-html/ecdf_auto_15_output-1.png" width="432" /&gt;
-]
-
----
-class: split-40
-count: false
- 
-
-.left-panel-ecdf-auto[
-
-```r
-set.seed(780)  
-rnorm(20) %&gt;%  
-  tibble(var = .) %&gt;%  
-  arrange(var) %&gt;%  
-  mutate(index = 1:n()) -&gt;  
-df  
-
-ggplot(data = df) +  
-  aes(x = var) +  
-  geom_rug() +  
-  aes(y = index) +  
-  geom_point() +  
-  geom_step() +  
-  aes(y = index / 20) -&gt;  
-ecdf  
-
-ggplot(data = df) +  
-* aes(x = var)
 ```
 ]
  
@@ -603,12 +612,12 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 20) +  
+  stat_ecdf(color = "red") -&gt;  
 ecdf  
 
 ggplot(data = df) +  
-  aes(x = var) +  
-* geom_rug()
+* aes(x = var)
 ```
 ]
  
@@ -637,14 +646,13 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 20) +  
+  stat_ecdf(color = "red") -&gt;  
 ecdf  
 
 ggplot(data = df) +  
   aes(x = var) +  
-  geom_rug() +  
-* geom_histogram(aes(group = index),
-*                color = "black")
+* geom_rug()
 ```
 ]
  
@@ -673,15 +681,15 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 20) +  
+  stat_ecdf(color = "red") -&gt;  
 ecdf  
 
 ggplot(data = df) +  
   aes(x = var) +  
   geom_rug() +  
-  geom_histogram(aes(group = index),  
-                 color = "black") +  
-* geom_histogram(color = "black")
+* geom_histogram(aes(group = index),
+*                color = "black")
 ```
 ]
  
@@ -710,7 +718,8 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 20) +  
+  stat_ecdf(color = "red") -&gt;  
 ecdf  
 
 ggplot(data = df) +  
@@ -718,8 +727,7 @@ ggplot(data = df) +
   geom_rug() +  
   geom_histogram(aes(group = index),  
                  color = "black") +  
-  geom_histogram(color = "black") +  
-* geom_histogram()
+* geom_histogram(color = "black")
 ```
 ]
  
@@ -748,7 +756,47 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 20) +  
+  stat_ecdf(color = "red") -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  geom_histogram(aes(group = index),  
+                 color = "black") +  
+  geom_histogram(color = "black") +  
+* geom_histogram()
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_21_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) +  
+  stat_ecdf(color = "red") -&gt;  
 ecdf  
 
 ggplot(data = df) +  
@@ -787,7 +835,8 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 20) +  
+  stat_ecdf(color = "red") -&gt;  
 ecdf  
 
 ggplot(data = df) +  
@@ -804,7 +853,7 @@ hist
 ]
  
 .right-panel-ecdf-auto[
-&lt;img src="ecdf_files/figure-html/ecdf_auto_22_output-1.png" width="432" /&gt;
+&lt;img src="ecdf_files/figure-html/ecdf_auto_23_output-1.png" width="432" /&gt;
 ]
 
 &lt;style&gt;
@@ -1215,7 +1264,7 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-* aes(y = index / 20)
+* aes(y = index / 200)
 ```
 ]
  
@@ -1244,7 +1293,38 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 200) +  
+* stat_ecdf(color = "red")
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_14_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 200) +  
+  stat_ecdf(color = "red")  -&gt;  
 *ecdf
 ```
 ]
@@ -1274,43 +1354,11 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 200) +  
+  stat_ecdf(color = "red")  -&gt;  
 ecdf  
 
 *ggplot(data = df)
-```
-]
- 
-.right-panel-ecdf_large-auto[
-&lt;img src="ecdf_files/figure-html/ecdf_large_auto_15_output-1.png" width="432" /&gt;
-]
-
----
-class: split-40
-count: false
- 
-
-.left-panel-ecdf_large-auto[
-
-```r
-set.seed(780)  
-rnorm(200) %&gt;%  
-  tibble(var = .) %&gt;%  
-  arrange(var) %&gt;%  
-  mutate(index = 1:n()) -&gt;  
-df  
-
-ggplot(data = df) +  
-  aes(x = var) +  
-  geom_rug() +  
-  aes(y = index) +  
-  geom_point() +  
-  geom_step() +  
-  aes(y = index / 20) -&gt;  
-ecdf  
-
-ggplot(data = df) +  
-* aes(x = var)
 ```
 ]
  
@@ -1339,12 +1387,12 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 200) +  
+  stat_ecdf(color = "red")  -&gt;  
 ecdf  
 
 ggplot(data = df) +  
-  aes(x = var) +  
-* geom_rug()
+* aes(x = var)
 ```
 ]
  
@@ -1373,14 +1421,13 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 200) +  
+  stat_ecdf(color = "red")  -&gt;  
 ecdf  
 
 ggplot(data = df) +  
   aes(x = var) +  
-  geom_rug() +  
-* geom_histogram(aes(group = index),
-*                color = "black")
+* geom_rug()
 ```
 ]
  
@@ -1409,15 +1456,15 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 200) +  
+  stat_ecdf(color = "red")  -&gt;  
 ecdf  
 
 ggplot(data = df) +  
   aes(x = var) +  
   geom_rug() +  
-  geom_histogram(aes(group = index),  
-                 color = "black") +  
-* geom_histogram(color = "black")
+* geom_histogram(aes(group = index),
+*                color = "black")
 ```
 ]
  
@@ -1446,7 +1493,8 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 200) +  
+  stat_ecdf(color = "red")  -&gt;  
 ecdf  
 
 ggplot(data = df) +  
@@ -1454,8 +1502,7 @@ ggplot(data = df) +
   geom_rug() +  
   geom_histogram(aes(group = index),  
                  color = "black") +  
-  geom_histogram(color = "black") +  
-* geom_histogram()
+* geom_histogram(color = "black")
 ```
 ]
  
@@ -1484,7 +1531,47 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 200) +  
+  stat_ecdf(color = "red")  -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  geom_histogram(aes(group = index),  
+                 color = "black") +  
+  geom_histogram(color = "black") +  
+* geom_histogram()
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_21_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 200) +  
+  stat_ecdf(color = "red")  -&gt;  
 ecdf  
 
 ggplot(data = df) +  
@@ -1523,7 +1610,8 @@ ggplot(data = df) +
   aes(y = index) +  
   geom_point() +  
   geom_step() +  
-  aes(y = index / 20) -&gt;  
+  aes(y = index / 200) +  
+  stat_ecdf(color = "red")  -&gt;  
 ecdf  
 
 ggplot(data = df) +  
@@ -1540,7 +1628,7 @@ hist
 ]
  
 .right-panel-ecdf_large-auto[
-&lt;img src="ecdf_files/figure-html/ecdf_large_auto_22_output-1.png" width="432" /&gt;
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_23_output-1.png" width="432" /&gt;
 ]
 
 &lt;style&gt;

@@ -18,7 +18,7 @@ output:
 ```{r, include = F}
 # This is the recommended set up for flipbooks
 # you might think about setting cache to TRUE as you gain practice --- building flipbooks from scracth can be time consuming
-knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = T, fig.retina = 3)
 library(flipbookr)
 ```
 
@@ -63,12 +63,13 @@ ggplot(data = df) +
   aes(y = index) + #BREAK
   geom_point() + #BREAK
   geom_step() + #BREAK
-  aes(y = index / 20) -> #BREAK
+  aes(y = index / 20) + #BREAK
+  stat_ecdf(color = "red") -> #BREAK
 ecdf
 
 ggplot(data = df) +
   aes(x = var) +
-  geom_rug() +
+  geom_rug() + #BREAK
   geom_histogram(aes(group = index),
                  color = "black") + #BREAK
   geom_histogram(color = "black") + #BREAK
@@ -101,12 +102,13 @@ ggplot(data = df) +
   aes(y = index) + #BREAK
   geom_point() + #BREAK
   geom_step() + #BREAK
-  aes(y = index / 20) -> #BREAK
+  aes(y = index / 200) + #BREAK
+  stat_ecdf(color = "red")  -> #BREAK
 ecdf
   
 ggplot(data = df) +
   aes(x = var) +
-  geom_rug() +
+  geom_rug() + #BREAK
   geom_histogram(aes(group = index),
                  color = "black") + #BREAK
   geom_histogram(color = "black") + #BREAK
