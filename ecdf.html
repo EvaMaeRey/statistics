@@ -1344,7 +1344,7 @@ ecdf
 
 ggplot(data = df) +  
   aes(x = var) +  
-* geom_rug(alpha = .4)
+* geom_rug()
 ```
 ]
  
@@ -1378,7 +1378,7 @@ ecdf
 
 ggplot(data = df) +  
   aes(x = var) +  
-  geom_rug(alpha = .4) +  
+  geom_rug() +  
 * geom_histogram(aes(group = index),
 *                color = "black")
 ```
@@ -1414,7 +1414,7 @@ ecdf
 
 ggplot(data = df) +  
   aes(x = var) +  
-  geom_rug(alpha = .4) +  
+  geom_rug() +  
   geom_histogram(aes(group = index),  
                  color = "black") +  
 * geom_histogram(color = "black")
@@ -1451,7 +1451,7 @@ ecdf
 
 ggplot(data = df) +  
   aes(x = var) +  
-  geom_rug(alpha = .4) +  
+  geom_rug() +  
   geom_histogram(aes(group = index),  
                  color = "black") +  
   geom_histogram(color = "black") +  
@@ -1489,7 +1489,7 @@ ecdf
 
 ggplot(data = df) +  
   aes(x = var) +  
-  geom_rug(alpha = .4) +  
+  geom_rug() +  
   geom_histogram(aes(group = index),  
                  color = "black") +  
   geom_histogram(color = "black") +  
@@ -1528,7 +1528,7 @@ ecdf
 
 ggplot(data = df) +  
   aes(x = var) +  
-  geom_rug(alpha = .4) +  
+  geom_rug() +  
   geom_histogram(aes(group = index),  
                  color = "black") +  
   geom_histogram(color = "black") +  
