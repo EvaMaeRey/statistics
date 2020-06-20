@@ -31,8 +31,18 @@ library(patchwork)
 
 
 ---
+class: inverse, center, middle
+
+# Small N vis walk through
+
+---
 
 `r chunk_reveal("ecdf", break_type = "user", display_type = "output")`
+
+---
+class: inverse, center, middle
+
+# Small N with code/vis walk through
 
 ---
 
@@ -42,9 +52,9 @@ library(patchwork)
 ```{r ecdf, include=FALSE}
 set.seed(780)
 rnorm(20) %>% 
-  tibble(var = .) %>% #BREAK
-  arrange(var) %>% #BREAK
-  mutate(index = 1:n()) -> #BREAK
+  tibble(var = .) %>% 
+  arrange(var) %>% 
+  mutate(index = 1:n()) -> 
 df
   
 ggplot(data = df) +
@@ -64,7 +74,14 @@ ggplot(data = df) +
   geom_histogram(color = "black") + #BREAK
   geom_histogram() -> #BREAK
 hist
+
+ecdf / hist
 ```
+
+---
+class: inverse, center, middle
+
+# larger N
 
 ---
 

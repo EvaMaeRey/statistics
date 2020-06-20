@@ -33,95 +33,25 @@ library(patchwork)
 
 
 ---
+class: inverse, center, middle
+
+# Small N vis walk through
+
+---
 
 count: false
 
-
-```
-# A tibble: 20 x 1
-        var
-      &lt;dbl&gt;
- 1 -1.65   
- 2 -0.899  
- 3  0.00564
- 4 -0.456  
- 5  2.12   
- 6  0.101  
- 7 -1.87   
- 8  0.970  
- 9 -0.830  
-10  0.934  
-11 -0.591  
-12 -1.41   
-13  0.239  
-14 -1.74   
-15 -0.850  
-16  1.03   
-17  0.794  
-18  0.668  
-19 -0.845  
-20 -0.785  
-```
+&lt;img src="ecdf_files/figure-html/ecdf_user_1_output-1.png" width="432" /&gt;
 
 ---
 count: false
 
-
-```
-# A tibble: 20 x 1
-        var
-      &lt;dbl&gt;
- 1 -1.87   
- 2 -1.74   
- 3 -1.65   
- 4 -1.41   
- 5 -0.899  
- 6 -0.850  
- 7 -0.845  
- 8 -0.830  
- 9 -0.785  
-10 -0.591  
-11 -0.456  
-12  0.00564
-13  0.101  
-14  0.239  
-15  0.668  
-16  0.794  
-17  0.934  
-18  0.970  
-19  1.03   
-20  2.12   
-```
+&lt;img src="ecdf_files/figure-html/ecdf_user_2_output-1.png" width="432" /&gt;
 
 ---
 count: false
 
-
-```
-# A tibble: 20 x 2
-        var index
-      &lt;dbl&gt; &lt;int&gt;
- 1 -1.87        1
- 2 -1.74        2
- 3 -1.65        3
- 4 -1.41        4
- 5 -0.899       5
- 6 -0.850       6
- 7 -0.845       7
- 8 -0.830       8
- 9 -0.785       9
-10 -0.591      10
-11 -0.456      11
-12  0.00564    12
-13  0.101      13
-14  0.239      14
-15  0.668      15
-16  0.794      16
-17  0.934      17
-18  0.970      18
-19  1.03       19
-20  2.12       20
-```
+&lt;img src="ecdf_files/figure-html/ecdf_user_3_output-1.png" width="432" /&gt;
 
 ---
 count: false
@@ -153,21 +83,6 @@ count: false
 
 &lt;img src="ecdf_files/figure-html/ecdf_user_9_output-1.png" width="432" /&gt;
 
----
-count: false
-
-&lt;img src="ecdf_files/figure-html/ecdf_user_10_output-1.png" width="432" /&gt;
-
----
-count: false
-
-&lt;img src="ecdf_files/figure-html/ecdf_user_11_output-1.png" width="432" /&gt;
-
----
-count: false
-
-
-
 &lt;style&gt;
 .left-panel-ecdf-user {
   color: #777;
@@ -191,6 +106,11 @@ count: false
 &lt;/style&gt;
 
 
+
+---
+class: inverse, center, middle
+
+# Small N with code/vis walk through
 
 ---
 
@@ -846,6 +766,47 @@ ggplot(data = df) +
 
 ]
 
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  geom_histogram(aes(group = index),  
+                 color = "black") +  
+  geom_histogram(color = "black") +  
+  geom_histogram() -&gt;  
+hist  
+
+*ecdf / hist
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_22_output-1.png" width="432" /&gt;
+]
+
 &lt;style&gt;
 .left-panel-ecdf-auto {
   color: #777;
@@ -872,6 +833,11 @@ ggplot(data = df) +
 
 
 
+
+---
+class: inverse, center, middle
+
+# larger N
 
 ---
 
