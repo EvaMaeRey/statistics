@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>ECDF</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Gina Reynolds" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/hygge.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/ninjutsu.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# ECDF
+## With flipbookr and xaringan
+### Gina Reynolds
+
+---
+
+
+
+
+
+
+---
+
+
+```r
+library(tidyverse)
+library(patchwork)
+```
+
+
+---
+
+count: false
+
+
+```
+# A tibble: 20 x 1
+        var
+      &lt;dbl&gt;
+ 1 -1.65   
+ 2 -0.899  
+ 3  0.00564
+ 4 -0.456  
+ 5  2.12   
+ 6  0.101  
+ 7 -1.87   
+ 8  0.970  
+ 9 -0.830  
+10  0.934  
+11 -0.591  
+12 -1.41   
+13  0.239  
+14 -1.74   
+15 -0.850  
+16  1.03   
+17  0.794  
+18  0.668  
+19 -0.845  
+20 -0.785  
+```
+
+---
+count: false
+
+
+```
+# A tibble: 20 x 1
+        var
+      &lt;dbl&gt;
+ 1 -1.87   
+ 2 -1.74   
+ 3 -1.65   
+ 4 -1.41   
+ 5 -0.899  
+ 6 -0.850  
+ 7 -0.845  
+ 8 -0.830  
+ 9 -0.785  
+10 -0.591  
+11 -0.456  
+12  0.00564
+13  0.101  
+14  0.239  
+15  0.668  
+16  0.794  
+17  0.934  
+18  0.970  
+19  1.03   
+20  2.12   
+```
+
+---
+count: false
+
+
+```
+# A tibble: 20 x 2
+        var index
+      &lt;dbl&gt; &lt;int&gt;
+ 1 -1.87        1
+ 2 -1.74        2
+ 3 -1.65        3
+ 4 -1.41        4
+ 5 -0.899       5
+ 6 -0.850       6
+ 7 -0.845       7
+ 8 -0.830       8
+ 9 -0.785       9
+10 -0.591      10
+11 -0.456      11
+12  0.00564    12
+13  0.101      13
+14  0.239      14
+15  0.668      15
+16  0.794      16
+17  0.934      17
+18  0.970      18
+19  1.03       19
+20  2.12       20
+```
+
+---
+count: false
+
+&lt;img src="ecdf_files/figure-html/ecdf_user_4_output-1.png" width="432" /&gt;
+
+---
+count: false
+
+&lt;img src="ecdf_files/figure-html/ecdf_user_5_output-1.png" width="432" /&gt;
+
+---
+count: false
+
+&lt;img src="ecdf_files/figure-html/ecdf_user_6_output-1.png" width="432" /&gt;
+
+---
+count: false
+
+&lt;img src="ecdf_files/figure-html/ecdf_user_7_output-1.png" width="432" /&gt;
+
+---
+count: false
+
+&lt;img src="ecdf_files/figure-html/ecdf_user_8_output-1.png" width="432" /&gt;
+
+---
+count: false
+
+&lt;img src="ecdf_files/figure-html/ecdf_user_9_output-1.png" width="432" /&gt;
+
+---
+count: false
+
+&lt;img src="ecdf_files/figure-html/ecdf_user_10_output-1.png" width="432" /&gt;
+
+---
+count: false
+
+&lt;img src="ecdf_files/figure-html/ecdf_user_11_output-1.png" width="432" /&gt;
+
+---
+count: false
+
+
+
+&lt;style&gt;
+.left-panel-ecdf-user {
+  color: #777;
+  width: 38.6138613861386%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-panel-ecdf-user {
+  width: 59.4059405940594%;
+  float: right;
+  padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-ecdf-user {
+  width: 0%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+*set.seed(780)
+```
+]
+ 
+.right-panel-ecdf-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+*rnorm(20)
+```
+]
+ 
+.right-panel-ecdf-auto[
+
+```
+ [1] -1.647531241 -0.898891586  0.005635507 -0.455534937  2.115503581
+ [6]  0.101123587 -1.873883654  0.969946060 -0.830382178  0.933596933
+[11] -0.590622722 -1.406949386  0.238567023 -1.744497088 -0.849863390
+[16]  1.025406106  0.794348885  0.668462054 -0.844740960 -0.785183840
+```
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+* tibble(var = .)
+```
+]
+ 
+.right-panel-ecdf-auto[
+
+```
+# A tibble: 20 x 1
+        var
+      &lt;dbl&gt;
+ 1 -1.65   
+ 2 -0.899  
+ 3  0.00564
+ 4 -0.456  
+ 5  2.12   
+ 6  0.101  
+ 7 -1.87   
+ 8  0.970  
+ 9 -0.830  
+10  0.934  
+11 -0.591  
+12 -1.41   
+13  0.239  
+14 -1.74   
+15 -0.850  
+16  1.03   
+17  0.794  
+18  0.668  
+19 -0.845  
+20 -0.785  
+```
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+* arrange(var)
+```
+]
+ 
+.right-panel-ecdf-auto[
+
+```
+# A tibble: 20 x 1
+        var
+      &lt;dbl&gt;
+ 1 -1.87   
+ 2 -1.74   
+ 3 -1.65   
+ 4 -1.41   
+ 5 -0.899  
+ 6 -0.850  
+ 7 -0.845  
+ 8 -0.830  
+ 9 -0.785  
+10 -0.591  
+11 -0.456  
+12  0.00564
+13  0.101  
+14  0.239  
+15  0.668  
+16  0.794  
+17  0.934  
+18  0.970  
+19  1.03   
+20  2.12   
+```
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+* mutate(index = 1:n())
+```
+]
+ 
+.right-panel-ecdf-auto[
+
+```
+# A tibble: 20 x 2
+        var index
+      &lt;dbl&gt; &lt;int&gt;
+ 1 -1.87        1
+ 2 -1.74        2
+ 3 -1.65        3
+ 4 -1.41        4
+ 5 -0.899       5
+ 6 -0.850       6
+ 7 -0.845       7
+ 8 -0.830       8
+ 9 -0.785       9
+10 -0.591      10
+11 -0.456      11
+12  0.00564    12
+13  0.101      13
+14  0.239      14
+15  0.668      15
+16  0.794      16
+17  0.934      17
+18  0.970      18
+19  1.03       19
+20  2.12       20
+```
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+*df
+```
+]
+ 
+.right-panel-ecdf-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+*ggplot(data = df)
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_7_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+* aes(x = var)
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_8_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+* geom_rug()
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_9_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+* aes(y = index)
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_10_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+* geom_point()
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_11_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+* geom_step()
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_12_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+* aes(y = index / 20)
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_13_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+*ecdf
+```
+]
+ 
+.right-panel-ecdf-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+*ggplot(data = df)
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_15_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+* aes(x = var)
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_16_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+* geom_rug()
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_17_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+* geom_histogram(aes(group = index),
+*                color = "black")
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_18_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  geom_histogram(aes(group = index),  
+                 color = "black") +  
+* geom_histogram(color = "black")
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_19_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  geom_histogram(aes(group = index),  
+                 color = "black") +  
+  geom_histogram(color = "black") +  
+* geom_histogram()
+```
+]
+ 
+.right-panel-ecdf-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_auto_20_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf-auto[
+
+```r
+set.seed(780)  
+rnorm(20) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  geom_histogram(aes(group = index),  
+                 color = "black") +  
+  geom_histogram(color = "black") +  
+  geom_histogram() -&gt;  
+*hist
+```
+]
+ 
+.right-panel-ecdf-auto[
+
+]
+
+&lt;style&gt;
+.left-panel-ecdf-auto {
+  color: #777;
+  width: 38.6138613861386%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-panel-ecdf-auto {
+  width: 59.4059405940594%;
+  float: right;
+  padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-ecdf-auto {
+  width: 0%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+*set.seed(780)
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+*rnorm(200)
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+
+```
+  [1] -1.647531241 -0.898891586  0.005635507 -0.455534937  2.115503581
+  [6]  0.101123587 -1.873883654  0.969946060 -0.830382178  0.933596933
+ [11] -0.590622722 -1.406949386  0.238567023 -1.744497088 -0.849863390
+ [16]  1.025406106  0.794348885  0.668462054 -0.844740960 -0.785183840
+ [21]  1.837337685  0.442731604 -1.328259220 -0.281602466  1.080365048
+ [26] -0.575308566  0.139441906  0.334802755  0.033743973  1.319005208
+ [31]  0.053124840  3.255166528 -0.759656764 -1.538410325  1.748896588
+ [36]  0.613864628  1.380147538 -1.714593651 -1.069075429  0.375454550
+ [41] -0.677401509 -0.145892718 -0.483588641  1.406019850  1.017028354
+ [46] -0.098136653  0.690471475  0.540770949 -1.797859900 -0.754777810
+ [51] -0.853192425  1.129422400 -1.136723505 -1.434601881 -1.798525534
+ [56]  1.377375661 -0.269621749  0.254726943  0.256149208  0.996431286
+ [61] -0.271595632 -0.129531145  0.442837585 -1.423907600  0.260302095
+ [66]  0.932503395 -0.210942501  0.284693554 -0.743559167  0.145353392
+ [71] -1.218458641  1.342264819  0.611150523  0.321078553  1.049817170
+ [76] -0.517772666  0.463814953 -0.742677180  0.064251896 -0.298629008
+ [81] -1.008338844  1.243924887  0.333020599  2.430218989 -0.303526605
+ [86] -1.407729838  0.642826539 -0.531465832 -0.222828484  0.741715116
+ [91] -0.651011411 -0.149275029  1.235855523  1.205554765  1.021957027
+ [96]  1.805922364 -0.418401576  2.485920624 -0.687232603  0.712129802
+[101]  0.392927948 -0.575877081  1.339105597 -0.295813269 -0.270682869
+[106] -0.557272148 -1.476393319 -1.146370024  0.850123631 -0.964441072
+[111] -0.376748668 -0.063408980  0.468356308 -0.808813077 -0.490751373
+[116]  1.650534747 -0.274971200 -0.003575037  0.202407017  0.834817358
+[121] -0.586922329 -1.155341496  0.119423556 -0.487350325 -0.305419643
+[126]  0.922676005  1.201417234  0.061497497 -0.962727937 -0.009631657
+[131] -0.192959006  0.715103542  1.435254106 -0.057136109 -1.336144518
+[136]  1.370861804  0.981686393  0.941868149  1.453895961 -1.299029811
+[141]  1.352799345  2.050433984  0.277279693 -0.964045765  1.006492599
+[146] -0.450460771  0.545860105 -0.560415140  1.052360111 -0.217578442
+[151] -0.759602267 -0.344148261 -0.719310085  0.753827059  0.148336721
+[156]  1.479936906  0.443617745  1.679034469  1.274943550 -0.382573366
+[161] -1.041572335 -0.699654620  0.588367809 -0.893171131 -0.610888130
+[166]  0.810736014 -0.232072555 -1.616901135 -0.391662324 -1.035237604
+[171]  0.755510085 -1.882211021 -2.813088913  0.925805268  0.659316262
+[176]  0.990375348  0.049304117 -1.237698376  1.178689859 -0.369087528
+[181] -0.946981465 -2.336728834  0.221916959  0.167139270  0.133288002
+[186]  0.103021420 -0.703627036 -0.239644193 -1.269467626 -0.264045704
+[191] -0.079449543  2.336743735 -0.643506945  0.598222006  0.709591848
+[196] -0.169176537  1.282282069  1.401361648 -0.886306835 -1.129623510
+```
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+* tibble(var = .)
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+
+```
+# A tibble: 200 x 1
+        var
+      &lt;dbl&gt;
+ 1 -1.65   
+ 2 -0.899  
+ 3  0.00564
+ 4 -0.456  
+ 5  2.12   
+ 6  0.101  
+ 7 -1.87   
+ 8  0.970  
+ 9 -0.830  
+10  0.934  
+# … with 190 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+* arrange(var)
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+
+```
+# A tibble: 200 x 1
+     var
+   &lt;dbl&gt;
+ 1 -2.81
+ 2 -2.34
+ 3 -1.88
+ 4 -1.87
+ 5 -1.80
+ 6 -1.80
+ 7 -1.74
+ 8 -1.71
+ 9 -1.65
+10 -1.62
+# … with 190 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+* mutate(index = 1:n())
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+
+```
+# A tibble: 200 x 2
+     var index
+   &lt;dbl&gt; &lt;int&gt;
+ 1 -2.81     1
+ 2 -2.34     2
+ 3 -1.88     3
+ 4 -1.87     4
+ 5 -1.80     5
+ 6 -1.80     6
+ 7 -1.74     7
+ 8 -1.71     8
+ 9 -1.65     9
+10 -1.62    10
+# … with 190 more rows
+```
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+*df
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+*ggplot(data = df)
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_7_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+* aes(x = var)
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_8_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+* geom_rug()
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_9_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+* aes(y = index)
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_10_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+* geom_point()
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_11_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+* geom_step()
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_12_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+* aes(y = index / 20)
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_13_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+*ecdf
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+*ggplot(data = df)
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_15_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+* aes(x = var)
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_16_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+* geom_rug(alpha = .4)
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_17_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug(alpha = .4) +  
+* geom_histogram(aes(group = index),
+*                color = "black")
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_18_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug(alpha = .4) +  
+  geom_histogram(aes(group = index),  
+                 color = "black") +  
+* geom_histogram(color = "black")
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_19_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug(alpha = .4) +  
+  geom_histogram(aes(group = index),  
+                 color = "black") +  
+  geom_histogram(color = "black") +  
+* geom_histogram()
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_20_output-1.png" width="432" /&gt;
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug(alpha = .4) +  
+  geom_histogram(aes(group = index),  
+                 color = "black") +  
+  geom_histogram(color = "black") +  
+  geom_histogram() -&gt;  
+*hist
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+
+]
+
+---
+class: split-40
+count: false
+ 
+
+.left-panel-ecdf_large-auto[
+
+```r
+set.seed(780)  
+rnorm(200) %&gt;%  
+  tibble(var = .) %&gt;%  
+  arrange(var) %&gt;%  
+  mutate(index = 1:n()) -&gt;  
+df  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug() +  
+  aes(y = index) +  
+  geom_point() +  
+  geom_step() +  
+  aes(y = index / 20) -&gt;  
+ecdf  
+
+ggplot(data = df) +  
+  aes(x = var) +  
+  geom_rug(alpha = .4) +  
+  geom_histogram(aes(group = index),  
+                 color = "black") +  
+  geom_histogram(color = "black") +  
+  geom_histogram() -&gt;  
+hist  
+
+*ecdf / hist
+```
+]
+ 
+.right-panel-ecdf_large-auto[
+&lt;img src="ecdf_files/figure-html/ecdf_large_auto_22_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.left-panel-ecdf_large-auto {
+  color: #777;
+  width: 38.6138613861386%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-panel-ecdf_large-auto {
+  width: 59.4059405940594%;
+  float: right;
+  padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-ecdf_large-auto {
+  width: 0%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+
+&lt;style type="text/css"&gt;
+.remark-code{line-height: 1.5; font-size: 80%}
+
+@media print {
+  .has-continuation {
+    display: block;
+  }
+}
+&lt;/style&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:10",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
