@@ -290,18 +290,37 @@ plot_correct_aspect_ratio <- function(plot){
 
 
 ```{r, include=F}
-equation <- c("",
+cov_equation <- c("",
   "## $$\\mu_x$$", 
   "## $$\\mu_y$$", 
   "## $$x_i-\\mu_x$$",
   "## $$y_i-\\mu_y$$",
-  "## $$(x_i-\\mu_x)(y_i-\\mu_y)$$",
-  "## $$\\frac{(x_i-\\mu_x)(y_i-\\mu_y)}{n}$$"
+  "## $$\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)$$",
+  "## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n}$$"
   )
+
+var_equation <- c("",
+  "## $$\\mu_x$$", 
+  "## $$\\mu_x$$", 
+  "## $$x_i-\\mu_x$$",
+  "## $$x_i-\\mu_x$$",
+  "## $$\\sum_{i=1}^n (x_i-\\mu_x)^2$$",
+  "## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)^2}{n}$$"
+  )
+
+
+sd_equation <- c("## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)^2}{n}$$",
+                 "## $$\\sqrt\\frac{\\sum_{i=1}^n (x_i-\\mu_x)^2}{n}$$")
+
+cov_to_cor_equation <- c("## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n}$$",
+                 "## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n*\\sigma_x}$$",
+                 "## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n*\\sigma_y}$$",
+                 "## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n*\\sigma_y}$$")
+
 ```
 
 
-`r chunk_reveal("cov_steps", display_type = c("md","output"), md = equation)`
+`r chunk_reveal("cov_steps", display_type = c("md","output"), md = cov_equation)`
 
 
 ```{r cov_steps, eval = F, echo=F}
@@ -346,14 +365,14 @@ $$ \sigma^2 = \frac{\sum_{i=1}^n (x_i-\mu_x)^2}{n} $$
 ---
 
 
-`r flipbookr::chunk_reveal("variance_steps", break_type = "user", display_type = "output")`
+`r flipbookr::chunk_reveal("variance_steps", break_type = "user", display_type = c("md","output"), md = var_equation)`
 
 ```{r variance_steps, eval = F, echo=F}
 set.seed(199402)
 create_x_y(relationship = 1,
            noise = 0) %>% 
   data_create_scatterplot() %>% 
-  plot_change_ylab_to_x() %>% #BREAK
+  plot_change_ylab_to_x() %>% 
   plot_correct_aspect_ratio() %>% #BREAK
   plot_draw_mean_x() %>% #BREAK
   plot_draw_mean_y() %>% #BREAK
@@ -391,7 +410,7 @@ $$ \sigma = \sqrt\frac{\sum_{i=1}^n (x_i-\mu_x)^2}{n} $$
 ---
 
 
-`r flipbookr::chunk_reveal("sd_steps", break_type = "user", display_type = "output")`
+`r flipbookr::chunk_reveal("sd_steps", break_type = "user", display_type = c("md","output"), md = sd_equation)`
 
 ```{r sd_steps, eval = F, echo=F}
 set.seed(199402); create_x_y(relationship = 1,
@@ -440,10 +459,10 @@ set.seed(1934); create_x_y(relationship = .1) -> data; data %>%  data_create_sca
   plot_draw_differences_x() %>% 
   plot_draw_differences_y() %>% 
   plot_multiply_differences() %>% 
-  plot_take_average_rectangle() %>% 
-  plot_normalize_x(data = data) %>% 
-  plot_normalize_y(data = data) %>% 
-  plot_max_correlation(data = data)
+  plot_take_average_rectangle() %>% #BREAK
+  plot_normalize_x(data = data) %>% #BREAK 
+  plot_normalize_y(data = data) %>% #BREAK 
+  plot_max_correlation(data = data) #BREAK
 ```
 
 ---
@@ -549,7 +568,7 @@ create_x_y(relationship = .5) %>%
 
 ---
 
-`r chunk_reveal("cov_steps2", display_type = c("code", "func", "output"), width_left = "27%", width_middle = "37%", width_right = "32%")`
+`r chunk_reveal("cov_steps2", display_type = c("code", "func", "output"), widths = c(27, 37, 32))`
 
 
 ```{r cov_steps2, eval = F, echo=F}
@@ -581,7 +600,7 @@ create_x_y(relationship = .5) %>%
 
 ---
 
-`r chunk_reveal("lm_steps", display_type = "output")`
+`r chunk_reveal("lm_steps", display_type = "output", widths = c(49,50), md = cov_to_cor_equation)`
 
 
 ```{r lm_steps, eval = F, echo=F}
