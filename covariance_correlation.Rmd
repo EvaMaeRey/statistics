@@ -314,13 +314,13 @@ sd_equation <- c("## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)^2}{n}$$",
 
 cov_to_cor_equation <- c("## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n}$$",
                  "## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n*\\sigma_x}$$",
-                 "## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n*\\sigma_y}$$",
-                 "## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n*\\sigma_y}$$")
+                 "## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n*\\sigma_x\\sigma_y}$$",
+                 "## $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n*\\sigma_x\\sigma_y}$$")
 
 ```
 
 
-`r chunk_reveal("cov_steps", display_type = c("md","output"), md = cov_equation)`
+`r chunk_reveal("cov_steps", display_type = c("md","output"), md = cov_equation, widths = c(44, 55))`
 
 
 ```{r cov_steps, eval = F, echo=F}
@@ -449,7 +449,7 @@ $$ cor(x,y) = \frac{\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)}{n *\sigma_x \sigma_y} $
 
 ---
 
-`r chunk_reveal("cor_steps", display_type = "output")`
+`r chunk_reveal("cor_steps", break_type = "user", display_type = c("md", "output"), md = cov_to_cor_equation, widths = c(44,55))`
 
 
 ```{r cor_steps, eval = F, echo=F}
@@ -467,20 +467,25 @@ set.seed(1934); create_x_y(relationship = .1) -> data; data %>%  data_create_sca
 
 ---
 
-`r chunk_reveal("cor_steps_neg", display_type = "output")`
+A negative correlation
+
+---
+
+
+`r chunk_reveal("cor_steps_neg", break_type = "user", display_type = c("md", "output"), md = cov_to_cor_equation, widths = c(44,55))`
 
 
 ```{r cor_steps_neg, eval = F, echo=F}
-set.seed(1934); create_x_y(relationship = -.05) -> data; data %>%  data_create_scatterplot() %>% 
+set.seed(1934); create_x_y(relationship = -.2) -> data; data %>%  data_create_scatterplot() %>% 
   plot_draw_mean_x() %>% 
   plot_draw_mean_y() %>% 
   plot_draw_differences_x() %>% 
   plot_draw_differences_y() %>% 
   plot_multiply_differences() %>% 
-  plot_take_average_rectangle() %>% 
-  plot_normalize_x(data = data) %>% 
-  plot_normalize_y(data = data) %>% 
-  plot_max_correlation(data = data)
+  plot_take_average_rectangle() %>% #BREAK
+  plot_normalize_x(data = data) %>% #BREAK
+  plot_normalize_y(data = data) %>% #BREAK
+  plot_max_correlation(data = data) #BREAK
 ```
 
 
@@ -531,7 +536,7 @@ $$ s = \sqrt\frac{\sum_{i=1}^n (x_i-\overline{x})^2}{n - 1} $$
 ---
 
 
-# DRY
+# DRY:  Bonus 
 
 --
 
@@ -598,22 +603,45 @@ create_x_y(relationship = .5) %>%
 - [A companion guide to Jim Hester’s, 'You can make an R package in 20 minutes'](https://evamaerey.github.io/package_in_20_minutes/package_in_20_minutes)
 
 
+
 ---
 
-`r chunk_reveal("lm_steps", display_type = "output", widths = c(49,50), md = cov_to_cor_equation)`
+`r chunk_reveal("numeric")`
+
+```{r numeric, include = F}
+cars %>% 
+  ggplot() + 
+  aes(x = speed, y = dist) +
+  geom_point() ->
+visualization
+
+cars$speed -
+  mean(cars$speed) ->
+x_diff
+
+cars$dist -
+  mean(cars$dist) ->
+y_diff
+
+x_diff %>% 
+  `*`(y_diff) %>% 
+  sum() %>% 
+  `/`(nrow(cars) - 1) ->
+my_calc
 
 
-```{r lm_steps, eval = F, echo=F}
-set.seed(1934); create_x_y(relationship = .1) -> data; data %>% data_create_scatterplot() %>% 
-  plot_draw_mean_x() %>% 
-  plot_draw_mean_y() %>% 
-  plot_draw_differences_x() %>% 
-  plot_draw_differences_y() %>% 
-  plot_multiply_differences() %>% 
-  plot_take_average_rectangle() %>% 
-  plot_normalize_x(data = data) +
-  geom_smooth(method = lm, se = F, aes(fill = F, color = F))
+library(magrittr)
+cars %$%
+  cov(dist, speed)
+
+visualization + 
+  annotate(geom = "text",
+           x = 7,
+           y = 100,
+           label = paste0("cov = ", 
+                          cars %$% cov(dist, speed) %>% round(1)))
 ```
+
 
 
 
