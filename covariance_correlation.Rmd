@@ -79,7 +79,8 @@ create_x_y <- function(num = 20,
                        ){
   
   tibble(x = rnorm(num, sd = spread_x) + 50 ) %>% 
-  mutate(y = relationship * x + rnorm(num, sd = noise)) %>% 
+  mutate(y = relationship * x + 
+           rnorm(num, sd = noise)) %>% 
   mutate(mean_x = mean(x)) %>% 
   mutate(mean_y = mean(y)) %>% 
   mutate(area = (x - mean_x)*(y - mean_y)) %>% 
@@ -109,7 +110,8 @@ data %>%
   theme(legend.position = c(.15, .9)) +
   aes(x = x) + 
   aes(y = y) +
-  theme(rect = element_rect(fill = background_color)) + 
+  theme(rect = element_rect(fill = 
+                              background_color)) + 
   theme(text = element_text(color = "white", 
                             face = "italic", 
                             size = 15)) +
@@ -160,13 +162,15 @@ plot_draw_differences_x <- function(plot){
   
   plot + 
   # difference xi mean x
-  scale_color_manual(breaks = c(FALSE, TRUE), 
-                     label = c("Negative", "Positive"), 
-                     values = c("orchid4", "lightgoldenrod3") )  + 
-  geom_segment(aes(col = x > mean(x), 
-                   xend = mean(x), yend = y), 
-                   arrow = arrow(ends = "first", 
-                                 length = unit(0.1, "inches"))) +
+  scale_color_manual(
+    breaks = c(FALSE, TRUE), 
+    label = c("Negative", "Positive"), 
+    values = c("orchid4", "lightgoldenrod3") )  + 
+  geom_segment(
+    aes(col = x > mean(x), 
+        xend = mean(x), yend = y), 
+    arrow = arrow(ends = "first", 
+                  length = unit(0.1, "inches"))) +
   labs(col = "")
   
     
@@ -241,18 +245,28 @@ plot_normalize_x <- function(plot, data){
   
   plot + 
   # Pearsons's Correlation 
-  scale_x_continuous(sec.axis = sec_axis(~ (. -mean(data$x))/ sd_pop(data$x), name = "sd x")) +
-  geom_vline(xintercept = mean(data$x) + sd_pop(data$x), lty = "dashed", color = "pink") +
-  geom_vline(xintercept = mean(data$x) - sd_pop(data$x), lty = "dashed", color = "pink") 
+  scale_x_continuous(
+    sec.axis = sec_axis(~ (. -mean(data$x))/ sd_pop(data$x), 
+                        name = "sd x")) +
+  geom_vline(xintercept = mean(data$x) + sd_pop(data$x), 
+             lty = "dashed", color = "pink") +
+  geom_vline(xintercept = mean(data$x) - sd_pop(data$x), 
+             lty = "dashed", color = "pink") 
   
 }
 
 plot_normalize_y <- function(plot, data, title = "Picture of covariance\n*and* Pearson correlation coefficient"){
   
   plot + 
-  scale_y_continuous(sec.axis = sec_axis(~ (. -mean(data$y))/ sd_pop(data$y), name = "sd y")) +
-  geom_hline(yintercept = mean(data$y) + sd_pop(data$y), lty = "dashed", color = "pink") +
-  geom_hline(yintercept = mean(data$y) - sd_pop(data$y), lty = "dashed", color = "pink") + 
+  scale_y_continuous(
+    sec.axis = sec_axis(~ (. -mean(data$y))/ sd_pop(data$y), 
+                        name = "sd y")) +
+  geom_hline(
+    yintercept = mean(data$y) + sd_pop(data$y), 
+    lty = "dashed", color = "pink") +
+  geom_hline(
+    yintercept = mean(data$y) - sd_pop(data$y), 
+    lty = "dashed", color = "pink") + 
   labs(title = title) +
   coord_fixed(ratio =  sd_pop(data$x)/sd_pop(data$y) )
 
@@ -615,6 +629,7 @@ cars %>%
   geom_point() ->
 visualization
 
+# 'by-hand' calculation
 cars$speed -
   mean(cars$speed) ->
 x_diff
@@ -626,10 +641,9 @@ y_diff
 x_diff %>% 
   `*`(y_diff) %>% 
   sum() %>% 
-  `/`(nrow(cars) - 1) ->
-my_calc
+  `/`(nrow(cars) - 1)
 
-
+# or use the function
 library(magrittr)
 cars %$%
   cov(dist, speed)
@@ -639,7 +653,9 @@ visualization +
            x = 7,
            y = 100,
            label = paste0("cov = ", 
-                          cars %$% cov(dist, speed) %>% round(1)))
+                          cars %$% 
+                            cov(dist, speed) %>% 
+                            round(1)))
 ```
 
 
@@ -650,5 +666,11 @@ visualization +
 
 .huge {
   font-size: 250%;
+}
+
+@media print {
+  .has-continuation {
+    display: block;
+  }
 }
 ```

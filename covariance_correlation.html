@@ -1538,6 +1538,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 *cars$speed
 ```
 ]
@@ -1564,6 +1565,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
 * mean(cars$speed)
 ```
@@ -1594,6 +1596,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 *x_diff
@@ -1618,6 +1621,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -1649,6 +1653,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -1683,6 +1688,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -1711,6 +1717,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -1748,6 +1755,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -1787,6 +1795,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -1822,6 +1831,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -1858,6 +1868,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -1869,50 +1880,18 @@ y_diff
 x_diff %&gt;%  
   `*`(y_diff) %&gt;%  
   sum() %&gt;%  
-  `/`(nrow(cars) - 1) -&gt;  
-*my_calc
-```
-]
- 
-.right-panel-numeric-auto[
+  `/`(nrow(cars) - 1)  
 
-]
-
----
-class: split-40
-count: false
- 
-
-.left-panel-numeric-auto[
-
-```r
-cars %&gt;%  
-  ggplot() +  
-  aes(x = speed, y = dist) +  
-  geom_point() -&gt;  
-visualization  
-
-cars$speed -  
-  mean(cars$speed) -&gt;  
-x_diff  
-
-cars$dist -  
-  mean(cars$dist) -&gt;  
-y_diff  
-
-x_diff %&gt;%  
-  `*`(y_diff) %&gt;%  
-  sum() %&gt;%  
-  `/`(nrow(cars) - 1) -&gt;  
-my_calc  
-
-
+# or use the function
 *library(magrittr)
 ```
 ]
  
 .right-panel-numeric-auto[
 
+```
+[1] 109.9469
+```
 ]
 
 ---
@@ -1929,6 +1908,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -1940,16 +1920,19 @@ y_diff
 x_diff %&gt;%  
   `*`(y_diff) %&gt;%  
   sum() %&gt;%  
-  `/`(nrow(cars) - 1) -&gt;  
-my_calc  
+  `/`(nrow(cars) - 1)  
 
-
+# or use the function
 library(magrittr)  
 *cars
 ```
 ]
  
 .right-panel-numeric-auto[
+
+```
+[1] 109.9469
+```
 
 ```
    speed dist
@@ -2020,6 +2003,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -2031,10 +2015,9 @@ y_diff
 x_diff %&gt;%  
   `*`(y_diff) %&gt;%  
   sum() %&gt;%  
-  `/`(nrow(cars) - 1) -&gt;  
-my_calc  
+  `/`(nrow(cars) - 1)  
 
-
+# or use the function
 library(magrittr)  
 cars %$%  
 * cov(dist, speed)
@@ -2042,6 +2025,10 @@ cars %$%
 ]
  
 .right-panel-numeric-auto[
+
+```
+[1] 109.9469
+```
 
 ```
 [1] 109.9469
@@ -2062,6 +2049,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -2073,10 +2061,9 @@ y_diff
 x_diff %&gt;%  
   `*`(y_diff) %&gt;%  
   sum() %&gt;%  
-  `/`(nrow(cars) - 1) -&gt;  
-my_calc  
+  `/`(nrow(cars) - 1)  
 
-
+# or use the function
 library(magrittr)  
 cars %$%  
   cov(dist, speed)  
@@ -2091,7 +2078,11 @@ cars %$%
 [1] 109.9469
 ```
 
-![](covariance_correlation_files/figure-html/numeric_auto_20_output-1.png)&lt;!-- --&gt;
+```
+[1] 109.9469
+```
+
+![](covariance_correlation_files/figure-html/numeric_auto_19_output-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -2108,6 +2099,7 @@ cars %&gt;%
   geom_point() -&gt;  
 visualization  
 
+# 'by-hand' calculation
 cars$speed -  
   mean(cars$speed) -&gt;  
 x_diff  
@@ -2119,10 +2111,9 @@ y_diff
 x_diff %&gt;%  
   `*`(y_diff) %&gt;%  
   sum() %&gt;%  
-  `/`(nrow(cars) - 1) -&gt;  
-my_calc  
+  `/`(nrow(cars) - 1)  
 
-
+# or use the function
 library(magrittr)  
 cars %$%  
   cov(dist, speed)  
@@ -2132,7 +2123,9 @@ visualization +
 *          x = 7,
 *          y = 100,
 *          label = paste0("cov = ",
-*                         cars %$% cov(dist, speed) %&gt;% round(1)))
+*                         cars %$%
+*                           cov(dist, speed) %&gt;%
+*                           round(1)))
 ```
 ]
  
@@ -2142,7 +2135,11 @@ visualization +
 [1] 109.9469
 ```
 
-![](covariance_correlation_files/figure-html/numeric_auto_21_output-1.png)&lt;!-- --&gt;
+```
+[1] 109.9469
+```
+
+![](covariance_correlation_files/figure-html/numeric_auto_20_output-1.png)&lt;!-- --&gt;
 ]
 
 &lt;style&gt;
@@ -2179,6 +2176,12 @@ visualization +
 
 .huge {
   font-size: 250%;
+}
+
+@media print {
+  .has-continuation {
+    display: block;
+  }
 }
 &lt;/style&gt;
     </textarea>
