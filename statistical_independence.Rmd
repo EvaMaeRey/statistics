@@ -161,19 +161,16 @@ library(tidyverse)
 tibble(tail_length = rnorm(n = 50), 
        brain_weight = rnorm(n = 50)) ->
 my_data; my_data
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+
+
+
+
+
+
+
+
+
+
 ggplot(data = my_data) +
   aes(x = tail_length) +
   aes(y = brain_weight) +
@@ -184,22 +181,18 @@ ggplot(data = my_data) +
                          ifelse(cor.test(my_data$tail_length, my_data$brain_weight)[[3]]<.05, "red", "black"),
                        size =
                          ifelse(cor.test(my_data$tail_length, my_data$brain_weight)[[3]]<.05, 8, 3)))
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+
+
+
+
+
+
+
+
+
+
+
+
 cor.test(x = my_data$tail_length, 
               y = my_data$brain_weight)
 ```
@@ -247,14 +240,15 @@ ggplot(height_data) +
                geom = "point",
                col = "goldenrod3",
                size = 5) 
-#
-#
-#
-#
-#
-#
-#
-#
+
+
+
+
+
+
+
+
+
 # statistical test
 t.test(height_data$height ~ # the continuous variable by (~)
          height_data$sex) # the discrete variable

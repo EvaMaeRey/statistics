@@ -84,6 +84,10 @@ class: inverse, center, middle
 
 # larger N
 
+--
+
+Now let's look at a case with a larger number of observations.
+
 ---
 
 `r chunk_reveal("ecdf_large")`
@@ -117,6 +121,57 @@ hist
 
 ecdf / hist
 ```
+
+---
+
+# One more univariate representation: "density histogram"
+
+--
+
+What's the difference between histogram and a *density* histogram?
+
+--
+
+Density histogram y axis is scaled such that the total area within the histogram bars is equal to one. 
+
+---
+
+`r chunk_reveal("density_plot")`
+
+```{r density_plot, include = F}
+set.seed(780)
+rnorm(20) %>% 
+  tibble(var = .) -> 
+df
+
+bin_width <- .5
+
+ggplot(data = df) +
+  aes(x = var) +
+  geom_rug(aes(y = NULL)) + 
+  geom_histogram(binwidth = bin_width,
+                 color = "black",
+                 alpha = .3,
+                 fill = "plum4") +
+  # count is default y for geom histogram
+  aes(y = ..count..) + # explicit y axis
+  # but we can calculate a new y axis
+  aes(y = ..count../(bin_width*nrow(df))) + 
+  # this is what density does
+  aes(y = ..density..) + # overwrite y axis
+  # lets get the axis equal
+  coord_equal() + 
+  # to compare with a 1 by 1 square
+  # which is also the area of the density hist
+  annotate(geom = "tile",
+           x = .5, y = .5, 
+           alpha = .3,
+           fill = "plum4")
+```
+
+---
+
+
 
 
 

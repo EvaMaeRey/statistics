@@ -63,7 +63,7 @@ How likely is it that such a strong relationship as the one I observe (or strong
 
 --
 
-If the null is true (often statistical independence), then how likely is it to observe stuch a strong relationship.
+If the null is true (often statistical independence), then how likely is it to observe such a strong relationship.
 
 ---
 
@@ -246,15 +246,21 @@ ggplot(gm_2007_sample_50) +
 ```{r hist_2, include = T}
 gm_2007_sample_50 %>% 
   group_by(asia) %>% 
-  mutate(mean_life_exp = mean(lifeExp)) %>% 
+  summarise(mean_life_exp = mean(lifeExp)) %>% 
 ggplot() + 
   aes(x = lifeExp) +
   aes(color = asia) +
-  facet_wrap(~ asia, nrow = 2) +
-  geom_rug(alpha = 0) +
+  geom_rug(data = gm_2007_sample_50,
+           alpha = 1) +
   geom_vline(aes(xintercept = mean_life_exp, color = asia),
              linetype = "dashed") +
-  labs(title = "signal")
+  labs(title = "signal") +
+  geom_segment(data = . %>% 
+                 pivot_wider(names_from = asia,
+                             values_from = mean_life_exp),
+               aes(x = Asia, xend = `not Asia`, y = 2, yend = 2),
+               arrow = arrow(ends = "both", type = "closed", length = unit(0.3,"cm")),
+               color = "black")
 ```
 
 ```{r hist_2, include = T}
@@ -304,19 +310,21 @@ ggplot(calcs) +
   theme(legend.position = "none") +
   # scale_y_continuous(sec.axis = sec_axis(~ (. -1/mean(dat$n)))) +
   labs(title = "noise") +
+  coord_equal(ratio = 1) +  
   geom_rect(data = dat,
-            fill = "steelblue",
-            aes(x = NULL, y = NULL, yend = NULL, xend = NULL, 
-                xmin = 0, ymin = 0, xmax = sqrt(variance_n), ymax = sqrt(variance_n)))
+              aes(xmin = 0, ymin = 0, 
+                xmax = sd/n, ymax = sd,
+                x = NULL, y = NULL, yend = NULL),
+            fill = "goldenrod4") 
 
 
 ggplot(data = final) +
-  geom_rect(fill = "steelblue") +
-  aes(xmin = 0, ymin = 0 , xmax = sqrt_sum_var_n, ymax = sqrt_sum_var_n) +
+  geom_rect(fill = "goldenrod4") +
+  aes(xmin = 0, ymin = 0 , 
+      xmax = sqrt_sum_var_n, ymax = sqrt_sum_var_n) +
   coord_equal() + 
   aes(x = 0, y = 0, xend = sqrt_sum_var_n, yend = 0) +
   geom_segment(size = 2, color = "firebrick") 
-
 ```
 
 

@@ -1,0 +1,88 @@
+---
+title: "Visualizing covariance, variance, standard deviation, correlation"
+author: "<br><br>Gina Reynolds"
+date: "<br>"
+output:
+  xaringan::moon_reader:
+    chakra: libs/remark-latest.min.js
+    lib_dir: libs
+    css: [default, hygge, ninjutsu]
+    nature:
+      ratio: "16:9"
+      highlightLines: true
+---
+
+
+
+---
+class: center, middle
+
+### Covariance is a measure of the joint variability of two random variables. 
+
+---
+class: inverse, center, middle
+
+.huge[
+
+$$ cov(x,y) = \frac{\sum_{i=1}^n (x_i-\mu_x)(y_i-\mu_y)}{n} $$
+]
+
+
+---
+class: inverse, center, middle
+
+
+# Let's look at that math type!
+
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = F, 
+                      warning = F,  comment = "", 
+                      cache = T, fig.height = 7, 
+                      fig.width = 8)
+
+library(flipbookr)
+library(tidyverse)
+```
+
+
+
+
+```{r, include=F}
+cov_equation <- c("",
+  "### $$\\mu_x$$", 
+  "### $$\\mu_y$$", 
+  "### $$x_i-\\mu_x$$",
+  "### $$y_i-\\mu_y$$",
+  "### $$\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)$$",
+  "### $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n}$$",
+                 "### $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n*\\sigma_x}$$",
+                 "### $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n*\\sigma_x\\sigma_y}$$",
+                 "### $$\\frac{\\sum_{i=1}^n (x_i-\\mu_x)(y_i-\\mu_y)}{n*\\sigma_x\\sigma_y}$$"
+  )
+
+cov_equation %>%
+  str_remove_all("\\$\\$") ->
+cov_equation_text
+```
+
+
+`r chunk_reveal(display_type = c("md","md2"), md2 = cov_equation, md = cov_equation_text, widths = c(2, 1))`
+
+
+
+```{css, eval = TRUE, echo = F}
+.remark-code{line-height: 1.5; font-size: 70%}
+
+.huge {
+  font-size: 250%;
+}
+
+@media print {
+  .has-continuation {
+    display: block;
+  }
+}
+```

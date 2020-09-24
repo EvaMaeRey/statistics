@@ -97,6 +97,33 @@ create_x_y <- function(num = 20,
   
 }
 
+
+create_x_y_ttest <- function(num = 20, 
+                       spread_x = 20,
+                       relationship = .1, 
+                       noise = 3
+                       ){
+  
+  tibble(x = sample(c(0,1), num, replace = T) ) %>% 
+  mutate(y = relationship * x + 
+           rnorm(num, sd = noise)) %>% 
+  mutate(mean_x = mean(x)) %>% 
+  mutate(mean_y = mean(y)) %>% 
+  mutate(area = (x - mean_x)*(y - mean_y)) %>% 
+  mutate(mean_area = mean(area)) %>% 
+  mutate(quasi_mean_area = area/(n() - 1)) %>%
+  mutate(sd_x_sample = sd(x)) %>% 
+  mutate(sd_x = sd_pop(x)) %>% 
+  mutate(sd_y_sample = sd(y)) %>% 
+  mutate(sd_y = sd_pop(y)) %>% 
+  mutate(some_x = sd_x) %>% 
+  mutate(some_x_sample = sd_x_sample) %>% 
+  mutate(some_y = mean_area/some_x) %>% 
+  mutate(some_y_sample = sd_y_sample) 
+  
+}
+
+
 data_calc_cor <- function(data){
   
   with(cor(x, y), data = data)
@@ -658,6 +685,29 @@ visualization +
                             round(1)))
 ```
 
+
+
+
+---
+
+```{r cor_steps_lm, eval = F, echo=F}
+set.seed(1934); create_x_y(relationship = .1) -> data; data %>%  data_create_scatterplot() %>% 
+  plot_draw_mean_x() %>% 
+  plot_draw_mean_y() %>% 
+  plot_draw_differences_x() %>% #BREAK
+  plot_draw_differences_y() %>% #BREAK
+  plot_multiply_differences() %>% #BREAK
+  plot_take_average_rectangle() %>% #BREAK
+  plot_normalize_x(data = data) %>% #BREAK 
+  plot_normalize_y(data = data) %>% #BREAK 
+  plot_max_correlation(data = data) + #BREAK
+  geom_smooth(method = lm, aes(fill = FALSE),
+              se = F) #BREAK
+```
+
+```{r, code = chunk_code_seq_as_vector("cor_steps_lm", break_type = "user"), echo = F, fig.show="hold", out.width="25%"}
+
+```
 
 
 

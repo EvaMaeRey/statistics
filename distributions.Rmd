@@ -1,0 +1,216 @@
+---
+title: "Distributions"
+subtitle: "With flipbookr and xaringan"
+author: "Gina Reynolds, December 2019"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, hygge, ninjutsu]
+    nature:
+      ratio: 20:10
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+
+
+```{r, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
+knitr::opts_chunk$set(fig.width = 12, message = FALSE, warning = FALSE, comment = "", cache = T, fig.retina = 3)
+library(flipbookr)
+library(tidyverse)
+```
+
+
+---
+
+`r chunk_reveal("dtpt")`
+
+
+```{r dtpt, eval = F, echo = F}
+set.seed(1256435)
+library(tidyverse)
+seq(-5, 5, .01) %>% 
+  tibble(x = .) %>% 
+  mutate(dy = dt(x, df = 30)) %>%
+  mutate(py = pt(x, df = 30)) %>%
+  mutate(qy = qt(x, df = 30)) %>%
+  ggplot() +
+  scale_y_continuous(limits = c(0,1)) + 
+  ggthemes::theme_solarized(base_size = 25) +
+  aes(x = x, y = dy) +
+  geom_line() + 
+  geom_area(fill = "magenta",
+            alpha = .3) +
+  geom_line(aes(y = py), color = "magenta") + 
+  geom_rug(data = tibble(x = rt(50, df = 30)),
+           alpha = .3,
+           aes(y = NULL)) +
+  geom_area(data = . %>% filter(py <= .025), fill = "plum4") +
+  geom_area(data = . %>% filter(py >= .975), fill = "plum4") +
+  geom_hline(yintercept = c(.025, .975), linetype = "dashed")
+```
+
+
+
+---
+
+
+`r chunk_reveal("integrate", break_type = "replacement", replace = "-4", replacements = -4:4)`
+
+
+
+
+```{r integrate, eval = F, echo = F}
+set.seed(1256435)
+library(tidyverse)
+seq(-5, 5, .1) %>% 
+  tibble(x = .) %>% 
+  mutate(dy = dt(x, df = 30)) %>% 
+  mutate(py = pt(x, df = 30)) %>% 
+  ggplot() +
+  aes(x = x, y = dy) +
+  geom_line() + 
+  geom_area(data = . %>% filter(x <= -4), 
+            fill = "magenta", 
+            alpha = .3) + 
+  geom_vline(xintercept = -4, 
+             linetype = "dashed") +
+  scale_y_continuous(limits = c(0,1)) + 
+  ggthemes::theme_solarized(base_size = 25)
+```
+
+---
+
+`r chunk_reveal("t30", break_type = "rotate")`
+
+```{r t30, eval = F, echo = F}
+set.seed(1256435)
+library(tidyverse)
+seq(-5, 5, .1) %>% 
+  tibble(x = .) %>% 
+  mutate(dy = dt(x, df = 30)) %>% 
+  mutate(py = pt(x, df = 30)) %>% 
+  ggplot() +
+  ggthemes::theme_solarized(base_size = 25) +
+  aes(x = x, y = dy) +
+  geom_line() + 
+  scale_y_continuous(limits = c(0,1)) + 
+  geom_area(fill = "magenta", alpha = .3) + #ROTATE
+  coord_equal() + geom_area(fill = "magenta", alpha = .3) + #ROTATE
+  coord_equal() + annotate(geom = "tile", x = .5, y = .5, fill = "magenta", alpha = .3) #ROTATE
+```
+
+---
+
+`r chunk_reveal("pdf", break_type = "replacement", replace = "-4", replacements = -4:4)`
+
+```{r pdf, eval = F, echo = F}
+set.seed(1256435)
+library(tidyverse)
+seq(-5, 5, .1) %>% 
+  tibble(x = .) %>% 
+  mutate(dy = dt(x, df = 30)) %>% 
+  mutate(py = pt(x, df = 30)) %>% 
+  ggplot() +
+  aes(x = x, y = dy) +
+  geom_line() + 
+  geom_line(data = . %>% filter(x <= -4), 
+            aes(y = py), 
+            size = 1.5,
+            color = "magenta") + 
+  geom_area(data = . %>% filter(x <= -4), 
+            fill = "magenta", 
+            alpha = .3) + 
+  geom_vline(xintercept = -4, 
+             linetype = "dashed") +
+  scale_y_continuous(limits = c(0,1)) + 
+  ggthemes::theme_solarized(base_size = 25)
+```
+
+
+
+
+
+---
+
+`r chunk_reveal("tdist", break_type = "rotate")`
+
+```{r tdist, eval = F, echo = F}
+library(tidyverse)
+seq(-5, 5, .05) %>% 
+  tibble(x = .) %>% 
+  mutate(y = dnorm(x)) %>% #ROTATE
+  mutate(y = dt(x, df = 2)) %>% #ROTATE
+  mutate(y = dt(x, df = 3)) %>% #ROTATE
+  mutate(y = dt(x, df = 5)) %>% #ROTATE
+  mutate(y = dt(x, df = 8)) %>% #ROTATE
+  mutate(y = dt(x, df = 14)) %>% #ROTATE
+  mutate(y = dt(x, df = 20)) %>% #ROTATE
+  mutate(y = dt(x, df = 30)) %>% #ROTATE
+  mutate(y = dt(x, df = 100)) %>% #ROTATE
+  mutate(y = dnorm(x)) %>% #ROTATE
+  ggplot() +
+  aes(x = x, y = y) +
+  geom_line() +
+  geom_area(fill = "magenta",
+            alpha = .3) +
+  scale_y_continuous(limits = c(0,.5)) + 
+  ggthemes::theme_solarized(base_size = 25)
+```
+
+---
+
+
+```{r gtz, eval = F, echo = F}
+seq(0,30, by = .1) %>% 
+  tibble(x = .) %>% 
+  mutate(y = dchisq(x, df = 4)) %>% #ROTATE
+  mutate(y = dchisq(x, df = 7)) %>% #ROTATE
+  mutate(y = dchisq(x, df = 12)) %>% #ROTATE
+  mutate(y = dchisq(x, df = 18)) %>% #ROTATE
+  mutate(y = dchisq(x, df = 20)) %>% #ROTATE
+  mutate(y = dbinom(x, size = 4, prob = .5)) %>% #ROTATE
+  mutate(y = dbinom(x, size = 10, prob = .5)) %>% #ROTATE
+  mutate(y = dbinom(x, size = 30, prob = .2)) %>% #ROTATE
+  mutate(y = dpois(x, lambda = 5)) %>% #ROTATE
+  mutate(y = dpois(x, lambda = 10)) %>% #ROTATE
+  mutate(y = dpois(x, lambda = 20)) %>% #ROTATE
+  mutate(y = dnbinom(x, size = 4, prob = .5)) %>% #ROTATE
+  mutate(y = dnbinom(x, size = 10, prob = .5)) %>% #ROTATE
+  mutate(y = dnbinom(x, size = 20, prob = .5)) %>% #ROTATE
+  mutate(y = df(x, df1 = 5, df2 = 1)) %>% #ROTATE
+  mutate(y = pf(x, df1 = 25, df2 = 10)) %>% #ROTATE
+  ggplot() +
+  aes(x = x, y = y) +
+  geom_point(alpha = .2) +
+  geom_line() +
+  scale_y_continuous(limits = c(0,1)) + 
+  ggthemes::theme_solarized()
+```
+
+
+
+```{r tdist_base, eval = F, echo = F}
+library(tidyverse)
+library(magrittr)
+seq(-4, 4, .1) %>% 
+  tibble(x = .) %>% 
+  mutate(y = dt(x, df = 3)) %$% # df is degrees of freedom
+  plot(x = x, y = y, type = "l", 
+     lty = "dashed", ylim = c(0,.4), 
+     xlab = "t", ylab = "f(t)")
+```
+
+
+```{css, eval = TRUE, echo = FALSE}
+.remark-code{line-height: 1.5; font-size: 80%}
+
+@media print {
+  .has-continuation {
+    display: block;
+  }
+}
+```
