@@ -652,7 +652,7 @@ seq(-5, 5, .01) %&gt;%
 count: false
  
 
-.panel1-integrate-replacement[
+.panel1-integrate-replace[
 
 ```r
 set.seed(1256435)
@@ -664,25 +664,25 @@ seq(-5, 5, .1) %&gt;%
   ggplot() +
   aes(x = x, y = dy) +
   geom_line() + 
-* geom_area(data = . %&gt;% filter(x &lt;= -4),  #&lt;&lt; #&lt;&lt;
+* geom_area(data = . %&gt;% filter(x &lt;= -4),
             fill = "magenta", 
             alpha = .3) + 
-* geom_vline(xintercept = -4,  #&lt;&lt; #&lt;&lt;
+* geom_vline(xintercept = -4,
              linetype = "dashed") +
   scale_y_continuous(limits = c(0,1)) + 
   ggthemes::theme_solarized(base_size = 25)
 ```
 ]
  
-.panel2-integrate-replacement[
-&lt;img src="distributions_files/figure-html/integrate_replacement_01_output-1.png" width="864" /&gt;
+.panel2-integrate-replace[
+&lt;img src="distributions_files/figure-html/integrate_replace_01_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-integrate-replacement[
+.panel1-integrate-replace[
 
 ```r
 set.seed(1256435)
@@ -704,15 +704,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-integrate-replacement[
-&lt;img src="distributions_files/figure-html/integrate_replacement_02_output-1.png" width="864" /&gt;
+.panel2-integrate-replace[
+&lt;img src="distributions_files/figure-html/integrate_replace_02_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-integrate-replacement[
+.panel1-integrate-replace[
 
 ```r
 set.seed(1256435)
@@ -734,15 +734,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-integrate-replacement[
-&lt;img src="distributions_files/figure-html/integrate_replacement_03_output-1.png" width="864" /&gt;
+.panel2-integrate-replace[
+&lt;img src="distributions_files/figure-html/integrate_replace_03_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-integrate-replacement[
+.panel1-integrate-replace[
 
 ```r
 set.seed(1256435)
@@ -764,15 +764,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-integrate-replacement[
-&lt;img src="distributions_files/figure-html/integrate_replacement_04_output-1.png" width="864" /&gt;
+.panel2-integrate-replace[
+&lt;img src="distributions_files/figure-html/integrate_replace_04_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-integrate-replacement[
+.panel1-integrate-replace[
 
 ```r
 set.seed(1256435)
@@ -794,15 +794,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-integrate-replacement[
-&lt;img src="distributions_files/figure-html/integrate_replacement_05_output-1.png" width="864" /&gt;
+.panel2-integrate-replace[
+&lt;img src="distributions_files/figure-html/integrate_replace_05_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-integrate-replacement[
+.panel1-integrate-replace[
 
 ```r
 set.seed(1256435)
@@ -824,15 +824,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-integrate-replacement[
-&lt;img src="distributions_files/figure-html/integrate_replacement_06_output-1.png" width="864" /&gt;
+.panel2-integrate-replace[
+&lt;img src="distributions_files/figure-html/integrate_replace_06_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-integrate-replacement[
+.panel1-integrate-replace[
 
 ```r
 set.seed(1256435)
@@ -854,15 +854,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-integrate-replacement[
-&lt;img src="distributions_files/figure-html/integrate_replacement_07_output-1.png" width="864" /&gt;
+.panel2-integrate-replace[
+&lt;img src="distributions_files/figure-html/integrate_replace_07_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-integrate-replacement[
+.panel1-integrate-replace[
 
 ```r
 set.seed(1256435)
@@ -884,15 +884,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-integrate-replacement[
-&lt;img src="distributions_files/figure-html/integrate_replacement_08_output-1.png" width="864" /&gt;
+.panel2-integrate-replace[
+&lt;img src="distributions_files/figure-html/integrate_replace_08_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-integrate-replacement[
+.panel1-integrate-replace[
 
 ```r
 set.seed(1256435)
@@ -914,12 +914,12 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-integrate-replacement[
-&lt;img src="distributions_files/figure-html/integrate_replacement_09_output-1.png" width="864" /&gt;
+.panel2-integrate-replace[
+&lt;img src="distributions_files/figure-html/integrate_replace_09_output-1.png" width="864" /&gt;
 ]
 
 &lt;style&gt;
-.panel1-integrate-replacement {
+.panel1-integrate-replace {
   color: black;
   width: 38.6060606060606%;
   hight: 32%;
@@ -927,7 +927,7 @@ seq(-5, 5, .1) %&gt;%
   padding-left: 1%;
   font-size: 80%
 }
-.panel2-integrate-replacement {
+.panel2-integrate-replace {
   color: black;
   width: 59.3939393939394%;
   hight: 32%;
@@ -935,7 +935,7 @@ seq(-5, 5, .1) %&gt;%
   padding-left: 1%;
   font-size: 80%
 }
-.panel3-integrate-replacement {
+.panel3-integrate-replace {
   color: black;
   width: NA%;
   hight: 33%;
@@ -1067,7 +1067,7 @@ seq(-5, 5, .1) %&gt;%
 count: false
  
 
-.panel1-pdf-replacement[
+.panel1-pdf-replace[
 
 ```r
 set.seed(1256435)
@@ -1079,29 +1079,29 @@ seq(-5, 5, .1) %&gt;%
   ggplot() +
   aes(x = x, y = dy) +
   geom_line() + 
-* geom_line(data = . %&gt;% filter(x &lt;= -4),  #&lt;&lt; #&lt;&lt;
+* geom_line(data = . %&gt;% filter(x &lt;= -4),
             aes(y = py), 
             size = 1.5,
             color = "magenta") + 
-* geom_area(data = . %&gt;% filter(x &lt;= -4),  #&lt;&lt; #&lt;&lt;
+* geom_area(data = . %&gt;% filter(x &lt;= -4),
             fill = "magenta", 
             alpha = .3) + 
-* geom_vline(xintercept = -4,  #&lt;&lt; #&lt;&lt;
+* geom_vline(xintercept = -4,
              linetype = "dashed") +
   scale_y_continuous(limits = c(0,1)) + 
   ggthemes::theme_solarized(base_size = 25)
 ```
 ]
  
-.panel2-pdf-replacement[
-&lt;img src="distributions_files/figure-html/pdf_replacement_01_output-1.png" width="864" /&gt;
+.panel2-pdf-replace[
+&lt;img src="distributions_files/figure-html/pdf_replace_01_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-pdf-replacement[
+.panel1-pdf-replace[
 
 ```r
 set.seed(1256435)
@@ -1127,15 +1127,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-pdf-replacement[
-&lt;img src="distributions_files/figure-html/pdf_replacement_02_output-1.png" width="864" /&gt;
+.panel2-pdf-replace[
+&lt;img src="distributions_files/figure-html/pdf_replace_02_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-pdf-replacement[
+.panel1-pdf-replace[
 
 ```r
 set.seed(1256435)
@@ -1161,15 +1161,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-pdf-replacement[
-&lt;img src="distributions_files/figure-html/pdf_replacement_03_output-1.png" width="864" /&gt;
+.panel2-pdf-replace[
+&lt;img src="distributions_files/figure-html/pdf_replace_03_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-pdf-replacement[
+.panel1-pdf-replace[
 
 ```r
 set.seed(1256435)
@@ -1195,15 +1195,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-pdf-replacement[
-&lt;img src="distributions_files/figure-html/pdf_replacement_04_output-1.png" width="864" /&gt;
+.panel2-pdf-replace[
+&lt;img src="distributions_files/figure-html/pdf_replace_04_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-pdf-replacement[
+.panel1-pdf-replace[
 
 ```r
 set.seed(1256435)
@@ -1229,15 +1229,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-pdf-replacement[
-&lt;img src="distributions_files/figure-html/pdf_replacement_05_output-1.png" width="864" /&gt;
+.panel2-pdf-replace[
+&lt;img src="distributions_files/figure-html/pdf_replace_05_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-pdf-replacement[
+.panel1-pdf-replace[
 
 ```r
 set.seed(1256435)
@@ -1263,15 +1263,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-pdf-replacement[
-&lt;img src="distributions_files/figure-html/pdf_replacement_06_output-1.png" width="864" /&gt;
+.panel2-pdf-replace[
+&lt;img src="distributions_files/figure-html/pdf_replace_06_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-pdf-replacement[
+.panel1-pdf-replace[
 
 ```r
 set.seed(1256435)
@@ -1297,15 +1297,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-pdf-replacement[
-&lt;img src="distributions_files/figure-html/pdf_replacement_07_output-1.png" width="864" /&gt;
+.panel2-pdf-replace[
+&lt;img src="distributions_files/figure-html/pdf_replace_07_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-pdf-replacement[
+.panel1-pdf-replace[
 
 ```r
 set.seed(1256435)
@@ -1331,15 +1331,15 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-pdf-replacement[
-&lt;img src="distributions_files/figure-html/pdf_replacement_08_output-1.png" width="864" /&gt;
+.panel2-pdf-replace[
+&lt;img src="distributions_files/figure-html/pdf_replace_08_output-1.png" width="864" /&gt;
 ]
 
 ---
 count: false
  
 
-.panel1-pdf-replacement[
+.panel1-pdf-replace[
 
 ```r
 set.seed(1256435)
@@ -1365,12 +1365,12 @@ seq(-5, 5, .1) %&gt;%
 ```
 ]
  
-.panel2-pdf-replacement[
-&lt;img src="distributions_files/figure-html/pdf_replacement_09_output-1.png" width="864" /&gt;
+.panel2-pdf-replace[
+&lt;img src="distributions_files/figure-html/pdf_replace_09_output-1.png" width="864" /&gt;
 ]
 
 &lt;style&gt;
-.panel1-pdf-replacement {
+.panel1-pdf-replace {
   color: black;
   width: 38.6060606060606%;
   hight: 32%;
@@ -1378,7 +1378,7 @@ seq(-5, 5, .1) %&gt;%
   padding-left: 1%;
   font-size: 80%
 }
-.panel2-pdf-replacement {
+.panel2-pdf-replace {
   color: black;
   width: 59.3939393939394%;
   hight: 32%;
@@ -1386,7 +1386,7 @@ seq(-5, 5, .1) %&gt;%
   padding-left: 1%;
   font-size: 80%
 }
-.panel3-pdf-replacement {
+.panel3-pdf-replace {
   color: black;
   width: NA%;
   hight: 33%;
