@@ -212,5 +212,6 @@ seq(-4, 4, .1) %>%
   .has-continuation {
     display: block;
   }
-}
+
+  }
 ```

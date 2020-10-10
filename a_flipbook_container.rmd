@@ -1,0 +1,140 @@
+---
+title: "Create and Embed an Instant Flipbook"
+subtitle: "With flipbookr and xaringan"
+author: "Gina Reynolds, October 2020"
+output: html_document
+---
+
+This template aimed at doing the following:  preparing a flipbook within an .Rmd file, which when rendered will *embed* the prepared flipbook in the resulting html.  Narrative might be interspursed between the code-movies.  (right now, only one code movie is working... got to figure out what's going wrong when we try for 2 imbedded flipbooks.)
+
+How we get this done:
+
+1. write some code in a code chunk
+2. save that code out as text
+3. create an "instant flipbook"
+    - create an .Rmd file that will bring in code
+    - render that file to an html xaringan slide show
+4. embed the flipbook upon knitting the container doc to .html
+
+
+```{r, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = F)
+library(flipbookr)
+library(tidyverse)
+```
+
+### 1. Write code
+
+Write some code in a code chunk to be code-movied. You can set echo to false later on.  This code chunk is named "my_code"
+
+```{r my_code, eval = F}
+cars %>% 
+  ggplot() +
+  aes(x = speed) +
+  aes(y = dist) +
+  geom_point(size = 7) +
+  aes(color = dist)
+```
+
+### 2. Save out code
+
+Refer to code chunk to get code and save it out.  (Here I'm calling the code text temp.R, but maybe this should be a real temp file?).
+
+The code will be pulled into the instant1.Rmd file and rendered to a xaringan slideshow w/ step-by-step reveal.  
+
+```{r}
+knitr::knit_code$get("my_code") %>% 
+  paste(collapse = "\n") %>% 
+  writeLines("temp.R")
+```
+
+### 3. Prepare instant flipbook
+
+
+```{r}
+write_instant_flipbook(file = "my_instant1.Rmd")
+rmarkdown::render("my_instant1.Rmd", quiet = T)
+```
+
+### 4. Embed instant flipbook
+
+
+The html is embedded:
+
+```{r}
+knitr::include_url(url = "my_instant1.html", height = 360)
+```
+
+
+### 4.b use xaringan extra...
+
+
+
+```{r}
+# another great option is to use the xaringanExtra package to embed
+# install with remotes::install_github("gadenbuie/xaringanExtra")
+xaringanExtra::embed_xaringan(
+  url = "my_instant1.html",
+  ratio = "16:10"
+)
+```
+
+
+
+---
+
+
+## Appendix
+
+### What the .Rmd looks like for the instant flipbook
+
+```{r}
+knitr::include_url(url = "my_instant1.Rmd", height = 360)
+
+```
+
+
+### How we might bundle up steps 2 and 3
+
+Some of the above could be contained in a single function `create_instant_flipbook`.  
+
+
+
+
+```{r, eval = F}
+create_instant_flipbook <- function(chunk_name, flipbook_name){
+  
+  # prepare code
+  knitr::knit_code$get(chunk_name) %>% 
+  paste(collapse = "\n") %>% 
+  writeLines("temp.R")
+  
+  # pr
+  flipbook_name_rmd <- paste0(flipbook_name, ".Rmd")
+  flipbook_name_html <- paste0(flipbook_name, ".html")
+  
+  write_instant_flipbook(file = flipbook_name_rmd)
+  rmarkdown::render(flipbook_name_rmd, quiet = T)
+  
+}
+
+```
+
+## What else
+
+- It could be cool to allow a bunch of xaringan extra settings to be passed to the instant flipbook in the create_instant_flipbook function - to allow more customization.  
+
+- you might allow `xaringanExtra::use_share_again()` to be turn on this function (the write_instant_flipbook function would have to change.)
+
+
+```{css, eval = TRUE, echo = FALSE}
+.remark-code{line-height: 1.5; font-size: 80%}
+
+@media print {
+  .has-continuation {
+    display: block;
+  }
+}
+```
