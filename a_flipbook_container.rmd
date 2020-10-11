@@ -88,12 +88,9 @@ xaringanExtra::embed_xaringan(
 
 ## Appendix
 
-### What the .Rmd looks like for the instant flipbook
+### What the .Rmd looks like for the instant flipbook:
 
-```{r}
-knitr::include_url(url = "my_instant1.Rmd", height = 360)
-
-```
+- [.Rmd](my_instant1.Rmd)
 
 
 ### How we might bundle up steps 2 and 3
