@@ -90,7 +90,7 @@ xaringanExtra::embed_xaringan(
 
 ### What the .Rmd looks like for the instant flipbook:
 
-- [.Rmd](my_instant1.Rmd)
+- [.Rmd](https://raw.githubusercontent.com/EvaMaeRey/statistics/master/my_instant1.Rmd)
 
 
 ### How we might bundle up steps 2 and 3
